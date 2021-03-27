@@ -2,7 +2,7 @@ import {Bid} from "./Bid";
 
 export class BNode {
 
-  static id: number = 0;
+  static highestId: number = -1;
   id: number;
   bid: string;
   description: string;
@@ -13,13 +13,12 @@ export class BNode {
   linkedId: number | undefined;
 
   constructor(id: number, bid: string, nodes: BNode[], description: string, condition: string) {
-    this.id = id;
-    this.id = BNode.id;
+    BNode.highestId += 1;
+    this.id = BNode.highestId;
     this.bid = bid;
     this.nodes = nodes;
     this.description = description;
     this.condition = condition;
-    BNode.id += 1;
   }
 
   addNode(node: BNode) {
@@ -40,6 +39,10 @@ export class BNode {
     } else {
       throw new Error("given id "+id+" undefined");
     }
-
   }
+
+  determineHighestId(): number {
+    return this.nodes.length == 0 ? -1 : Math.max(...this.nodes.map(b => Math.max(b.id,b.determineHighestId())));
+  }
+
 }
