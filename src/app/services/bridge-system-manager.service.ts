@@ -51,7 +51,6 @@ export class BridgeSystemManager {
     }
   }
 
-
   determineLinkedNodesDirect(node: BNode): BNode[] {
     const linkedNodes = new Array<BNode>();
     if (node.linkedId != undefined) {
