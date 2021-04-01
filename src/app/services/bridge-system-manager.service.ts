@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BNode} from "./model/BNode";
+import {BNode} from "../model/BNode";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,11 @@ export class BridgeSystemManager {
     return b;
   }
 
-  getBid(node: BNode, id: number | undefined) {
+  getNode(bidList: Map<number, BNode>, id: number) {
+    return bidList.get(id);
+  }
+
+  getBidAtCurrentNode(node: BNode, id: number | undefined) {
     const x = node.nodes.find(bid => bid.id == id);
     if (x != undefined) {
       return x;
@@ -37,11 +41,11 @@ export class BridgeSystemManager {
     return BNode.highestId;
   }
 
-  determineLinkedNodes(bidList: Map<number,BNode>): BNode[] {
-    return [...bidList].filter(([id,node]) => node.linkedId != undefined ).map( ([a,b]) => b);
+  determineLinkedNodes(bidList: Map<number, BNode>): BNode[] {
+    return [...bidList].filter(([id, node]) => node.linkedId != undefined).map(([a, b]) => b);
   }
 
-  connectLinkedNodes(linkedNodes: BNode[], bidList: Map<number,BNode>) {
+  connectLinkedNodes(linkedNodes: BNode[], bidList: Map<number, BNode>) {
     for (let nwl of linkedNodes) {
       nwl.linkedNode = bidList.get(nwl.id);
     }
@@ -59,17 +63,17 @@ export class BridgeSystemManager {
       return linkedNodes;
   }
 
-  connectLinkedNodesDirect(node: BNode, bidList: Map<number,BNode>) {
+  connectLinkedNodesDirect(node: BNode, bidList: Map<number, BNode>) {
     this.connectLinkedNodesWorker(bidList, this.determineLinkedNodesDirect(node));
   }
 
-  connectLinkedNodesWorker(bidlist: Map<number,BNode>, nodesWithLinks: BNode[]) {
+  connectLinkedNodesWorker(bidlist: Map<number, BNode>, nodesWithLinks: BNode[]) {
     for (let nwl of nodesWithLinks) {
       nwl.linkedNode = bidlist.get(nwl.id);
     }
   }
 
-  getTotalBidList(node: BNode): Map<number,BNode> {
+  getTotalBidList(node: BNode): Map<number, BNode> {
     if (node.nodes.length > 0) {
       return node.nodes.map(b => this.getTotalBidList(b)).reduce((accumulator, value) => new Map([...accumulator, ...value]), new Map()).set(node.id, node);
     } else {
