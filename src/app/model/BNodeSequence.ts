@@ -34,6 +34,7 @@ export class BNodeSequence {
 
   reset() {
     this.nodes = new Array<BNode>();
+    this.indexNode = undefined;
   }
   getLength(): number {
     return this.nodes.length;

@@ -11,7 +11,7 @@ import {BNodeSequence} from "../model/BNodeSequence";
 export class BnodeSequenceComponent implements OnInit {
 
   @Input() subject!: Subject<BNode>;
-  @Output() selectNode = new EventEmitter<BNode>();
+  @Output() selectNode = new EventEmitter<BNode|undefined>();
 
   bns: BNodeSequence;
 
@@ -30,6 +30,11 @@ export class BnodeSequenceComponent implements OnInit {
   selectBid(bn: BNode) {
     this.bns.setIndexNode(bn);
     this.selectNode.emit(bn);
+  }
+
+  reset() {
+    this.bns.reset();
+    this.selectNode.emit(undefined);
   }
 
 }

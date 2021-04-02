@@ -15,7 +15,7 @@ export class BidJarComponent implements OnInit {
   baseNode!: BNode;
 
   subject: Subject<BNode> = new Subject<BNode>();
-  bridgeSystem : BiddingSystem;
+  bridgeSystem: BiddingSystem;
 
   constructor(private  bsm: BridgeSystemManager) {
     this.bridgeSystem = new BiddingSystem(this.bsm);
@@ -27,8 +27,12 @@ export class BidJarComponent implements OnInit {
     this.subject.asObservable().subscribe(b => this.setBnode(b));
   }
 
-  setBnode(bn: BNode) {
-    this.bnode = bn;
+  setBnode(bn: BNode | undefined) {
+    if (bn === undefined) {
+      this.bnode = this.baseNode;
+    } else {
+      this.bnode = bn;
+    }
   }
 
 }
