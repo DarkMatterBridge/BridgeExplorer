@@ -22,6 +22,9 @@ export class BidListComponent implements OnInit {
   }
 
   addNode(): void {
+    if (this.newBnode.bid.length===0) {
+      return;
+    }
     this.bnode.nodes.push(this.newBnode);
     this.newBnode = new BNode("",[],"","");
   }
