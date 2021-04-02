@@ -13,6 +13,7 @@ import { BidLineComponent } from './bid-line/bid-line.component';
 import { BidListComponent } from './bid-list/bid-list.component';
 import { BidJarComponent } from './bid-jar/bid-jar.component';
 import { BnodeSequenceComponent } from './bnode-sequence/bnode-sequence.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BnodeSequenceComponent } from './bnode-sequence/bnode-sequence.componen
     MatSliderModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

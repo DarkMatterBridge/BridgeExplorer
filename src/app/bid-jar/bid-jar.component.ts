@@ -19,8 +19,8 @@ export class BidJarComponent implements OnInit {
 
   constructor(private  bsm: BridgeSystemManager) {
     this.bridgeSystem = new BiddingSystem(this.bsm);
-    this.bnode = this.bridgeSystem.bridgeSystem;
-    this.baseNode = this.bnode;
+    this.baseNode = this.bridgeSystem.bridgeSystem;
+    this.bnode = this.baseNode;
   }
 
   ngOnInit(): void {

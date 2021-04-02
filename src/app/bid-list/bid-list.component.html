@@ -6,8 +6,12 @@
 </div>
 
 <div *ngFor="let bn of bnode.nodes">
-    <app-bid-line [bnode]="bn"  [subject]="subject" ></app-bid-line>
+    <app-bid-line [bnode]="bn" [subject]="subject" ($deleteNode)="deleteNode($event)"></app-bid-line>
 </div>
+
+<app-bid-line [bnode]="newBnode" [subject]="subject" [newBid]="true"></app-bid-line>
+<div (click)="addNode()"> ADD </div>
+
 <!--<div *ngFor="let bn of bnode.linkedNode">-->
 <!--  <app-bid-line [bnode]="bn"></app-bid-line>-->
 <!--</div>-->

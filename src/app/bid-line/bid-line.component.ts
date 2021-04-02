@@ -16,9 +16,12 @@ export class BidLineComponent implements OnInit {
   bnode!: BNode ;
   @Input()
   subject!: Subject<BNode>;
+  @Input()
+  newBid = false ;
+  @Input()
+  bidEditable = false ;
 
-  @Output() selectNode = new EventEmitter<BNode>();
-
+  @Output() $deleteNode = new EventEmitter<BNode>();
 
   constructor() {
     this.bnode = new BNode("", [], "","");
@@ -30,6 +33,9 @@ export class BidLineComponent implements OnInit {
   selectBid(bn: BNode) {
     this.subject.next(bn);
 //    this.selectNode.emit(bn);
+  }
+  deleteBid(bn: BNode) {
+    this.$deleteNode.next(bn);
   }
 
 }

@@ -1,9 +1,9 @@
-<p> Bidding-Sequence</p>
+<div class="b-bidding-sequence">
 
 <span (click)="reset()">R</span>
 <span *ngFor="let bn of bns.nodes; let i = index" (click)="selectBid(bn)">
 -
   <span [className]="bn == bns.indexNode ? 'fett':''">{{bn.bid}}</span>
 
-
 </span>
+</div>

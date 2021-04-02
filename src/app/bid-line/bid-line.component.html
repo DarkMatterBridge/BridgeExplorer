@@ -1,2 +1,15 @@
+<div>
 
-<div (click)="selectBid(bnode)">{{bnode.bid}} {{bnode.condition}}</div>
+  <div *ngIf="newBid" class="w10"><input [(ngModel)]="bnode.bid" size="2"/></div>
+  <div *ngIf="!newBid" (click)="selectBid(bnode)" class="w10"> {{bnode.bid}}</div>
+
+  <div class="b-input">
+  <input [(ngModel)]="bnode.condition" size="50"/>
+  </div>
+  <a *ngIf="!newBid"  [routerLink]="" (click)="deleteBid(bnode)" class="mat-cell">
+    <i class="material-icons">
+      delete
+    </i>
+  </a>
+
+</div>

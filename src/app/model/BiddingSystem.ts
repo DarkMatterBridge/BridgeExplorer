@@ -10,7 +10,7 @@ export class BiddingSystem {
   bidList: Map<number, BNode>;
 
   constructor(private bsm: BridgeSystemManager) {
-    this.setBridgeSystem(this.bridgeSystem = new BNode("x", [], "root", ""));
+    this.setBridgeSystem(this.bridgeSystem = new BNode("Root", [], "root", ""));
     this.setElementarySystem();
   }
 

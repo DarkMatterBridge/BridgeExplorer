@@ -14,14 +14,20 @@ export class BidListComponent implements OnInit {
   @Input()
   subject!: Subject<BNode>;
 
+  newBnode = new BNode("",[],"","");
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  // setBnode(bn: BNode) {
-  //   this.bnode = bn;
-  //   this.subject.next(this.bnode);
-  // }
+  addNode(): void {
+    this.bnode.nodes.push(this.newBnode);
+    this.newBnode = new BNode("",[],"","");
+  }
+
+  deleteNode(bn: BNode): void {
+    this.bnode.nodes = this.bnode.nodes.filter(b => b!==bn);
+  }
+
 }
