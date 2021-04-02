@@ -1,6 +1,6 @@
 
 <div *ngFor="let bn of bnode.nodes">
-  <app-bid-line [bnode]="bn"></app-bid-line>
+    <app-bid-line [bnode]="bn"  (selectNode)="setBnode($event)" ></app-bid-line>
 </div>
 <!--<div *ngFor="let bn of bnode.linkedNode">-->
 <!--  <app-bid-line [bnode]="bn"></app-bid-line>-->

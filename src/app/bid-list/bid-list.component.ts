@@ -9,7 +9,7 @@ import {BNode} from "../model/BNode";
 export class BidListComponent implements OnInit {
 
   @Input()
-  bnode: BNode;
+  bnode!: BNode;
 
   constructor() {
   }
@@ -17,4 +17,7 @@ export class BidListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setBnode(bn: BNode) {
+    this.bnode = bn;
+  }
 }

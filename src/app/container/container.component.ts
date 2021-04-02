@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {BiddingSystem} from "../model/BiddingSystem";
 import {BNode} from "../model/BNode";
 import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 

@@ -42,7 +42,7 @@ export class BridgeSystemManager {
   }
 
   determineLinkedNodes(bidList: Map<number, BNode>): BNode[] {
-    return [...bidList].filter(([id, node]) => node.linkedId != undefined).map(([a, b]) => b);
+    return [...bidList].filter(([id , node]) => node.linkedId != undefined).map(([a, b]) => b);
   }
 
   connectLinkedNodes(linkedNodes: BNode[], bidList: Map<number, BNode>) {

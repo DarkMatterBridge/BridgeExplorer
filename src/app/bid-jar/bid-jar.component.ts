@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BNode} from "../model/BNode";
+import {BiddingSystem} from "../model/BiddingSystem";
+import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 
 @Component({
   selector: 'app-bid-jar',
@@ -8,10 +10,14 @@ import {BNode} from "../model/BNode";
 })
 export class BidJarComponent implements OnInit {
 
-  @Input()
-  bnode: BNode;
+  bnode!: BNode;
 
-  constructor() { }
+  bridgeSystem : BiddingSystem;
+
+  constructor(private  bsm: BridgeSystemManager) {
+    this.bridgeSystem = new BiddingSystem(this.bsm);
+    this.bnode = this.bridgeSystem.bridgeSystem;
+  }
 
   ngOnInit(): void {
   }
