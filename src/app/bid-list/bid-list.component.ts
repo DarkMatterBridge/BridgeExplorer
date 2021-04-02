@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BNode} from "../model/BNode";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-bid-list',
@@ -10,6 +11,8 @@ export class BidListComponent implements OnInit {
 
   @Input()
   bnode!: BNode;
+  @Input()
+  subject!: Subject<BNode>;
 
   constructor() {
   }
@@ -19,5 +22,6 @@ export class BidListComponent implements OnInit {
 
   setBnode(bn: BNode) {
     this.bnode = bn;
+    this.subject.next(this.bnode);
   }
 }

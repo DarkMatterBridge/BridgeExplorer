@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {BNode} from "../model/BNode";
 import {BiddingSystem} from "../model/BiddingSystem";
 import {BridgeSystemManager} from "../services/bridge-system-manager.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-bid-jar',
@@ -11,15 +12,22 @@ import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 export class BidJarComponent implements OnInit {
 
   bnode!: BNode;
+  baseNode!: BNode;
 
+  subject: Subject<BNode> = new Subject<BNode>();
   bridgeSystem : BiddingSystem;
 
   constructor(private  bsm: BridgeSystemManager) {
     this.bridgeSystem = new BiddingSystem(this.bsm);
     this.bnode = this.bridgeSystem.bridgeSystem;
+    this.baseNode = this.bnode;
   }
 
   ngOnInit(): void {
+  }
+
+  setBnode(bn: BNode) {
+    this.bnode = bn;
   }
 
 }

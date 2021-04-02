@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Subject} from "rxjs";
+import {BNode} from "../model/BNode";
+import {BNodeSequence} from "../model/BNodeSequence";
 
 @Component({
   selector: 'app-bnode-sequence',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BnodeSequenceComponent implements OnInit {
 
-  constructor() { }
+  @Input() subject!: Subject<BNode>;
+  @Output() selectNode = new EventEmitter<BNode>();
+
+  bns: BNodeSequence;
+
+  constructor() {
+    this.bns = new BNodeSequence();
+  }
 
   ngOnInit(): void {
+    this.subject.asObservable().subscribe(b => this.addBNode(b));
+  }
+
+  addBNode(bnode: BNode) {
+    this.bns.addNode(bnode);
+  }
+
+  selectBid(bn: BNode) {
+    this.selectNode.emit(bn);
   }
 
 }

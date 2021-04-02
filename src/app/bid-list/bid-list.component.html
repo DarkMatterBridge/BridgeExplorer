@@ -1,4 +1,10 @@
 
+<div>
+  <p>
+    {{bnode.bid}}
+  </p>
+</div>
+
 <div *ngFor="let bn of bnode.nodes">
     <app-bid-line [bnode]="bn"  (selectNode)="setBnode($event)" ></app-bid-line>
 </div>
