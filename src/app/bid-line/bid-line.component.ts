@@ -1,6 +1,4 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {BiddingSystem} from "../model/BiddingSystem";
-import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 import {BNode} from "../model/BNode";
 import {EventEmitter, Injectable} from '@angular/core';
 import {Subject} from "rxjs";

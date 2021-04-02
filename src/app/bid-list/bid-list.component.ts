@@ -33,4 +33,5 @@ export class BidListComponent implements OnInit {
     this.bnode.nodes = this.bnode.nodes.filter(b => b!==bn);
   }
 
+
 }
