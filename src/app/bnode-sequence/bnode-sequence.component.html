@@ -1,2 +1,7 @@
 <p> Bidding</p>
-<span *ngFor="let bn of bns.nodes" (click)="selectBid(bn)" > {{bn.bid}}</span>
+<span *ngFor="let bn of bns.nodes; let i = index" (click)="selectBid(bn)">
+-
+  <span [className]="bn == bns.indexNode ? 'fett':''">{{bn.bid}}</span>
+
+
+</span>

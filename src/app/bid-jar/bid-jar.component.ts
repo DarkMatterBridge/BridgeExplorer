@@ -24,6 +24,7 @@ export class BidJarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subject.asObservable().subscribe(b => this.setBnode(b));
   }
 
   setBnode(bn: BNode) {

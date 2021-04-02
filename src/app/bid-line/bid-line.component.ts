@@ -14,6 +14,8 @@ export class BidLineComponent implements OnInit {
 
   @Input()
   bnode!: BNode ;
+  @Input()
+  subject!: Subject<BNode>;
 
   @Output() selectNode = new EventEmitter<BNode>();
 
@@ -26,7 +28,8 @@ export class BidLineComponent implements OnInit {
   }
 
   selectBid(bn: BNode) {
-    this.selectNode.emit(bn);
+    this.subject.next(bn);
+//    this.selectNode.emit(bn);
   }
 
 }

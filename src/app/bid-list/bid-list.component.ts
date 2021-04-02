@@ -20,8 +20,8 @@ export class BidListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setBnode(bn: BNode) {
-    this.bnode = bn;
-    this.subject.next(this.bnode);
-  }
+  // setBnode(bn: BNode) {
+  //   this.bnode = bn;
+  //   this.subject.next(this.bnode);
+  // }
 }

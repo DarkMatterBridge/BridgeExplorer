@@ -28,6 +28,7 @@ export class BnodeSequenceComponent implements OnInit {
   }
 
   selectBid(bn: BNode) {
+    this.bns.setIndexNode(bn);
     this.selectNode.emit(bn);
   }
 
