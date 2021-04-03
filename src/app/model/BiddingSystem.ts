@@ -11,7 +11,6 @@ export class BiddingSystem {
 
   constructor(private bsm: BridgeSystemManager) {
     this.setBridgeSystem(this.bridgeSystem = new BNode("Root", [], "root", ""));
-    this.setElementarySystem();
   }
 
   public setBridgeSystem(bs: BNode) {

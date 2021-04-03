@@ -20,10 +20,7 @@ export class BidJarComponent implements OnInit {
   bridgeSystem: BiddingSystem;
 
   constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
-    this.bridgeSystem = new BiddingSystem(this.bsm);
-
-    this.baseNode = this.bridgeSystem.bridgeSystem;
-    this.bnode = this.baseNode;
+    this.bridgeSystem = new BiddingSystem(bsm);
   }
 
   ngOnInit(): void {
@@ -58,4 +55,38 @@ export class BidJarComponent implements OnInit {
 
     alert ("Highest ID: "+hid+" No of bids: "+nobids)
   }
+
+  loadLegacySystem() {
+    this.fileService.getLocalBridgeSystem().subscribe(
+      (data: {}) => {
+        const l = new LegacyBiddingSystem(this.bsm);
+        BNode.highestId = -1;
+        this.baseNode = l.parseToNew(data);
+        this.bnode = this.baseNode;
+        this.getStatistics();
+      }
+    )
+
+  }
+
+  loadNewSystem() {
+    this.bridgeSystem = new BiddingSystem(this.bsm);
+    this.baseNode = this.bridgeSystem.bridgeSystem;
+    this.bnode = this.baseNode;
+
+  }
+
+  resetSystem() {
+    this.bridgeSystem = new BiddingSystem(this.bsm);
+    this.baseNode = this.bridgeSystem.bridgeSystem;
+    this.bnode = this.baseNode;
+  }
+
+  loadElementarySystem() {
+    this.bridgeSystem = new BiddingSystem(this.bsm);
+    this.bridgeSystem.setElementarySystem();
+    this.baseNode = this.bridgeSystem.bridgeSystem;
+    this.bnode = this.baseNode;
+  }
+
 }

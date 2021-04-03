@@ -15,8 +15,8 @@ export class BNode {
   who = true; // we = true / they = false
 
   constructor(bid: string, nodes: BNode[], description: string, condition: string) {
-    BNode.highestId += 1;
-    this.id = BNode.highestId;
+//    BNode.highestId += 1;
+    this.id = -1;
     this.bid = bid;
     this.nodes = nodes;
     this.description = description;

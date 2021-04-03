@@ -17,27 +17,27 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  loadSystem() {
-    var getter = this.getLocalBridgeSystem();
-    getter.subscribe(
-      (data: {}) => {
-        this.systemHierarchy = data;
-        const l = new LegacyBiddingSystem();
-        this.bnode = l.parseToNew(this.systemHierarchy);
-      }
-    );
-    return getter;
-  }
+  // loadSystem() {
+  //   var getter = this.getLocalBridgeSystem();
+  //   getter.subscribe(
+  //     (data: {}) => {
+  //       this.systemHierarchy = data;
+  //       const l = new LegacyBiddingSystem();
+  //       this.bnode = l.parseToNew(this.systemHierarchy);
+  //     }
+  //   );
+  //   return getter;
+  // }
 
   getLocalBridgeSystem() {
     return this.http.get(this.bridgeSystemUrl);
   }
 
-  parseLegacySystem() :BNode{
-    let leg : LegacyBiddingSystem = new LegacyBiddingSystem();
-    leg.systemHierarchy = this.systemHierarchy;
-    console.log(this.systemHierarchy);
-    return leg.parseToNew(this.systemHierarchy);
-
-  }
+  // parseLegacySystem() :BNode{
+  //   let leg : LegacyBiddingSystem = new LegacyBiddingSystem();
+  //   leg.systemHierarchy = this.systemHierarchy;
+  //   console.log(this.systemHierarchy);
+  //   return leg.parseToNew(this.systemHierarchy);
+  //
+  // }
 }

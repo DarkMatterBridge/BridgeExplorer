@@ -82,5 +82,10 @@ export class BridgeSystemManager {
     }
   }
 
+  persistNode(bnode : BNode) {
+    BNode.highestId += 1;
+    bnode.id = BNode.highestId;
+  }
+
 
 }

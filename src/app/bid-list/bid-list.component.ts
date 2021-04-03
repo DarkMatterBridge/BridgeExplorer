@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BNode} from "../model/BNode";
 import {Subject} from "rxjs";
+import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 
 @Component({
   selector: 'app-bid-list',
@@ -15,7 +16,7 @@ export class BidListComponent implements OnInit {
   subject!: Subject<BNode>;
 
   newBnode = new BNode("",[],"","");
-  constructor() {
+  constructor(private bsm: BridgeSystemManager) {
   }
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class BidListComponent implements OnInit {
     if (this.newBnode.bid.length===0) {
       return;
     }
+    this.bsm.persistNode(this.newBnode);
     this.bnode.nodes.push(this.newBnode);
     this.newBnode = new BNode("",[],"","");
   }
