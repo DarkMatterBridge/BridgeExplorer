@@ -1,15 +1,21 @@
 <div>
 
-  <div *ngIf="newBid" class="w10"><input [(ngModel)]="bnode.bid" size="2"/></div>
-  <div *ngIf="!newBid" (click)="selectBid(bnode)" class="w10"> {{bnode.bid}}</div>
+  <div *ngIf="newBid" class="w10">
+    <input [(ngModel)]="bnode.bid" size="2"/></div>
 
-  <div class="b-input">
-  <input [(ngModel)]="bnode.condition" size="50"/>
+  <div *ngIf="!newBid" (click)="selectBid(bnode)" class="w10">
+    <div  class="w1"> <i *ngIf="!bnode.who" class="material-icons" style="font-size:16px;" >     face   </i>   </div>
+    {{bnode.bid}}
   </div>
-  <a *ngIf="!newBid"  [routerLink]="" (click)="deleteBid(bnode)" class="mat-cell">
+  <div class="b-input">
+    <input [(ngModel)]="bnode.condition" size="50"/>
+  </div>
+
+  <a *ngIf="!newBid" [routerLink]="" (click)="deleteBid(bnode)" class="mat-cell">
     <i class="material-icons">
       delete
     </i>
   </a>
+  {{bnode.id}}
 
 </div>

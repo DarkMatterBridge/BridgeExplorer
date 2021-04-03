@@ -12,6 +12,8 @@ export class BNode {
   linkedNode: BNode | undefined;
   linkedId: number | undefined;
 
+  who = true; // we = true / they = false
+
   constructor(bid: string, nodes: BNode[], description: string, condition: string) {
     BNode.highestId += 1;
     this.id = BNode.highestId;

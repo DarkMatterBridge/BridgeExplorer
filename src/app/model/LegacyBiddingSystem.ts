@@ -17,7 +17,10 @@ export class LegacyBiddingSystem {
       bnode.nodes.push(b);
 
       if (rnn.hasOwnProperty('Follow')) {
-        this.parseWorker(b, rnn['Follow'])
+        this.parseWorker(b, rnn['Follow'], true)
+      }
+      if (rnn.hasOwnProperty('Opponent')) {
+        this.parseWorker(b, rnn['Opponent'], false)
       }
 
       console.log(rootnodeName + " " + rnn.hasOwnProperty("Desc"));
@@ -25,15 +28,19 @@ export class LegacyBiddingSystem {
     return bnode;
   }
 
-  public parseWorker(bnode: BNode, hierachy: { [index: string]: any }) {
+  public parseWorker(bnode: BNode, hierachy: { [index: string]: any }, who: boolean) {
     let rootnodes = Object.getOwnPropertyNames(hierachy);
     rootnodes.forEach(rootnodeName => {
       const rnn = hierachy[rootnodeName];
       const b = new BNode(rootnodeName, [], "", rnn.hasOwnProperty('Desc') ? rnn['Desc'] : "");
+      b.who = who;
       bnode.nodes.push(b);
 
       if (rnn.hasOwnProperty('Follow')) {
-        this.parseWorker(b, rnn['Follow'])
+        this.parseWorker(b, rnn['Follow'], true)
+      }
+      if (rnn.hasOwnProperty('Opponent')) {
+        this.parseWorker(b, rnn['Opponent'], false)
       }
 
     });

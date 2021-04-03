@@ -15,8 +15,6 @@ export class FileService {
   private newSystem!: BNode;
 
   constructor(private http: HttpClient) {
-    this.loadSystem();
-
   }
 
   loadSystem() {

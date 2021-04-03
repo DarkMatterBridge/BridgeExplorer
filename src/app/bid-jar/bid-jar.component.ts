@@ -28,15 +28,17 @@ export class BidJarComponent implements OnInit {
 
   ngOnInit(): void {
     this.subject.asObservable().subscribe(b => this.setBnode(b));
-    this.fileService.loadSystem()
+    this.getStatistics();
 
-    this.fileService.getLocalBridgeSystem().subscribe(
-      (data: {}) => {
-        const l = new LegacyBiddingSystem();
-        this.baseNode = l.parseToNew(data);
-        this.bnode = this.baseNode;
-      }
-    )
+    // this.fileService.getLocalBridgeSystem().subscribe(
+    //   (data: {}) => {
+    //     const l = new LegacyBiddingSystem();
+    //     BNode.highestId = -1;
+    //     this.baseNode = l.parseToNew(data);
+    //     this.bnode = this.baseNode;
+    //     this.getStatistics();
+    //   }
+    // )
 
   }
 
@@ -48,4 +50,12 @@ export class BidJarComponent implements OnInit {
     }
   }
 
+  getStatistics() {
+    const hid =
+    this.bsm.determineAndSetHighestId(this.baseNode);
+    const nobids =
+    this.bsm.getTotalBidList(this.baseNode).size;
+
+    alert ("Highest ID: "+hid+" No of bids: "+nobids)
+  }
 }
