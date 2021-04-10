@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LegacyBiddingSystem} from "../model/LegacyBiddingSystem";
 import {BNode} from "../model/BNode";
 
 @Injectable({
@@ -9,7 +8,7 @@ import {BNode} from "../model/BNode";
 export class FileService {
 
   bridgeSystemUrl = 'assets/bridgePrecision.json';
-  public systemHierarchy: {[index: string]:any} = {};
+  public systemHierarchy: { [index: string]: any } = {};
   public bnode!: BNode;
 
   private newSystem!: BNode;
@@ -40,4 +39,19 @@ export class FileService {
   //   return leg.parseToNew(this.systemHierarchy);
   //
   // }
+
+  saveIntoLocalStorage(name: string, bnode: BNode) {
+    const json = JSON.stringify(bnode, ["id", "bid", "condition", "description", "nodes", "who"]);
+    localStorage.setItem(name, json.toString());
+  }
+
+
+  loadFromLocalStorage(name: string): BNode | undefined {
+    const json = localStorage.getItem(name);
+    if (json) {
+      return JSON.parse(json) as BNode;
+    }
+    return undefined;
+  }
+
 }

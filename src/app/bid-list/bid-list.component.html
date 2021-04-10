@@ -4,6 +4,19 @@
   </p>
 </div>
 
+<table>
+  <thead><td class="min20"></td></thead>
+  <tr *ngFor="let bn of bnode.nodes"  app-bid-item="bn" [bnode]="bn" [subject]="subject" ($deleteNode)="deleteNode($event)">
+  </tr>
+  <tr app-bid-item [bnode]="newBnode" [subject]="subject" [newBid]="true"></tr>
+</table>
+<a (click)="addNode()" [routerLink]=""><i class="material-icons">
+  add
+</i>
+</a>
+<p></p>
+
+
 <div *ngFor="let bn of bnode.nodes">
   <app-bid-line [bnode]="bn" [subject]="subject" ($deleteNode)="deleteNode($event)"></app-bid-line>
 </div>
@@ -13,6 +26,7 @@
   add
 </i>
 </a>
+
 
 <!--<div *ngFor="let bn of bnode.linkedNode">-->
 <!--  <app-bid-line [bnode]="bn"></app-bid-line>-->

@@ -3,7 +3,7 @@
 <span (click)="reset()">R</span>
 <span *ngFor="let bn of bns.nodes; let i = index" (click)="selectBid(bn)">
 -
-  <span [className]="bn == bns.indexNode ? 'fett':''">{{bn.bid}}</span>
-
+ <span  [ngClass]="{'fett': bn == bns.indexNode,
+                 'opp': !bn.who}"> {{bn.bid}}</span>
 </span>
 </div>

@@ -1,0 +1,23 @@
+
+  <td *ngIf="newBid">
+    <input [(ngModel)]="bnode.bid" size="2"/></td>
+
+
+  <td *ngIf="!newBid" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': !bnode.who}">
+    {{bnode.bid}}
+  </td>
+
+  <td>
+    <input [(ngModel)]="bnode.condition" size="50"/>
+  </td>
+
+  <td >
+    <a *ngIf="!newBid" [routerLink]="" (click)="deleteBid(bnode)" class="mat-cell">
+      <i class="material-icons">
+        delete
+      </i>
+    </a></td>
+
+  <td>
+    {{bnode.id}}
+  </td>

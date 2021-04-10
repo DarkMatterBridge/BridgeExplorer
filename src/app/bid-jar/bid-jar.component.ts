@@ -66,7 +66,6 @@ export class BidJarComponent implements OnInit {
         this.getStatistics();
       }
     )
-
   }
 
   loadNewSystem() {
@@ -87,6 +86,21 @@ export class BidJarComponent implements OnInit {
     this.bridgeSystem.setElementarySystem();
     this.baseNode = this.bridgeSystem.bridgeSystem;
     this.bnode = this.baseNode;
+  }
+
+  saveIntoLocalStorage() {
+    let name = "precision";
+    this.fileService.saveIntoLocalStorage(name, this.baseNode);
+  }
+
+  loadFromLocalStorage() {
+    let name = "precision";
+    const b = this.fileService.loadFromLocalStorage(name);
+    if (b) {
+      this.baseNode = b;
+      this.bnode = b;
+    }
+
   }
 
 }
