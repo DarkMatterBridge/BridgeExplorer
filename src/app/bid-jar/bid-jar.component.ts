@@ -16,6 +16,7 @@ export class BidJarComponent implements OnInit {
   bnode!: BNode;
   baseNode!: BNode;
 
+  linContent = "initial";
   subject: Subject<BNode> = new Subject<BNode>();
   bridgeSystem: BiddingSystem;
 
@@ -25,6 +26,7 @@ export class BidJarComponent implements OnInit {
 
   ngOnInit(): void {
     this.subject.asObservable().subscribe(b => this.setBnode(b));
+    this.resetSystem();
     this.getStatistics();
 
     // this.fileService.getLocalBridgeSystem().subscribe(
@@ -49,11 +51,11 @@ export class BidJarComponent implements OnInit {
 
   getStatistics() {
     const hid =
-    this.bsm.determineAndSetHighestId(this.baseNode);
+      this.bsm.determineAndSetHighestId(this.baseNode);
     const nobids =
-    this.bsm.getTotalBidList(this.baseNode).size;
+      this.bsm.getTotalBidList(this.baseNode).size;
 
-    alert ("Highest ID: "+hid+" No of bids: "+nobids)
+    alert("Highest ID: " + hid + " No of bids: " + nobids)
   }
 
   loadLegacySystem() {
@@ -66,6 +68,24 @@ export class BidJarComponent implements OnInit {
         this.getStatistics();
       }
     )
+  }
+
+  loadLinExample() {
+    window.postMessage({
+      direction: "from-page-script",
+      message: "Message from the page"
+    }, "*");
+
+    // this.fileService.getLinExample().subscribe(
+    //   data => alert(data)
+    // )
+  }
+
+  copyLin() {
+    const c = document.getElementById("lin");
+    if (c) {
+      this.linContent = c.innerText;
+    }
   }
 
   loadNewSystem() {
@@ -100,7 +120,24 @@ export class BidJarComponent implements OnInit {
       this.baseNode = b;
       this.bnode = b;
     }
-
   }
+
+  downloadSystem() {
+    let name = "precision";
+    this.fileService.downloadSystem(name, this.baseNode)
+  }
+
+  processFile(imageInput: HTMLInputElement) {
+    // const files = imageInput.files;
+    // if (files) {
+    //   const file: File = files[0];
+    //   const b = this.fileService.uploadSystem(file);
+    //   if (b) {
+    //     this.baseNode = b;
+    //     this.bnode = b;
+    //   }
+    // }
+  }
+
 
 }

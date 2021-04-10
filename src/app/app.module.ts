@@ -16,6 +16,7 @@ import { BnodeSequenceComponent } from './bnode-sequence/bnode-sequence.componen
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BidItemComponent } from './bid-item/bid-item.component';
+import { LinLoaderComponent } from './lin-loader/lin-loader.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BidItemComponent } from './bid-item/bid-item.component';
     BidListComponent,
     BidJarComponent,
     BnodeSequenceComponent,
-    BidItemComponent
+    BidItemComponent,
+    LinLoaderComponent
   ],
   imports: [
     BrowserModule,

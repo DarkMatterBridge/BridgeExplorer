@@ -54,4 +54,39 @@ export class FileService {
     return undefined;
   }
 
+  downloadSystem(name: string, bnode: BNode) {
+    const biddingSystem = JSON.stringify(bnode);
+    var wea = window.open("", "hallo");
+    if (wea) {
+      wea.document.write(biddingSystem);
+    }
+    var text = biddingSystem,
+      blob = new Blob([text], {type: 'text/plain'}),
+      anchor = document.createElement('a');
+
+    anchor.download = "bs.json";
+    anchor.href = (window.URL).createObjectURL(blob);
+    anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+    anchor.click();
+  }
+
+  // uploadSystem(file: File): BNode {
+  //
+  //   const fileReader = new FileReader();
+  //   fileReader.onload = fileLoadedEvent => {
+  //     var datae: string | ArrayBuffer | null;
+  //     datae = fileReader.result
+  //     if (datae) {
+  //       const bn = JSON.parse(datae.toString()) as BNode;
+  //     }
+  //   }
+  //   fileReader.readAsText(file);
+  //
+  // }
+
+  getLinExample() {
+    return this.http.get("https://www.bridgebase.com/myhands/fetchlin.php?id=1022970755&when_played=1616782848");
+  }
+
+
 }
