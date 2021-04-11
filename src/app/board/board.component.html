@@ -1,0 +1,31 @@
+<table>
+  <tr>
+    <td></td>
+    <td>{{board.players[2]}}
+      <app-hand [hand]="board.northHand"></app-hand>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>{{board.players[1]}}
+      <app-hand [hand]="board.westHand"></app-hand>
+    </td>
+    <td></td>
+    <td>{{board.players[3]}}
+      <app-hand [hand]="board.eastHand"></app-hand></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{board.players[0]}}
+      <app-hand [hand]="board.southHand"></app-hand>
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+Dealer: {{board.dealer}}
+<p></p>
+<app-bidding-sequence [biddingSequence]="board.biddingSequence"></app-bidding-sequence>
+
+
+

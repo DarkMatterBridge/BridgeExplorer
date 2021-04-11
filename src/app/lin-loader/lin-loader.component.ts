@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FileService} from "../services/file.service";
 import {Subject} from "rxjs";
 import {LinParserService} from "../lin-parser.service";
-import {LinFile} from "../model/LinFile";
+import {LinObject} from "../model/LinObject";
 import {Hand} from "../model/Hand";
+import {Board} from "../model/Board";
 
 @Component({
   selector: 'app-lin-loader',
@@ -15,8 +16,7 @@ export class LinLoaderComponent implements OnInit {
   url = "";
   linContent = "";
   uploadSubject: Subject<string> = new Subject<string>();
-
-  southHand: Hand = new Hand();
+  board: Board = new Board();
 
   constructor(private fileService: FileService, private  linParserService: LinParserService) {
   }
@@ -25,29 +25,32 @@ export class LinLoaderComponent implements OnInit {
     this.uploadSubject.subscribe(ln => this.parseLinFile(ln));
   }
 
-  parseLinFile(linFile: string) {
-    this.linContent = linFile;
-    const lp = new LinFile(this.linContent);
-    const x = lp.parsed;
-    console.log(lp.hands());
-    console.log(lp.south())
-    let hand = new Hand();
-    hand.setHandFromString(lp.south());
-    this.southHand = hand;
+  parseLinFile(linFileContent: string) {
+    this.linContent = linFileContent;
+    const linFile = new LinObject(this.linContent);
+    this.board = new Board(); // import > to trigger changedetection in child components
+    this.board.importLinObject(linFile);
   }
 
   loadLinFromUrl() {
+    window.addEventListener("message", e => this.takeLin(e))
     window.postMessage({
       direction: "from-page-script",
       message: this.url
     }, "*");
+  }
+
+  takeLin(event: any){
+    if (event.source == window && event.data && event.data.direction == "from-content-script"){
+      this.parseLinFile(event.data.message);
+    }
 
   }
 
-  copyLin() {
+  copyAndParse() {
     const c = document.getElementById("lin");
     if (c) {
-      this.linContent = c.innerText;
+      this.parseLinFile(c.innerText);
     }
   }
 

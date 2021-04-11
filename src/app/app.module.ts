@@ -18,6 +18,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { BidItemComponent } from './bid-item/bid-item.component';
 import { LinLoaderComponent } from './lin-loader/lin-loader.component';
 import { HandComponent } from './hand/hand.component';
+import { BoardComponent } from './board/board.component';
+import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { HandComponent } from './hand/hand.component';
     BnodeSequenceComponent,
     BidItemComponent,
     LinLoaderComponent,
-    HandComponent
+    HandComponent,
+    BoardComponent,
+    BiddingSequenceComponent
   ],
   imports: [
     BrowserModule,

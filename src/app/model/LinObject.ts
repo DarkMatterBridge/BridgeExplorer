@@ -1,4 +1,4 @@
-export class LinFile {
+export class LinObject {
 
   source: string;
   par: any;
@@ -15,7 +15,6 @@ export class LinFile {
     }
     var reg = /[\w]{2}\|[^\|]*\|/g;
     var m;
-    var n = 0;
     let map = new Map();
     do {
       m = reg.exec(this.source);
@@ -23,17 +22,8 @@ export class LinFile {
         let [key, value] = this.retrieve_pair(m.toString());
         this.addEntry(map, key, value);
       }
-      n = n + 1;
     } while (m);
     this.par = map;
-    console.log(map);
-//   scanner = StringScanner.new(source)
-// @parsed = Hash.new { |hash, key| hash[key] = [] }
-// until scanner.eos?
-//   scanner.scan_until(/[\w]{2}\|[^\|]*\|/)
-//   key, value = retrieve_pair(scanner.matched)
-// @parsed[key] << value
-// end
     return this.par;
   }
 
@@ -61,5 +51,57 @@ export class LinFile {
 
   south(): string {
     return this.hands()[0].substr(1);
+  }
+
+  west(): string {
+    return this.hands()[1];
+  }
+
+  north(): string {
+    return this.hands()[2];
+  }
+
+  bids() {
+    let bids = this.parsed.get("mb").map
+    (
+      (bid: string) => {
+        switch (bid.toUpperCase()) {
+          case "P":
+            return "P";
+          case "D":
+            return "X";
+            break;
+          case "R":
+            return "XX";
+            break;
+          default: {
+            if (bid.match(/\dN/)) {
+              return bid[0] + "NT";
+            } else {
+              return bid.toUpperCase();
+            }
+          }
+        }
+      }
+    )
+    return bids;
+  }
+
+  dealer(): string {
+    switch (this.parsed.get("md")[0][0]) {
+      case  "1":
+        return "S"
+      case  "2":
+        return "W"
+      case  "3":
+        return "N"
+      case  "4":
+        return "E"
+    }
+    return "";
+  }
+
+  players() {
+    return (this.parsed.get("pn"))[0].split(",");
   }
 }

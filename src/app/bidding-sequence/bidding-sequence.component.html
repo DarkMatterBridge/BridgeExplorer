@@ -1,0 +1,17 @@
+
+
+<span *ngFor="let bid of biddingSequence.bids" > {{bid}}</span>
+
+<table>
+<tr><td>West</td><td>North</td><td>East</td><td>South</td></tr>
+  <tr *ngFor="let i of numbers">
+    <td *ngFor="let j of [0,1,2,3]">
+      <span *ngIf="4*i+j <= biddingEnd && 4*i+j>=biddingStart">
+        {{biddingSequence.bids[4*i+j-biddingStart]}}
+      </span>
+    </td>
+  </tr>
+
+</table>
+
+https://www.bridgebase.com/myhands/fetchlin.php?id=1070643200&when_played=1617996516

@@ -4,9 +4,9 @@
 </div>
 <div id="lin"> lin</div>
 <div> {{linContent}}</div>
-<a [routerLink]="" (click)="copyLin()" > Lin example </a>
+<a [routerLink]="" (click)="copyAndParse()" > Parse Lin file  </a>
 
 <p>
   <input #fileInput type="file" accept=".lin" (change)="processFile(fileInput)">
 
-  <div> <app-hand [hand]="southHand"></app-hand></div>
+<div> <app-board [board]="board"></app-board></div>
