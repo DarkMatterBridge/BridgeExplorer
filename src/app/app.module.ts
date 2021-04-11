@@ -17,6 +17,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BidItemComponent } from './bid-item/bid-item.component';
 import { LinLoaderComponent } from './lin-loader/lin-loader.component';
+import { HandComponent } from './hand/hand.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LinLoaderComponent } from './lin-loader/lin-loader.component';
     BidJarComponent,
     BnodeSequenceComponent,
     BidItemComponent,
-    LinLoaderComponent
+    LinLoaderComponent,
+    HandComponent
   ],
   imports: [
     BrowserModule,

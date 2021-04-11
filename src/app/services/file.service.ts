@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BNode} from "../model/BNode";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -70,23 +71,40 @@ export class FileService {
     anchor.click();
   }
 
-  // uploadSystem(file: File): BNode {
-  //
-  //   const fileReader = new FileReader();
-  //   fileReader.onload = fileLoadedEvent => {
-  //     var datae: string | ArrayBuffer | null;
-  //     datae = fileReader.result
-  //     if (datae) {
-  //       const bn = JSON.parse(datae.toString()) as BNode;
-  //     }
-  //   }
-  //   fileReader.readAsText(file);
-  //
-  // }
+  uploadSystem(file: File, uploadSubject: Subject<BNode>) {
 
-  getLinExample() {
-    return this.http.get("https://www.bridgebase.com/myhands/fetchlin.php?id=1022970755&when_played=1616782848");
+    const fileReader = new FileReader();
+    fileReader.onload = fileLoadedEvent => {
+      var datae: string | ArrayBuffer | null;
+      datae = fileReader.result
+      if (datae) {
+        const bn = JSON.parse(datae.toString()) as BNode;
+        uploadSubject.next(bn);
+      }
+    }
+    fileReader.readAsText(file);
+
   }
+
+  uploadLinFile(file: File, uploadSubject: Subject<string>) {
+
+    const fileReader = new FileReader();
+    fileReader.onload = fileLoadedEvent => {
+      var data: string | ArrayBuffer | null;
+      data = fileReader.result;
+      if (data) {
+        uploadSubject.next(data.toString());
+      }
+    }
+    fileReader.readAsText(file);
+
+  }
+
+
+  //
+  // getLinExample() {
+  //   return this.http.get("https://www.bridgebase.com/myhands/fetchlin.php?id=1022970755&when_played=1616782848");
+  // }
 
 
 }
