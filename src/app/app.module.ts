@@ -20,6 +20,7 @@ import { LinLoaderComponent } from './lin-loader/lin-loader.component';
 import { HandComponent } from './hand/hand.component';
 import { BoardComponent } from './board/board.component';
 import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.component';
+import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.co
     LinLoaderComponent,
     HandComponent,
     BoardComponent,
-    BiddingSequenceComponent
+    BiddingSequenceComponent,
+    LinkableBnodeListComponent
   ],
   imports: [
     BrowserModule,

@@ -35,5 +35,8 @@ export class BidItemComponent implements OnInit {
     this.$deleteNode.next(bn);
   }
 
+  markAsLinkable(bn: BNode){
+
+  }
 
 }

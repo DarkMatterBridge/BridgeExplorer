@@ -20,7 +20,9 @@ export class BidJarComponent implements OnInit {
   subject: Subject<BNode> = new Subject<BNode>();
   bridgeSystem: BiddingSystem;
 
-  uploadSubject: Subject<BNode>  = new Subject<BNode>();
+  uploadSubject: Subject<BNode> = new Subject<BNode>();
+
+  linkableBnodes: BNode[] = new Array();
 
   constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
     this.bridgeSystem = new BiddingSystem(bsm);
@@ -31,7 +33,7 @@ export class BidJarComponent implements OnInit {
     this.resetSystem();
     this.getStatistics();
 
-    this.uploadSubject.subscribe( bn => this.setSystem(bn));
+    this.uploadSubject.subscribe(bn => this.setSystem(bn));
 
     // this.fileService.getLocalBridgeSystem().subscribe(
     //   (data: {}) => {
@@ -142,5 +144,15 @@ export class BidJarComponent implements OnInit {
     }
   }
 
+  ///
+  markAsLinkable() {
+    this.linkableBnodes.push(this.bnode);
+  }
 
+  linkBnode(linkableBnode: BNode | undefined) {
+    if (linkableBnode) {
+      this.bnode.linkedNode = linkableBnode;
+      this.bnode.linkedId = linkableBnode.id;
+    }
+  }
 }

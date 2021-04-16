@@ -1,14 +1,17 @@
+<a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> -
+<a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
+<a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
 
-<a [routerLink]="" (click)="loadLegacySystem()" > Load Legacy System </a>
-<a [routerLink]="" (click)="resetSystem()" > Load new System </a>
-<a [routerLink]="" (click)="loadElementarySystem()" > Load Elementary System </a>
-
-<a [routerLink]="" (click)="saveIntoLocalStorage()" > Save System to local Storage </a>
-<a [routerLink]="" (click)="loadFromLocalStorage()" > Load System from local Storage </a>
-<a [routerLink]="" (click)="downloadSystem()" > Download System </a>
+<a [routerLink]="" (click)="saveIntoLocalStorage()"> Save System to local Storage </a> -
+<a [routerLink]="" (click)="loadFromLocalStorage()"> Load System from local Storage </a> -
+<a [routerLink]="" (click)="downloadSystem()"> Download System </a>
 <p>
-<input #fileInput type="file" accept=".json" (change)="processFile(fileInput)">
+  <input #fileInput type="file" accept=".json" (change)="processFile(fileInput)">
 
-<app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"></app-bnode-sequence>
-<app-bid-list [bnode]="bnode" [subject]="subject"></app-bid-list>
+  <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"></app-bnode-sequence>
+  <a [routerLink]="" (click)="markAsLinkable()"> Add As Linkable Node </a>
 
+  <app-bid-list [bnode]="bnode" [subject]="subject"></app-bid-list>
+
+</p>
+<app-linkable-bnode-list [linkableBnodes]="linkableBnodes" (linkNodeEvent)="linkBnode($event)"> </app-linkable-bnode-list>
