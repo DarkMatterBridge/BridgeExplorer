@@ -38,7 +38,7 @@ export class ContainerComponent implements OnInit {
     console.log("linkednodes");
     console.log(x);
 
-    this.bsm.connectLinkedNodes(x, bidlist);
+    this.bsm.connectLinkedNodesW(x, bidlist);
 
 
     this.bsm.determineAndSetHighestId(this.biddingSystem);

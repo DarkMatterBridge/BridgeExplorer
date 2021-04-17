@@ -33,19 +33,10 @@ export class FileService {
     return this.http.get(this.bridgeSystemUrl);
   }
 
-  // parseLegacySystem() :BNode{
-  //   let leg : LegacyBiddingSystem = new LegacyBiddingSystem();
-  //   leg.systemHierarchy = this.systemHierarchy;
-  //   console.log(this.systemHierarchy);
-  //   return leg.parseToNew(this.systemHierarchy);
-  //
-  // }
-
   saveIntoLocalStorage(name: string, bnode: BNode) {
-    const json = JSON.stringify(bnode, ["id", "bid", "condition", "description", "nodes", "who"]);
+    const json = this.transformToJson(bnode);
     localStorage.setItem(name, json.toString());
   }
-
 
   loadFromLocalStorage(name: string): BNode | undefined {
     const json = localStorage.getItem(name);
@@ -55,13 +46,17 @@ export class FileService {
     return undefined;
   }
 
+  transformToJson(bnode: BNode): string {
+    return JSON.stringify(bnode, ["id", "bid", "condition", "description", "nodes", "who", "linkedId"]);
+  }
+
   downloadSystem(name: string, bnode: BNode) {
-    const biddingSystem = JSON.stringify(bnode);
+    const json = this.transformToJson(bnode);
     var wea = window.open("", "hallo");
     if (wea) {
-      wea.document.write(biddingSystem);
+      wea.document.write(json);
     }
-    var text = biddingSystem,
+    var text = json,
       blob = new Blob([text], {type: 'text/plain'}),
       anchor = document.createElement('a');
 

@@ -1,25 +1,23 @@
 <div>
   <p>
-    {{bnode.bid}}
+    {{bnode.bid}}    [{{bnode.condition}}]
+
   </p>
 </div>
 
 <table>
   <thead><td class="min20"></td></thead>
-  <tr *ngFor="let bn of bnode.nodes"  app-bid-item="bn" [bnode]="bn" [subject]="subject" ($deleteNode)="deleteNode($event)">
+  <tr *ngFor="let bn of bnode.nodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
+      ($addOrDeleteNode)="addOrdeleteNode($event)">
   </tr>
-  <tr app-bid-item [bnode]="newBnode" [subject]="subject" [newBid]="true"></tr>
+  <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)" [newBid]="true"></tr>
+
+  <tr *ngFor="let bn of linkedNodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
+      ($addOrDeleteNode)="addOrdeleteNode($event)">
+  </tr>
 </table>
-<a (click)="addNode()" [routerLink]=""><i class="material-icons">
-  add
-</i>
-</a>
 <p></p>
 
-
-<!--<div *ngFor="let bn of bnode.linkedNode">-->
-<!--  <app-bid-line [bnode]="bn"></app-bid-line>-->
-<!--</div>-->
 
 
 <!--<div *ngFor="let bn of bnode.nodes">-->

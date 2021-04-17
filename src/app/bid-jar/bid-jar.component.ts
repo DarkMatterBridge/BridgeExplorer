@@ -48,6 +48,7 @@ export class BidJarComponent implements OnInit {
 
   setSystem(bn: BNode) {
     this.baseNode = this.bnode = bn;
+    this.bsm.makeUsable(bn);
   }
 
 
@@ -73,9 +74,9 @@ export class BidJarComponent implements OnInit {
       (data: {}) => {
         const l = new LegacyBiddingSystem(this.bsm);
         BNode.highestId = -1;
-        this.baseNode = l.parseToNew(data);
-        this.bnode = this.baseNode;
+        this.setSystem(l.parseToNew(data));
         this.getStatistics();
+        this.resetBidding();
       }
     )
   }
@@ -98,24 +99,18 @@ export class BidJarComponent implements OnInit {
     }
   }
 
-  loadNewSystem() {
-    this.bridgeSystem = new BiddingSystem(this.bsm);
-    this.baseNode = this.bridgeSystem.bridgeSystem;
-    this.bnode = this.baseNode;
-
-  }
-
   resetSystem() {
     this.bridgeSystem = new BiddingSystem(this.bsm);
     this.baseNode = this.bridgeSystem.bridgeSystem;
     this.bnode = this.baseNode;
+    this.resetBidding();
   }
 
   loadElementarySystem() {
     this.bridgeSystem = new BiddingSystem(this.bsm);
     this.bridgeSystem.setElementarySystem();
-    this.baseNode = this.bridgeSystem.bridgeSystem;
-    this.bnode = this.baseNode;
+    this.setSystem(this.bridgeSystem.bridgeSystem);
+    this.resetBidding();
   }
 
   saveIntoLocalStorage() {
@@ -127,8 +122,8 @@ export class BidJarComponent implements OnInit {
     let name = "precision";
     const b = this.fileService.loadFromLocalStorage(name);
     if (b) {
-      this.baseNode = b;
-      this.bnode = b;
+      this.setSystem(b);
+      this.resetBidding();
     }
   }
 
@@ -144,6 +139,10 @@ export class BidJarComponent implements OnInit {
     }
   }
 
+  resetBidding() {
+    this.subject.next(undefined);
+  }
+
   ///
   markAsLinkable() {
     this.linkableBnodes.push(this.bnode);
@@ -151,6 +150,7 @@ export class BidJarComponent implements OnInit {
 
   linkBnode(linkableBnode: BNode | undefined) {
     if (linkableBnode) {
+      alert("link added");
       this.bnode.linkedNode = linkableBnode;
       this.bnode.linkedId = linkableBnode.id;
     }

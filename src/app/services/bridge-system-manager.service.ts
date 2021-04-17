@@ -42,13 +42,21 @@ export class BridgeSystemManager {
   }
 
   determineLinkedNodes(bidList: Map<number, BNode>): BNode[] {
-    return [...bidList].filter(([id , node]) => node.linkedId != undefined).map(([a, b]) => b);
+    return [...bidList].filter(([id, node]) => node.linkedId != undefined).map(([a, b]) => b);
   }
 
-  connectLinkedNodes(linkedNodes: BNode[], bidList: Map<number, BNode>) {
+  connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>) {
+    alert("linked nodes: "+ linkedNodes.length);
     for (let nwl of linkedNodes) {
-      nwl.linkedNode = bidList.get(nwl.id);
+      nwl.linkedNode = bidList.get(nwl.linkedId||-1);
+      alert(nwl.linkedId+" "+nwl.linkedNode?.bid);
     }
+  }
+
+  makeUsable(bn: BNode) {
+    const bidList = this.getTotalBidList(bn);
+    this.connectLinkedNodesW(this.determineLinkedNodes(bidList), bidList);
+    this.determineAndSetHighestId(bn);
   }
 
   determineLinkedNodesDirect(node: BNode): BNode[] {
@@ -82,7 +90,7 @@ export class BridgeSystemManager {
     }
   }
 
-  persistNode(bnode : BNode) {
+  persistNode(bnode: BNode) {
     BNode.highestId += 1;
     bnode.id = BNode.highestId;
   }

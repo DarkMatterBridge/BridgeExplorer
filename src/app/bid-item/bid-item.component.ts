@@ -18,7 +18,7 @@ export class BidItemComponent implements OnInit {
   @Input()
   bidEditable = false ;
 
-  @Output() $deleteNode = new EventEmitter<BNode>();
+  @Output() $addOrDeleteNode = new EventEmitter<BNode>();
 
   constructor() {
     this.bnode = new BNode("", [], "","");
@@ -31,12 +31,8 @@ export class BidItemComponent implements OnInit {
     this.subject.next(bn);
 //    this.selectNode.emit(bn);
   }
-  deleteBid(bn: BNode) {
-    this.$deleteNode.next(bn);
-  }
-
-  markAsLinkable(bn: BNode){
-
+  addOdeleteBid(bn: BNode) {
+    this.$addOrDeleteNode.next(bn);
   }
 
 }
