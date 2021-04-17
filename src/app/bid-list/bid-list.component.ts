@@ -50,4 +50,14 @@ export class BidListComponent implements OnInit, OnChanges {
     }
   }
 
+  unlink() {
+    this.bnode.linkedNode = undefined;
+    this.bnode.linkedId = undefined;
+    this.linkedNodes = new Array();
+  }
+
+  materialize() {
+    this.bsm.materializeLinkeNode(this.bnode);
+    this.linkedNodes = new Array();
+  }
 }

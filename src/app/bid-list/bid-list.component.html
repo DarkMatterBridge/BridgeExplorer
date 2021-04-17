@@ -12,6 +12,13 @@
   </tr>
   <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)" [newBid]="true"></tr>
 
+  <tr *ngIf="linkedNodes.length >0">
+    <td> Linked</td>
+    <td>{{bnode.linkedNode?.bid}} [{{bnode.linkedNode?.condition}}] -
+      <a [routerLink]="" (click)="materialize()"> materialize </a> -
+      <a [routerLink]="" (click)="unlink()"> unlink </a>
+    </td>
+  </tr>
   <tr *ngFor="let bn of linkedNodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
       ($addOrDeleteNode)="addOrdeleteNode($event)">
   </tr>

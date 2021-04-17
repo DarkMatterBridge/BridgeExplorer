@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BNode} from "../model/BNode";
+import {FileService} from "./file.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BridgeSystemManager {
 
-  constructor() {
+  constructor(private fileService: FileService) {
   }
 
   addNode(node: BNode, subNode: BNode) {
@@ -93,6 +94,26 @@ export class BridgeSystemManager {
   persistNode(bnode: BNode) {
     BNode.highestId += 1;
     bnode.id = BNode.highestId;
+  }
+
+  materializeLinkeNode(bnode: BNode) {
+    if (bnode.linkedNode) {
+      // bnode.nodes = [...bnode.linkedNode.nodes];
+      console.log(bnode);
+      console.log(this.copyBNode(bnode));
+      bnode.nodes = this.copyBNode(bnode.linkedNode).nodes;
+
+      bnode.linkedNode = undefined;
+      bnode.linkedId = undefined;
+    }
+  }
+
+  copyBNode(bnode: BNode): BNode{
+    return  JSON.parse(this.transformToJson(bnode)) as BNode;
+  }
+
+  transformToJson(bnode: BNode): string {
+    return JSON.stringify(bnode, ["id", "bid", "condition", "description", "nodes", "who", "linkedId", "linkedNode"]);
   }
 
 
