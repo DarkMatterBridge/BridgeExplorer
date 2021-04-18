@@ -1,8 +1,11 @@
-<div>
-  <p>
-    {{bnode.bid}}    [{{bnode.condition}}]
+<div *ngIf="!editable" (click)="editable=true">
+  <p>  {{bnode.bid}}    [{{bnode.con}}]
 
   </p>
+</div>
+<div *ngIf="editable" >
+<app-node-simple-edit [bnode]="bnode"></app-node-simple-edit>
+<span (click)="editable=false">Close</span>
 </div>
 
 <table>
@@ -14,7 +17,7 @@
 
   <tr *ngIf="linkedNodes.length >0">
     <td> Linked</td>
-    <td>{{bnode.linkedNode?.bid}} [{{bnode.linkedNode?.condition}}] -
+    <td>{{bnode.linkedNode?.bid}} [{{bnode.linkedNode?.con}}] -
       <a [routerLink]="" (click)="materialize()"> materialize </a> -
       <a [routerLink]="" (click)="unlink()"> unlink </a>
     </td>

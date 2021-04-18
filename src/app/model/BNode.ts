@@ -5,8 +5,8 @@ export class BNode {
   static highestId: number = -1;
   id: number;
   bid: string;
-  description: string;
-  condition: string;
+  desc: string|undefined;
+  con: string;  // the condition
   nodes: BNode[];
 
   linkedNode: BNode | undefined;
@@ -14,13 +14,13 @@ export class BNode {
 
   who = true; // we = true / they = false
 
-  constructor(bid: string, nodes: BNode[], description: string, condition: string) {
+  constructor(bid: string, nodes: BNode[], desc: string, con: string) {
 //    BNode.highestId += 1;
     this.id = -1;
     this.bid = bid;
     this.nodes = nodes;
-    this.description = description;
-    this.condition = condition;
+//    this.desc = desc;
+    this.con = con;
   }
 
 }

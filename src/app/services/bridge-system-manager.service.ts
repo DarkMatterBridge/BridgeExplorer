@@ -14,8 +14,8 @@ export class BridgeSystemManager {
     node.nodes.push(subNode);
   }
 
-  addBid(node: BNode, bid: string, condition: string, description: string = "") {
-    let b = new BNode(bid, new Array<BNode>(), description, condition);
+  addBid(node: BNode, bid: string, con: string, desc: string = "") {
+    let b = new BNode(bid, new Array<BNode>(), desc, con);
     this.addNode(node, b);
     return b;
   }
@@ -113,7 +113,7 @@ export class BridgeSystemManager {
   }
 
   transformToJson(bnode: BNode): string {
-    return JSON.stringify(bnode, ["id", "bid", "condition", "description", "nodes", "who", "linkedId", "linkedNode"]);
+    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "who", "linkedId", "linkedNode"]);
   }
 
 

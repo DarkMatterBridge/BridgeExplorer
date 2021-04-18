@@ -44,7 +44,7 @@ export class ContainerComponent implements OnInit {
     this.bsm.determineAndSetHighestId(this.biddingSystem);
     console.log(BNode.highestId);
 
-    var s = JSON.stringify(this.biddingSystem, ["id", "bid", "condition", "description", "nodes"]);
+    var s = JSON.stringify(this.biddingSystem, ["id", "bid", "con", "desc", "nodes"]);
     BNode.highestId = -1;
     this.biddingSystem = <BNode>JSON.parse(s);
     this.biddingSystem = JSON.parse(s) as BNode;
@@ -55,7 +55,7 @@ export class ContainerComponent implements OnInit {
     this.bsm.determineAndSetHighestId(this.biddingSystem);
     console.log("highest" + BNode.highestId);
 
-    s = JSON.stringify(this.biddingSystem, ["id", "bid", "condition", "description", "nodes"]);
+    s = JSON.stringify(this.biddingSystem, ["id", "bid", "con", "desc", "nodes"]);
     this.biddingSystem = JSON.parse(s) as BNode;
     console.log(s);
 

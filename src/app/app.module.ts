@@ -21,6 +21,7 @@ import { HandComponent } from './hand/hand.component';
 import { BoardComponent } from './board/board.component';
 import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.component';
 import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode-list.component';
+import { NodeSimpleEditComponent } from './node-simple-edit/node-simple-edit.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode
     HandComponent,
     BoardComponent,
     BiddingSequenceComponent,
-    LinkableBnodeListComponent
+    LinkableBnodeListComponent,
+    NodeSimpleEditComponent
   ],
   imports: [
     BrowserModule,

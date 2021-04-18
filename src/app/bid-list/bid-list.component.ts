@@ -15,6 +15,8 @@ export class BidListComponent implements OnInit, OnChanges {
   @Input()
   subject!: Subject<BNode>;
 
+  editable = false;
+
   linkedNodes: BNode[] = new Array();
 
   newBnode = new BNode("", [], "", "");
@@ -38,6 +40,7 @@ export class BidListComponent implements OnInit, OnChanges {
       return;
     }
     this.bsm.persistNode(this.newBnode);
+    this.newBnode.desc = "NEW";
     this.bnode.nodes.push(this.newBnode);
     this.newBnode = new BNode("", [], "", "");
   }
