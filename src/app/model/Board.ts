@@ -40,4 +40,12 @@ export class Board {
   getAllCards() {
     return  ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
   }
+
+  reverseCardsInSuits() {
+    this.southHand.reverseSuits();
+    this.westHand.reverseSuits();
+    this.northHand.reverseSuits();
+    this.eastHand.reverseSuits();
+  }
+
 }

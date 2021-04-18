@@ -22,6 +22,7 @@ import { BoardComponent } from './board/board.component';
 import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.component';
 import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode-list.component';
 import { NodeSimpleEditComponent } from './node-simple-edit/node-simple-edit.component';
+import { DealViewComponent } from './deal-view/deal-view.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NodeSimpleEditComponent } from './node-simple-edit/node-simple-edit.com
     BoardComponent,
     BiddingSequenceComponent,
     LinkableBnodeListComponent,
-    NodeSimpleEditComponent
+    NodeSimpleEditComponent,
+    DealViewComponent
   ],
   imports: [
     BrowserModule,

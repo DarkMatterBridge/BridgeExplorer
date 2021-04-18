@@ -52,6 +52,13 @@ export class Hand {
     return "";
   }
 
+  reverseSuits() {
+    this.cards[0] = this.cards[0].reverse();
+    this.cards[1] = this.cards[1].reverse();
+    this.cards[2] = this.cards[2].reverse();
+    this.cards[3] = this.cards[3].reverse();
+  }
+
   detCardsInSuit() {
     this.cardsInSuit = [0, 0, 0, 0];
     this.cardsInSuit[0] = this.cards[0].length;

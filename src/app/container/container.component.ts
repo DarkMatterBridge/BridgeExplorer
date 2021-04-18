@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BNode} from "../model/BNode";
 import {BridgeSystemManager} from "../services/bridge-system-manager.service";
+import {Deal} from "../model/Deal";
 
 @Component({
   selector: 'app-container',
@@ -38,9 +39,6 @@ export class ContainerComponent implements OnInit {
     console.log("linkednodes");
     console.log(x);
 
-    this.bsm.connectLinkedNodesW(x, bidlist);
-
-
     this.bsm.determineAndSetHighestId(this.biddingSystem);
     console.log(BNode.highestId);
 
@@ -58,6 +56,13 @@ export class ContainerComponent implements OnInit {
     s = JSON.stringify(this.biddingSystem, ["id", "bid", "con", "desc", "nodes"]);
     this.biddingSystem = JSON.parse(s) as BNode;
     console.log(s);
+
+    let deal = new Deal();
+    deal.shuffle();
+    console.log(deal.printHand(1));
+    console.log(deal.printHand(2));
+    console.log(deal.printHand(3));
+    console.log(deal.printHand(4));
 
   }
 
