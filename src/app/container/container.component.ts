@@ -15,9 +15,9 @@ export class ContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.biddingSystem = new BNode("root", new Array<BNode>(), "Precision", "");
+    this.biddingSystem = new BNode("root", new Array<BNode>(), "Precision");
     console.log(BNode.highestId);
-    var opening = this.bsm.addBid(this.biddingSystem, "opening", "", "");
+    var opening = this.bsm.addBid(this.biddingSystem, "opening", "");
     console.log(BNode.highestId);
 
     this.bsm.addBid(opening, "1C", "P>15");
@@ -51,7 +51,7 @@ export class ContainerComponent implements OnInit {
 
     this.bsm.determineAndSetHighestId(this.biddingSystem);
     console.log("highest" + BNode.highestId);
-    this.bsm.addBid(this.biddingSystem, "Stayman", "", "");
+    this.bsm.addBid(this.biddingSystem, "Stayman", "");
     this.bsm.determineAndSetHighestId(this.biddingSystem);
     console.log("highest" + BNode.highestId);
 

@@ -10,34 +10,18 @@ export class LegacyBiddingSystem {
 
   public systemHierarchy: { [index: string]: any } = {};
 
-  parseToNew(hierachy: { [index: string]: any }) :BNode {
-    let bnode: BNode = new BNode("Root", [], "", "");
-    this.parseWorker(bnode, hierachy,  undefined);
+  parseToNew(hierachy: { [index: string]: any }): BNode {
+    let bnode: BNode = new BNode("Root", [], "");
+    this.parseWorker(bnode, hierachy, undefined);
     return bnode;
-    // let rootnodes = Object.getOwnPropertyNames(s);
-    // rootnodes.forEach(rootnodeName => {
-    //   const rnn = s[rootnodeName];
-    //   const b = new BNode(rootnodeName, [], "", rnn.hasOwnProperty('Desc') ? rnn['Desc'] : "");
-    //   bnode.nodes.push(b);
-    //
-    //   if (rnn.hasOwnProperty('Follow')) {
-    //     this.parseWorker(b, rnn['Follow'], true)
-    //   }
-    //   if (rnn.hasOwnProperty('Opponent')) {
-    //     this.parseWorker(b, rnn['Opponent'], false)
-    //   }
-    //
-    //   console.log(rootnodeName + " " + rnn.hasOwnProperty("Desc"));
-    // });
-    // return bnode;
   }
 
-  public parseWorker(bnode: BNode, hierachy: { [index: string]: any }, ob: boolean|undefined)  {
+  public parseWorker(bnode: BNode, hierachy: { [index: string]: any }, ob: boolean | undefined) {
 
     let rootNames = Object.getOwnPropertyNames(hierachy);
     rootNames.forEach(nodeName => {
       const rnn = hierachy[nodeName];
-      const childNode = new BNode(nodeName, [], "", rnn.hasOwnProperty('Desc') ? rnn['Desc'] : "");
+      const childNode = new BNode(nodeName, [], rnn.hasOwnProperty('Desc') ? rnn['Desc'] : "");
       childNode.ob = ob;
       this.bsm.persistNode(childNode);
       bnode.nodes.push(childNode);
@@ -46,7 +30,7 @@ export class LegacyBiddingSystem {
         this.parseWorker(childNode, rnn['Follow'], undefined)
       }
       if (rnn.hasOwnProperty('Opponent')) {
-        this.parseWorker(childNode, rnn['Opponent'],  true);
+        this.parseWorker(childNode, rnn['Opponent'], true);
       }
 
     });

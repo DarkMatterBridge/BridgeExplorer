@@ -75,7 +75,7 @@ export class FileService {
       datae = fileReader.result
       if (datae) {
         const bn = JSON.parse(datae.toString()) as BNode;
-        bn.linkedNode = new BNode("1x", new Array<BNode>(), "", "");
+        bn.linkedNode = new BNode("1x", new Array<BNode>(), "");
         uploadSubject.next(bn);
       }
     }

@@ -19,7 +19,7 @@ export class BidListComponent implements OnInit, OnChanges {
 
   linkedNodes: BNode[] = new Array();
 
-  newBnode = new BNode("", [], "", "");
+  newBnode = new BNode("", [], "");
 
   constructor(private bsm: BridgeSystemManager) {
   }
@@ -42,7 +42,7 @@ export class BidListComponent implements OnInit, OnChanges {
     this.bsm.persistNode(this.newBnode);
     this.newBnode.desc = "NEW";
     this.bnode.nodes.push(this.newBnode);
-    this.newBnode = new BNode("", [], "", "");
+    this.newBnode = new BNode("", [], "");
   }
 
   addOrdeleteNode(bn: BNode): void {

@@ -22,7 +22,7 @@ export class BidLineComponent implements OnInit {
   @Output() $deleteNode = new EventEmitter<BNode>();
 
   constructor() {
-    this.bnode = new BNode("", [], "","");
+    this.bnode = new BNode("", [], "");
   }
 
   ngOnInit(): void {

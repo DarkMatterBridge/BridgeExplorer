@@ -21,7 +21,7 @@ export class BidItemComponent implements OnInit {
   @Output() $addOrDeleteNode = new EventEmitter<BNode>();
 
   constructor() {
-    this.bnode = new BNode("", [], "","");
+    this.bnode = new BNode("", [], "");
   }
 
   ngOnInit(): void {
