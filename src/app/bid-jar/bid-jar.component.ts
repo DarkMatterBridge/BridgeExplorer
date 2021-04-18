@@ -155,4 +155,9 @@ export class BidJarComponent implements OnInit {
       this.bnode.linkedId = linkableBnode.id;
     }
   }
+
+  showStatistics() {
+    alert("No of Subnodes: "+ this.bsm.getTotalBidList(this.bnode).size);
+  }
+
 }

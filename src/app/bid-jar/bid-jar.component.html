@@ -10,6 +10,7 @@
 
   <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"></app-bnode-sequence>
   <a [routerLink]="" (click)="markAsLinkable()"> Add As Linkable Node </a>
+  <a [routerLink]="" (click)="showStatistics()"> Show Statistics </a>
 
   <app-bid-list [bnode]="bnode" [subject]="subject"></app-bid-list>
 

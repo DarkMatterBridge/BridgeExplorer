@@ -60,7 +60,8 @@ export class FileService {
       blob = new Blob([text], {type: 'text/plain'}),
       anchor = document.createElement('a');
 
-    anchor.download = "bs.json";
+    anchor.download = bnode.bid+"_"+ (new Date())+".json";
+//    anchor.download = "bs.json";
     anchor.href = (window.URL).createObjectURL(blob);
     anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
     anchor.click();

@@ -13,6 +13,7 @@ export class BNode {
   linkedId: number | undefined;
 
   who = true; // we = true / they = false
+  ob: boolean | undefined;
 
   constructor(bid: string, nodes: BNode[], desc: string, con: string) {
 //    BNode.highestId += 1;
