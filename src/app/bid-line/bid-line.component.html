@@ -4,7 +4,7 @@
     <input [(ngModel)]="bnode.bid" size="2"/></div>
 
   <div *ngIf="!newBid" (click)="selectBid(bnode)" class="w10">
-    <div  class="w1"> <i *ngIf="!bnode.who" class="material-icons" style="font-size:16px;" >     face   </i>   </div>
+    <div  class="w1"> <i *ngIf="bnode.ob" class="material-icons" style="font-size:16px;" >     face   </i>   </div>
     {{bnode.bid}}
   </div>
   <div class="b-input">

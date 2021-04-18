@@ -157,7 +157,11 @@ export class BidJarComponent implements OnInit {
   }
 
   showStatistics() {
-    alert("No of Subnodes: "+ this.bsm.getTotalBidList(this.bnode).size);
+
+    // this.bsm.getTotalBidList(this.bnode).forEach((a, b) => {
+    //   a.ob = a.who ? undefined : true;
+    // })
+    alert("No of Subnodes: " + this.bsm.getTotalBidList(this.bnode).size);
   }
 
 }

@@ -47,7 +47,7 @@ export class FileService {
   }
 
   transformToJson(bnode: BNode): string {
-    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "who", "linkedId"]);
+    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "ob", "linkedId"]);
   }
 
   downloadSystem(name: string, bnode: BNode) {

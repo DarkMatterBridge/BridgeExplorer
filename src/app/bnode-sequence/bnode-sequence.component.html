@@ -4,6 +4,6 @@
 <span *ngFor="let bn of bns.nodes; let i = index" (click)="selectBid(bn)">
 -
  <span  [ngClass]="{'fett': bn == bns.indexNode,
-                 'opp': !bn.who}"> {{bn.bid}}</span>
+                 'opp': bn.ob}"> {{bn.bid}}</span>
 </span>
 </div>

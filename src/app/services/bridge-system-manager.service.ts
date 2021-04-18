@@ -113,7 +113,7 @@ export class BridgeSystemManager {
   }
 
   transformToJson(bnode: BNode): string {
-    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "who", "linkedId", "linkedNode"]);
+    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "ob", "linkedId", "linkedNode"]);
   }
 
 
