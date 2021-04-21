@@ -18,7 +18,6 @@ export class Board {
     this.northHand.setHandFromString(linobject.north());
     this.constructEastHand();
     this.biddingSequence.bids = linobject.bids();
-//    this.dealer =
     this.biddingSequence.dealer = linobject.dealer();
     this.players = linobject.players();
     console.log(this.players);

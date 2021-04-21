@@ -3,7 +3,7 @@ export class BiddingSequence {
   bids: string[] = new Array();
 
   latestContractBid: string | undefined;
-  dealer: string = "S"; // default
+  dealer: string = "W"; // default
 
   // business logic:
 
@@ -17,8 +17,10 @@ export class BiddingSequence {
   }
 
   // x is possible if last bid contractBid or contractBid - p - p
-  // XX is possible if last bid X or x - p - p
   isBidLegal(bid: string): boolean {
+
+    if (this.biddingFinished())
+      return false;
 
     if (bid === 'P')
       return true;
@@ -56,8 +58,12 @@ export class BiddingSequence {
   }
 
   doubleAllowed(): boolean {
+    if (this.bids.length === 0)
+      return false;
     if (this.isContractBid(this.bids[this.bids.length - 1]))
       return true;
+    if (this.bids.length < 3)
+      return false;
     if (this.isContractBid(this.bids[this.bids.length - 3]) &&
       this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P')
       return true;
@@ -65,6 +71,21 @@ export class BiddingSequence {
   }
 
   redoubleAllowed(): boolean {
-    return true;
+    // XX is possible if last bid X or x - p - p
+    if (this.bids.length === 0)
+      return false;
+    if (this.bids[this.bids.length - 1] === 'X')
+      return true;
+    if (this.bids.length < 3)
+      return false;
+    if (this.bids[this.bids.length - 3] === 'X' &&
+      this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P')
+      return true;
+    return false;
+  }
+
+  biddingFinished(): boolean {
+    return this.bids.length > 3 && this.bids[this.bids.length - 3] === 'P' &&
+      this.bids[this.bids.length - 2] === 'P' && this.bids[this.bids.length - 1] === 'P';
   }
 }

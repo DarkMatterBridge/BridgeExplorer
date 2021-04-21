@@ -6,6 +6,6 @@
   </tr>
 </table>
 
-<button (click)="addBid('P')"> Passe </button>
-<button (click)="addBid('X')"> Double </button>
-<button (click)="addBid('XX')"> Redouble </button>
+<button (click)="addBid('P')" [disabled]="!biddingSequence.isBidLegal('P')"> Passe </button>
+<button (click)="addBid('X')" [disabled]="!biddingSequence.isBidLegal('X')"> Double </button>
+<button (click)="addBid('XX')" [disabled]="!biddingSequence.isBidLegal('XX')"> Redouble </button>
