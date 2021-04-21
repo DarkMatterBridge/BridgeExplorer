@@ -17,10 +17,10 @@ export class Hand {
   }
 
   setHandFromString(handString: string) { // Assuming currently the Lin Format
-    this.setSuitFromString("S", (handString.match(/S(.*?)H/) || []) [0].split(/[SH]/)[1]);
-    this.setSuitFromString("H", (handString.match(/H(.*?)D/) || []) [0].split(/[HD]/)[1]);
-    this.setSuitFromString("D", (handString.match(/D(.*?)C/) || []) [0].split(/[DC]/)[1]);
-    this.setSuitFromString("C", (handString.match(/C(.*?)$/) || []) [0].substr(1));
+    this.setSuitFromString("S", (handString.match(/S(.*)H/) || []) [0].split(/[SH]/)[1]);
+    this.setSuitFromString("H", (handString.match(/H(.*)D/) || []) [0].split(/[HD]/)[1]);
+    this.setSuitFromString("D", (handString.match(/D(.*)C/) || []) [0].split(/[DC]/)[1]);
+    this.setSuitFromString("C", (handString.match(/C(.*)$/) || []) [0].substr(1));
   }
 
   setSuitFromString(suitEN: string, valuesEN: string) {

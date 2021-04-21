@@ -8,6 +8,8 @@ import {Hand} from "../model/Hand";
 })
 export class HandComponent implements OnInit {
 
+  symbols = ['♣', '♦', '♥', '♠'].reverse();
+
   @Input()
   hand: Hand = new Hand();
 

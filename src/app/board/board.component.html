@@ -1,32 +1,41 @@
 <table>
   <tr>
-    <td></td>
-    <td>{{board.players[2]}}
-      <app-hand [hand]="board.northHand"></app-hand>
+    <td>
+      <table>
+        <tr>
+          <td></td>
+          <td>{{board.players[2]}}
+            <app-hand [hand]="board.northHand"></app-hand>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>{{board.players[1]}}
+            <app-hand [hand]="board.westHand"></app-hand>
+          </td>
+          <td></td>
+          <td>{{board.players[3]}}
+            <app-hand [hand]="board.eastHand"></app-hand>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>{{board.players[0]}}
+            <app-hand [hand]="board.southHand"></app-hand>
+          </td>
+          <td></td>
+        </tr>
+      </table>
     </td>
-    <td></td>
-  </tr>
   <tr>
-    <td>{{board.players[1]}}
-      <app-hand [hand]="board.westHand"></app-hand>
+  <td>
+    Dealer: {{board.biddingSequence.dealer}}
+    <app-bidding-sequence [biddingSequence]="board.biddingSequence"
+                          [count]="board.biddingSequence.bids.length"></app-bidding-sequence>
+  </td>
+    <td>
+      <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
     </td>
-    <td></td>
-    <td>{{board.players[3]}}
-      <app-hand [hand]="board.eastHand"></app-hand></td>
   </tr>
-  <tr>
-    <td></td>
-    <td>{{board.players[0]}}
-      <app-hand [hand]="board.southHand"></app-hand>
-    </td>
-    <td></td>
-  </tr>
+
 </table>
-
-Dealer: {{board.biddingSequence.dealer}}
-<p></p>
-<app-bidding-sequence [biddingSequence]="board.biddingSequence"
-                      [count]="board.biddingSequence.bids.length" ></app-bidding-sequence>
-<app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
-
-

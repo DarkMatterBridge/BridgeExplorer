@@ -1,3 +1,6 @@
-<div *ngFor="let suit of hand.cards">
-  <span *ngFor="let card of suit.reverse()"> {{card}}</span>
+<div *ngFor="let suit of hand.cards.reverse(); let i = index">
+
+{{symbols[i]}} <span *ngFor="let card of suit.reverse()"> {{card}}</span>
 </div>
+
+

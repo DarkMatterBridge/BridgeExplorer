@@ -1,4 +1,5 @@
 import {Board} from "./Board";
+import {DealHand} from "./DealHand";
 
 export class Deal {
 
@@ -7,7 +8,7 @@ export class Deal {
   suit = ['Treff', 'Karo', 'Herz', 'Pik'];
   value = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 
-  static suits = ['C','D','H','S'];
+  static suits = ['C', 'D', 'H', 'S'];
 
   constructor() {
     this.cards = new Array(52);
@@ -32,8 +33,8 @@ export class Deal {
     for (var i = 0; i < this.cards.length; i++) {
       var z = Math.floor(Math.random() * (this.cards.length - i) + i);
       let cardS = this.cards[z];
-      this.cards[z]=  this.cards[i];
-      this.cards[i]=  cardS;
+      this.cards[z] = this.cards[i];
+      this.cards[i] = cardS;
       // this.cards[z], this.cards[i] = this.cards[i], this.cards[z];
     }
   }
@@ -63,20 +64,37 @@ export class Deal {
   //   }
   // }
 
-  getSortedHand(d:number): number[]{
-    return this.cards.slice(d * 13 - 13, d * 13).sort((i,j) => (j-i));
+  getSortedHand(d: number): number[] {
+    return this.cards.slice(d * 13 - 13, d * 13).sort((i, j) => (j - i));
+  }
+
+  getHand(d: number): number[] {
+    return this.cards.slice(d * 13 - 13, d * 13);
+  }
+
+  getDealHand(d: number): DealHand {
+    return new DealHand(this.cards.slice(d * 13 - 13, d * 13));
   }
 
   printHand(d: number) {
     let cards = this.getSortedHand(d);
     let suit = 3;
-    let out = Deal.suits[suit];
-    for ( let i = 0; i< 13; i++) {
-      if ( cards[i] < suit*13 ){
-        suit = suit - 1;
-        out = out + Deal.suits[suit];
+    // let out = Deal.suits[suit];
+    // for ( let i = 0; i< 13; i++) {
+    //   if ( cards[i] < suit*13 ){
+    //     suit = suit - 1;
+    //     out = out + Deal.suits[suit];
+    //   }
+    //   out = out + this.cardValue(cards[i])
+    // }
+    let out = "";
+    let j = 0;
+    for (suit = 3; suit >= 0; suit--) {
+      out = out + Deal.suits[suit];
+      while (cards[j] >= suit * 13) {
+        out = out + this.cardValue(cards[j]);
+        j++;
       }
-      out = out + this.cardValue(cards[i])
     }
     return out;
   }
@@ -98,7 +116,7 @@ export class Deal {
     // 4432 96   3321 18
     // 6322 72   5211 10
     // 5422 80   4311 12
-    if (this.cardsInSuit[d-1] == null) // todo > implement the right check
+    if (this.cardsInSuit[d - 1] == null) // todo > implement the right check
       this.detCardsInSuit(d);
     return this.cardsInSuit[d - 1][3] * this.cardsInSuit[d - 1][2] * this.cardsInSuit[d - 1][1] * this.cardsInSuit[d - 1][0] > 89;
   }
