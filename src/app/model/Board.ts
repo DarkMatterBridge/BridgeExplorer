@@ -12,16 +12,14 @@ export class Board {
   players = new Array();
   biddingSequence : BiddingSequence = new BiddingSequence();
 
-  dealer = "";
-
   importLinObject(linobject: LinObject) {
     this.southHand.setHandFromString(linobject.south());
     this.westHand.setHandFromString(linobject.west());
     this.northHand.setHandFromString(linobject.north());
     this.constructEastHand();
     this.biddingSequence.bids = linobject.bids();
-    this.dealer = linobject.dealer();
-    this.biddingSequence.dealer = this.dealer;
+//    this.dealer =
+    this.biddingSequence.dealer = linobject.dealer();
     this.players = linobject.players();
     console.log(this.players);
   }

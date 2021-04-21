@@ -14,7 +14,7 @@ export class BidItemComponent implements OnInit {
   @Input()
   subject!: Subject<BNode>;
   @Input()
-  newBid = false ;
+  newNode = false ;
   @Input()
   bidEditable = false ;
 

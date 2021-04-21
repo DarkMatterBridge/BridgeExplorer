@@ -13,7 +13,7 @@
   <tr *ngFor="let bn of bnode.nodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
       ($addOrDeleteNode)="addOrdeleteNode($event)">
   </tr>
-  <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)" [newBid]="true"></tr>
+  <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)" [newNode]="true"></tr>
 
   <tr *ngIf="linkedNodes.length >0">
     <td> Linked</td>
@@ -27,17 +27,4 @@
   </tr>
 </table>
 <p></p>
-
-
-
-<!--<div *ngFor="let bn of bnode.nodes">-->
-<!--  <app-bid-line [bnode]="bn" [subject]="subject" ($deleteNode)="deleteNode($event)"></app-bid-line>-->
-<!--</div>-->
-
-<!--<app-bid-line [bnode]="newBnode" [subject]="subject" [newBid]="true"></app-bid-line>-->
-<!--<a (click)="addNode()" [routerLink]=""><i class="material-icons">-->
-<!--  add-->
-<!--</i>-->
-<!--</a>-->
-
 

@@ -23,9 +23,10 @@
   </tr>
 </table>
 
-Dealer: {{board.dealer}}
+Dealer: {{board.biddingSequence.dealer}}
 <p></p>
-<app-bidding-sequence [biddingSequence]="board.biddingSequence"></app-bidding-sequence>
-
+<app-bidding-sequence [biddingSequence]="board.biddingSequence"
+                      [count]="board.biddingSequence.bids.length" ></app-bidding-sequence>
+<app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
 
 

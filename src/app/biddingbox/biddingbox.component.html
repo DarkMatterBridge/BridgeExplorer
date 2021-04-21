@@ -1,0 +1,11 @@
+<table>
+  <tr *ngFor="let level of bids">
+    <td *ngFor="let bid of level" (click)="addBid(bid)" [ngClass]="{'fett': !biddingSequence.isBidLegal(bid)}">
+        {{bid}}
+    </td>
+  </tr>
+</table>
+
+<button (click)="addBid('P')"> Passe </button>
+<button (click)="addBid('X')"> Double </button>
+<button (click)="addBid('XX')"> Redouble </button>

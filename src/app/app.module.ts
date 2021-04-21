@@ -23,6 +23,7 @@ import { BiddingSequenceComponent } from './bidding-sequence/bidding-sequence.co
 import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode-list.component';
 import { NodeSimpleEditComponent } from './node-simple-edit/node-simple-edit.component';
 import { DealViewComponent } from './deal-view/deal-view.component';
+import { BiddingboxComponent } from './biddingbox/biddingbox.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DealViewComponent } from './deal-view/deal-view.component';
     BiddingSequenceComponent,
     LinkableBnodeListComponent,
     NodeSimpleEditComponent,
-    DealViewComponent
+    DealViewComponent,
+    BiddingboxComponent
   ],
   imports: [
     BrowserModule,
