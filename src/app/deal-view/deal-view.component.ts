@@ -31,16 +31,19 @@ export class DealViewComponent implements OnInit {
 
   generateBoard(): void {
     this.dealCondition = new DealCondition();
-    this.dealCondition.northCondition.parseCondition(this.conditionNorth);
+    const parsed = this.dealCondition.northCondition.parseCondition(this.conditionNorth);
 
-    let n = 0;
-    this.deal.shuffle();
-    while (!this.dealCondition.checkNorth(this.deal.getDealHand(3)) && n < this.maxTries) {
-      n++;
+    if (parsed) {
+      let n = 0;
       this.deal.shuffle();
-    }
-    alert(n);
-    this.board = this.deal.getBoard();
+      while (!this.dealCondition.checkNorth(this.deal.getDealHand(3)) && n < this.maxTries) {
+        n++;
+        this.deal.shuffle();
+      }
+      alert(n);
+      this.board = this.deal.getBoard();
+    } else
+      alert("Parsing Error");
 
   }
 

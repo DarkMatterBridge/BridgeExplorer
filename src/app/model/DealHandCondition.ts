@@ -20,7 +20,6 @@ export class DealHandCondition {
     let ff = this.parseConditionWorker(cond);
     if (ff) {
       this.eval = ff;
-      alert(this.eval);
       return true;
     }
     return false;
@@ -31,7 +30,13 @@ export class DealHandCondition {
     let f1 = this.parseForAnd(cond)
     if (f1 != undefined) return f1;
 
+    f1 = this.parseForNegation(cond)
+    if (f1 != undefined) return f1;
+
     f1 = this.parseForSuit(cond)
+    if (f1 != undefined) return f1;
+
+    f1 = this.parseForMajor(cond)
     if (f1 != undefined) return f1;
 
     f1 = this.parseForPlus(cond)
@@ -48,6 +53,21 @@ export class DealHandCondition {
 
     return undefined;
 
+  }
+
+  parseForNegation(cond: string): Function | undefined {
+
+    const regex = /(\!)(.*)/;
+    const a = regex.exec(cond);
+
+    if (a != null) {
+      let cond = a[2];
+      const f1 = this.parseConditionWorker(cond);
+      if (f1 !== undefined) {
+        return (hand: DealHand) => !f1(hand);
+      }
+    }
+    return undefined;
   }
 
   parseForPlus(cond: string): Function | undefined {
@@ -119,11 +139,21 @@ export class DealHandCondition {
     return undefined;
   }
 
-  parseForInterval(cond: string): Function | undefined {
+  parseForMajor(cond: string): Function | undefined {
+    const regex = /(\d+)(\+|\-)?M/;
+    const a = regex.exec(cond);
+    if (a != null) {
+      var length = +a[1];
+      if (a[2] == "+") {
+        return (hand: DealHand) => (hand.cardsInSuit(2) >= length || hand.cardsInSuit(3) >= length);
+      }
+    }
+    return undefined;
+  }
 
+  parseForInterval(cond: string): Function | undefined {
     const regex = /(\d+)\-(\d+)/;
     const a = regex.exec(cond);
-
     if (a != null) {
       this.lowPoints = +a[1];
       this.highPoints = +a[2];
