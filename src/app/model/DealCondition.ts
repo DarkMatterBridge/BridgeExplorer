@@ -35,9 +35,30 @@ export class DealCondition {
   }
 
   import(dealConditionSequence: string[]) {
+    let west = "";
+    let east = "";
     if (dealConditionSequence.length > 1) {
-      this.northCondition.importAndParseCondition(dealConditionSequence[1]);
+      for (let i = 1; i < dealConditionSequence.length; i++) {
+        if (i % 2 === 0)
+          west += (west === "" ? "" : ",") + dealConditionSequence[i];
+        else
+          east += (east === "" ? "" : ",") + dealConditionSequence[i];
+      }
+      //
+      // if (dealConditionSequence.length === 2) {
+      //   this.directionConditions[1].importAndParseCondition(dealConditionSequence[1]);
+      // }
+      // if (dealConditionSequence.length === 3) {
+      //   this.directionConditions[1].importAndParseCondition(dealConditionSequence[1]);
+      //   this.directionConditions[3].importAndParseCondition(dealConditionSequence[2]);
+      // }
+      // if (dealConditionSequence.length === 4) {
+      //   this.directionConditions[1].importAndParseCondition(dealConditionSequence[1]+","+dealConditionSequence[3]);
+      //   this.directionConditions[3].importAndParseCondition(dealConditionSequence[2]);
+      // }
     }
+    this.directionConditions[1].importAndParseCondition(west);
+    this.directionConditions[3].importAndParseCondition(east);
   }
 
   parseConditions() {

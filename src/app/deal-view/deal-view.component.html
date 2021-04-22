@@ -1,11 +1,6 @@
 
 <app-board [board]="board"></app-board>
 
-West:<input [(ngModel)]="conditionWest" size="40"/>
-<p></p>
-North:<input [(ngModel)]="dealCondition.northCondition.condition" size="40" [ngClass]="{'parsingNotOk': parsingNorthOk}" (ngModelChange)="parse()"/>
-
-
 <p></p>
 South:<input [(ngModel)]="dealCondition.directionConditions[0].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[0]}" (ngModelChange)="parseDirection(0)"/>
 <p></p>

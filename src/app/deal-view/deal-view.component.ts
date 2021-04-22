@@ -15,15 +15,9 @@ export class DealViewComponent implements OnInit, OnChanges {
   dealCondition: DealCondition;
   @Input() dealConditionSequence: string[] = [];
 
-
-  conditionWest = "";
-  conditionEast = "";
-  conditionSouth = "";
-
   parsingNorthOk = true;
   parsingOK: boolean[] = new Array();
   maxTries = 100000;
-
 
   constructor() {
     this.board = new Board();
