@@ -31,19 +31,10 @@ export class BidJarComponent implements OnInit {
   ngOnInit(): void {
     this.subject.asObservable().subscribe(b => this.setBnode(b));
     this.resetSystem();
-    this.getStatistics();
+    this.loadFromLocalStorage();
 
     this.uploadSubject.subscribe(bn => this.setSystem(bn));
 
-    // this.fileService.getLocalBridgeSystem().subscribe(
-    //   (data: {}) => {
-    //     const l = new LegacyBiddingSystem();
-    //     BNode.highestId = -1;
-    //     this.baseNode = l.parseToNew(data);
-    //     this.bnode = this.baseNode;
-    //     this.getStatistics();
-    //   }
-    // )
   }
 
   setSystem(bn: BNode) {

@@ -47,7 +47,7 @@ export class BridgeSystemManager {
   }
 
   connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>) {
-    alert("linked nodes: "+ linkedNodes.length);
+//    alert("linked nodes: "+ linkedNodes.length);
     for (let nwl of linkedNodes) {
       nwl.linkedNode = bidList.get(nwl.linkedId||-1);
       alert(nwl.linkedId+" "+nwl.linkedNode?.bid);
