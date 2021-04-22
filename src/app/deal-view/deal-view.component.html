@@ -1,8 +1,18 @@
 
 <app-board [board]="board"></app-board>
 
-North:<input [(ngModel)]="conditionNorth" size="40"/>
+West:<input [(ngModel)]="conditionWest" size="40"/>
 <p></p>
-North:<input [(ngModel)]="conditionNorth" size="40"/>
+North:<input [(ngModel)]="dealCondition.northCondition.condition" size="40" [ngClass]="{'parsingNotOk': parsingNorthOk}" (ngModelChange)="parse()"/>
+
+
+<p></p>
+South:<input [(ngModel)]="dealCondition.directionConditions[0].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[0]}" (ngModelChange)="parseDirection(0)"/>
+<p></p>
+West:<input [(ngModel)]="dealCondition.directionConditions[1].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[1]}" (ngModelChange)="parseDirection(1)"/>
+<p></p>
+North:<input [(ngModel)]="dealCondition.directionConditions[2].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[2]}" (ngModelChange)="parseDirection(2)"/>
+<p></p>
+East:<input [(ngModel)]="dealCondition.directionConditions[3].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[3]}" (ngModelChange)="parseDirection(3)"/>
 <p></p>
 <button (click)="generateBoard()"> Generate</button>

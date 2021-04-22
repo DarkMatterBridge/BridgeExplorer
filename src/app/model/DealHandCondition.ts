@@ -5,6 +5,8 @@ export class DealHandCondition {
   lowPoints = 0;
   highPoints = 30;
 
+  condition = "";
+
   public eval: Function;
 
   constructor() {
@@ -15,17 +17,28 @@ export class DealHandCondition {
     return this.eval(hand);
   }
 
-  parseCondition(cond: string): boolean {
-
-    let ff = this.parseConditionWorker(cond);
-    if (ff) {
-      this.eval = ff;
-      return true;
-    }
-    return false;
+  importAndParseCondition(cond: string): boolean {
+    this.condition = cond;
+    return this.parseCondition();
   }
 
+  parseCondition(): boolean {
+    try {
+      let ff = this.parseConditionWorker(this.condition);
+      if (ff) {
+        this.eval = ff;
+        return true;
+      }
+      else return false;
+    } catch (e: any) {
+      return false;
+    }
+  }
+
+
   parseConditionWorker(cond: string): Function | undefined {
+
+    console.log("Parsing: "+cond);
 
     let f1 = this.parseForAnd(cond)
     if (f1 != undefined) return f1;
@@ -51,7 +64,9 @@ export class DealHandCondition {
     f1 = this.parseForBalanced(cond)
     if (f1 != undefined) return f1;
 
-    return undefined;
+    console.log("Error: "+cond+ " could not be parsed.");
+    throw new Error("Error: "+cond+ " could not be parsed.");
+//    return undefined;
 
   }
 
@@ -107,6 +122,7 @@ export class DealHandCondition {
       const f1 = this.parseConditionWorker(evax);
       const f2 = this.parseConditionWorker(evay);
       if (f1 !== undefined && f2 !== undefined) {
+        console.log("And successfully parsed");
         return (hand: DealHand) => f1(hand) && f2(hand);
       }
     }

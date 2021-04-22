@@ -13,6 +13,8 @@ export class BnodeSequenceComponent implements OnInit {
   @Input() subject!: Subject<BNode>;
   @Output() selectNode = new EventEmitter<BNode | undefined>();
 
+  @Output() conditions = new EventEmitter<string[]>();
+
   bns: BNodeSequence;
 
   constructor() {
@@ -39,6 +41,11 @@ export class BnodeSequenceComponent implements OnInit {
   reset() {
     this.bns.reset();
     this.selectNode.emit(undefined);
+  }
+
+  emitCondtions() {
+    let conditions = this.bns.nodes.map(b => b.con);
+    this.conditions.emit(conditions);
   }
 
 }

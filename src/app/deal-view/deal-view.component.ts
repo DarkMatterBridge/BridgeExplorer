@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Board} from "../model/Board";
 import {Deal} from "../model/Deal";
 import {DealCondition} from "../model/DealCondition";
@@ -8,13 +8,20 @@ import {DealCondition} from "../model/DealCondition";
   templateUrl: './deal-view.component.html',
   styleUrls: ['./deal-view.component.scss']
 })
-export class DealViewComponent implements OnInit {
+export class DealViewComponent implements OnInit, OnChanges {
 
   board: Board;
   deal: Deal;
   dealCondition: DealCondition;
+  @Input() dealConditionSequence: string[] = [];
 
-  conditionNorth = "";
+
+  conditionWest = "";
+  conditionEast = "";
+  conditionSouth = "";
+
+  parsingNorthOk = true;
+  parsingOK: boolean[] = new Array();
   maxTries = 100000;
 
 
@@ -22,6 +29,7 @@ export class DealViewComponent implements OnInit {
     this.board = new Board();
     this.deal = new Deal();
     this.dealCondition = new DealCondition();
+    this.parsingOK[0] = this.parsingOK[1] = this.parsingOK[2] = this.parsingOK[3] = true;
   }
 
   ngOnInit(): void {
@@ -29,14 +37,20 @@ export class DealViewComponent implements OnInit {
     this.board = this.deal.getBoard();
   }
 
-  generateBoard(): void {
+  ngOnChanges(): void {
     this.dealCondition = new DealCondition();
-    const parsed = this.dealCondition.northCondition.parseCondition(this.conditionNorth);
+    this.dealCondition.import(this.dealConditionSequence);
+    console.log(this.dealConditionSequence);
+  }
 
-    if (parsed) {
+  generateBoard(): void {
+//    const parsed = this.dealCondition.northCondition.importAndParseCondition(this.dealCondition.northCondition.condition);
+
+    if (this.parsingOK[0]&&this.parsingOK[1]&&this.parsingOK[2]&&this.parsingOK[3]) {
       let n = 0;
       this.deal.shuffle();
-      while (!this.dealCondition.checkNorth(this.deal.getDealHand(3)) && n < this.maxTries) {
+//      while (!this.dealCondition.checkNorth(this.deal.getDealHand(3)) && n < this.maxTries) {
+      while (!this.dealCondition.check(this.deal) && n < this.maxTries) {
         n++;
         this.deal.shuffle();
       }
@@ -44,7 +58,13 @@ export class DealViewComponent implements OnInit {
       this.board = this.deal.getBoard();
     } else
       alert("Parsing Error");
-
   }
 
+  parse() {
+    this.parsingNorthOk = !this.dealCondition.northCondition.importAndParseCondition(this.dealCondition.northCondition.condition);
+  }
+
+  parseDirection(direction: number) {
+    this.parsingOK[direction] = this.dealCondition.directionConditions[direction].parseCondition();
+  }
 }

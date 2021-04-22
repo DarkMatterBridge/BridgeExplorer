@@ -24,6 +24,9 @@ export class BidJarComponent implements OnInit {
 
   linkableBnodes: BNode[] = new Array();
 
+  dealViewActivated = false;
+  dealConditions : string[] = new Array();
+
   constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
     this.bridgeSystem = new BiddingSystem(bsm);
   }
@@ -72,23 +75,12 @@ export class BidJarComponent implements OnInit {
     )
   }
 
-  loadLinExample() {
-    window.postMessage({
-      direction: "from-page-script",
-      message: "Message from the page"
-    }, "*");
-
-    // this.fileService.getLinExample().subscribe(
-    //   data => alert(data)
-    // )
-  }
-
-  copyLin() {
-    const c = document.getElementById("lin");
-    if (c) {
-      this.linContent = c.innerText;
-    }
-  }
+  // copyLin() {
+  //   const c = document.getElementById("lin");
+  //   if (c) {
+  //     this.linContent = c.innerText;
+  //   }
+  // }
 
   resetSystem() {
     this.bridgeSystem = new BiddingSystem(this.bsm);
@@ -153,6 +145,11 @@ export class BidJarComponent implements OnInit {
     //   a.ob = a.who ? undefined : true;
     // })
     alert("No of Subnodes: " + this.bsm.getTotalBidList(this.bnode).size);
+  }
+
+  activateDealView(x: string[]) {
+    this.dealViewActivated = true;
+    this.dealConditions = x;
   }
 
 }
