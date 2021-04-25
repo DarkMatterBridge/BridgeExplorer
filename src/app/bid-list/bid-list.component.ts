@@ -40,9 +40,18 @@ export class BidListComponent implements OnInit, OnChanges {
       return;
     }
     this.bsm.persistNode(this.newBnode);
-    this.newBnode.desc = "NEW";
     this.bnode.nodes.push(this.newBnode);
+    this.sortNodes();
     this.newBnode = new BNode("", [], "");
+  }
+
+  sortNodes(): void {
+    this.bnode.nodes = this.bnode.nodes
+      .sort((a, b) => this.strainOrder(a).localeCompare(this.strainOrder(b)));
+  }
+
+  strainOrder(node: BNode) {
+    return (node.bid.endsWith("N")) ? node.bid.substr(0,1)+"Z" : node.bid;
   }
 
   addOrdeleteNode(bn: BNode): void {
