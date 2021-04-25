@@ -15,9 +15,9 @@ export class DealViewComponent implements OnInit, OnChanges {
   dealCondition: DealCondition;
   @Input() dealConditionSequence: string[] = [];
 
-  parsingNorthOk = true;
   parsingOK: boolean[] = new Array();
   maxTries = 100000;
+  tries  = 0;
 
   constructor() {
     this.board = new Board();
@@ -32,9 +32,15 @@ export class DealViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    console.log(this.dealConditionSequence);
     this.dealCondition = new DealCondition();
     this.dealCondition.import(this.dealConditionSequence);
-    console.log(this.dealConditionSequence);
+    this.parseDirection(0);
+    this.parseDirection(1);
+    this.parseDirection(2);
+    this.parseDirection(3);
+    this.generateBoard();
+
   }
 
   generateBoard(): void {
@@ -48,14 +54,10 @@ export class DealViewComponent implements OnInit, OnChanges {
         n++;
         this.deal.shuffle();
       }
-      alert(n);
+      this.tries = n;
       this.board = this.deal.getBoard();
     } else
       alert("Parsing Error");
-  }
-
-  parse() {
-    this.parsingNorthOk = !this.dealCondition.northCondition.importAndParseCondition(this.dealCondition.northCondition.condition);
   }
 
   parseDirection(direction: number) {

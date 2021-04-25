@@ -1,13 +1,42 @@
-
 <app-board [board]="board"></app-board>
 
-<p></p>
-South:<input [(ngModel)]="dealCondition.directionConditions[0].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[0]}" (ngModelChange)="parseDirection(0)"/>
-<p></p>
-West:<input [(ngModel)]="dealCondition.directionConditions[1].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[1]}" (ngModelChange)="parseDirection(1)"/>
-<p></p>
-North:<input [(ngModel)]="dealCondition.directionConditions[2].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[2]}" (ngModelChange)="parseDirection(2)"/>
-<p></p>
-East:<input [(ngModel)]="dealCondition.directionConditions[3].condition" size="40" [ngClass]="{'parsingNotOk': !parsingOK[3]}" (ngModelChange)="parseDirection(3)"/>
-<p></p>
-<button (click)="generateBoard()"> Generate</button>
+<table>
+  <tr></tr>
+  <tr>
+    <td>
+      South:
+    </td>
+    <td><input [(ngModel)]="dealCondition.directionConditions[0].condition" size="60"
+               [ngClass]="{'parsingNotOk': !parsingOK[0]}" (ngModelChange)="parseDirection(0)"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      West:
+    </td>
+    <td>
+      <input [(ngModel)]="dealCondition.directionConditions[1].condition" size="60"
+             [ngClass]="{'parsingNotOk': !parsingOK[1]}" (ngModelChange)="parseDirection(1)"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      North:
+    </td>
+    <td>
+      <input [(ngModel)]="dealCondition.directionConditions[2].condition" size="60"
+             [ngClass]="{'parsingNotOk': !parsingOK[2]}" (ngModelChange)="parseDirection(2)"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      East:
+    </td>
+    <td>
+      <input [(ngModel)]="dealCondition.directionConditions[3].condition" size="60"
+             [ngClass]="{'parsingNotOk': !parsingOK[3]}" (ngModelChange)="parseDirection(3)"/>
+    </td>
+  </tr>
+</table>
+
+<button (click)="generateBoard()"> Generate</button> {{tries}}

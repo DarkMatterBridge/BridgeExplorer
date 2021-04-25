@@ -44,7 +44,7 @@ export class BnodeSequenceComponent implements OnInit {
   }
 
   emitCondtions() {
-    let conditions = this.bns.nodes.map(b => b.con);
+    let conditions = this.bns.nodes.map(b => b.con); // todo include all directions & opps
     this.conditions.emit(conditions);
   }
 

@@ -12,8 +12,16 @@ export class DealHand {
     return this.cards.reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 8, 0), 0);
   }
 
+  pointsInSuit(suit: number): number {
+    return this.cards.filter(card => (card>=suit*13 && card<suit*13+13)).reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 8, 0), 0);
+  }
+
   cardsInSuit(suit: number): number {
     return this.cards.filter(card => (card>=suit*13 && card<suit*13+13)).length;
+  }
+
+  distribution(): string {
+    return [3,2,1,0].map(i => this.cardsInSuit(i)).sort().reduce((a,b) => a+b, "");
   }
 
   isBalanced(): boolean {

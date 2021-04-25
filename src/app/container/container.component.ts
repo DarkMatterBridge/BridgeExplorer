@@ -59,11 +59,6 @@ export class ContainerComponent implements OnInit {
 
     let deal = new Deal();
     deal.shuffle();
-    console.log(deal.printHand(1));
-    console.log(deal.printHand(2));
-    console.log(deal.printHand(3));
-    console.log(deal.printHand(4));
-
   }
 
 }

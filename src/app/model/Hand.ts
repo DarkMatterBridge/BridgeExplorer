@@ -24,7 +24,6 @@ export class Hand {
   }
 
   setSuitFromString(suitEN: string, valuesEN: string) {
-    console.log(suitEN + " : " + valuesEN);
     var suitNum = 11 // = undefined
     switch (suitEN) {
       case 'C':

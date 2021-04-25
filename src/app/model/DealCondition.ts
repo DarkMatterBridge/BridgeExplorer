@@ -39,10 +39,10 @@ export class DealCondition {
     let east = "";
     if (dealConditionSequence.length > 1) {
       for (let i = 1; i < dealConditionSequence.length; i++) {
-        if (i % 2 === 0)
-          west += (west === "" ? "" : ",") + dealConditionSequence[i];
+        if (i % 2 === 1)
+          west += (west === "" ? "" : " & ") + dealConditionSequence[i];
         else
-          east += (east === "" ? "" : ",") + dealConditionSequence[i];
+          east += (east === "" ? "" : " & ") + dealConditionSequence[i];
       }
       //
       // if (dealConditionSequence.length === 2) {
