@@ -22,6 +22,26 @@ export class DealHandCondition {
     return this.parseCondition();
   }
 
+  addAndParseCondition(cond: string): boolean {
+    return this.addCondition(cond);
+  }
+
+  addCondition(cond: string){
+    let addCondition = this.condition.trim();
+    if (addCondition.length === 0) return true;
+    try {
+      let ff = this.parseConditionWorker(this.condition);
+      if (ff && ff!== undefined) {
+        let fff = ff;
+        console.log("Successfully parsed and added");
+        this.eval =  (hand: DealHand) => this.eval(ff) && fff(hand);
+             return true;
+      } else return false;
+    } catch (e: any) {
+      return false;
+    }
+  }
+
   parseCondition(): boolean {
     this.condition = this.condition.trim();
     if (this.condition.length === 0) return true;

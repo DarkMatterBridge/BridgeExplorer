@@ -11,8 +11,8 @@ export class Deal {
   static suits = ['C', 'D', 'H', 'S'];
 
   constructor() {
+    this.cardsInSuit = new Array();
     this.cards = new Array(52);
-    this.cardsInSuit = new Array(4);
     for (var i = 0; i < this.cards.length; i++) {
       this.cards[i] = i;
     }
@@ -79,14 +79,6 @@ export class Deal {
   printHand(d: number) {
     let cards = this.getSortedHand(d);
     let suit = 3;
-    // let out = Deal.suits[suit];
-    // for ( let i = 0; i< 13; i++) {
-    //   if ( cards[i] < suit*13 ){
-    //     suit = suit - 1;
-    //     out = out + Deal.suits[suit];
-    //   }
-    //   out = out + this.cardValue(cards[i])
-    // }
     let out = "";
     let j = 0;
     for (suit = 3; suit >= 0; suit--) {
@@ -104,9 +96,10 @@ export class Deal {
   }
 
   detCardsInSuit(d: number) {
-    this.cardsInSuit[d - 1] = [0, 0, 0, 0];
+    if (this.cardsInSuit[d - 1].length === 0)
+      this.cardsInSuit[d - 1] = [0, 0, 0, 0];
     this.cards.slice(d * 13 - 13, d * 13).forEach(n => {
-      this.cardsInSuit[d - 1][Math.floor(n / 13)]++;
+      this.cardsInSuit[d-1][Math.floor(n / 13)]++;
     });
   }
 
@@ -116,8 +109,7 @@ export class Deal {
     // 4432 96   3321 18
     // 6322 72   5211 10
     // 5422 80   4311 12
-    if (this.cardsInSuit[d - 1] == null) // todo > implement the right check
-      this.detCardsInSuit(d);
+    this.detCardsInSuit(d);
     return this.cardsInSuit[d - 1][3] * this.cardsInSuit[d - 1][2] * this.cardsInSuit[d - 1][1] * this.cardsInSuit[d - 1][0] > 89;
   }
 

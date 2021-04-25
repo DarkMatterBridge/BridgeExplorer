@@ -17,7 +17,7 @@ export class DealViewComponent implements OnInit, OnChanges {
 
   parsingOK: boolean[] = new Array();
   maxTries = 100000;
-  tries  = 0;
+  tries = 0;
 
   constructor() {
     this.board = new Board();
@@ -39,17 +39,15 @@ export class DealViewComponent implements OnInit, OnChanges {
     this.parseDirection(1);
     this.parseDirection(2);
     this.parseDirection(3);
-    this.generateBoard();
-
+    this.generateBoard(false);
   }
 
-  generateBoard(): void {
-//    const parsed = this.dealCondition.northCondition.importAndParseCondition(this.dealCondition.northCondition.condition);
+  generateBoard(newTry = true): void {
 
-    if (this.parsingOK[0]&&this.parsingOK[1]&&this.parsingOK[2]&&this.parsingOK[3]) {
+    if (this.parsingOK[0] && this.parsingOK[1] && this.parsingOK[2] && this.parsingOK[3]) {
       let n = 0;
-      this.deal.shuffle();
-//      while (!this.dealCondition.checkNorth(this.deal.getDealHand(3)) && n < this.maxTries) {
+      if (newTry)
+        this.deal.shuffle();
       while (!this.dealCondition.check(this.deal) && n < this.maxTries) {
         n++;
         this.deal.shuffle();
