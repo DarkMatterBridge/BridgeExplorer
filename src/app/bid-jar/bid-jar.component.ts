@@ -147,9 +147,9 @@ export class BidJarComponent implements OnInit {
     alert("No of Subnodes: " + this.bsm.getTotalBidList(this.bnode).size);
   }
 
-  activateDealView(x: string[]) {
+  activateDealView(dealConditions: string[]) {
     this.dealViewActivated = true;
-    this.dealConditions = x;
+    this.dealConditions = dealConditions;
   }
 
 }

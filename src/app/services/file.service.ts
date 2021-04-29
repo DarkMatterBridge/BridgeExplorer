@@ -103,5 +103,9 @@ export class FileService {
   //   return this.http.get("https://www.bridgebase.com/myhands/fetchlin.php?id=1022970755&when_played=1616782848");
   // }
 
+  getTricks() {
+    return this.http.get("http://localhost:8081?key=test",  {responseType: 'text'});
+  }
+
 
 }

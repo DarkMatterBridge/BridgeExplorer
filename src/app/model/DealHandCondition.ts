@@ -1,9 +1,11 @@
 import {DealHand} from "./DealHand";
+import {HandAttributes} from "./HandAttributes";
 
 export class DealHandCondition {
 
-  lowPoints = 0;
-  highPoints = 30;
+  handAttributes: HandAttributes = new HandAttributes();
+  lowPoints: number | undefined;
+  highPoints: number | undefined;
 
   condition = "";
 
@@ -23,19 +25,29 @@ export class DealHandCondition {
   }
 
   addAndParseCondition(cond: string): boolean {
-    return this.addCondition(cond);
+    return this.addConditionDynamically(cond);
   }
 
-  addCondition(cond: string){
+  addCondition(cond: string) {
+
+    cond = this.handAttributes.parse(cond);
+
+    if (this.condition === "")
+      this.condition = cond;
+    else
+      this.condition += " & " + cond;
+  }
+
+  addConditionDynamically(cond: string) {
     let addCondition = this.condition.trim();
     if (addCondition.length === 0) return true;
     try {
       let ff = this.parseConditionWorker(this.condition);
-      if (ff && ff!== undefined) {
+      if (ff && ff !== undefined) {
         let fff = ff;
         console.log("Successfully parsed and added");
-        this.eval =  (hand: DealHand) => this.eval(ff) && fff(hand);
-             return true;
+        this.eval = (hand: DealHand) => this.eval(hand) && fff(hand);
+        return true;
       } else return false;
     } catch (e: any) {
       return false;
@@ -142,21 +154,21 @@ export class DealHandCondition {
     let f1: Function;
 
     if (a != null) {
-      this.lowPoints = +a[1];
-      f1 = (hand: DealHand) => hand.points() >= this.lowPoints;
+      let lp = this.lowPoints = +a[1];
+      f1 = (hand: DealHand) => hand.points() >= lp;
       return f1;
     } else return undefined;
   }
 
-  parseForMinus(cond: string): Function | undefined {
+  parseForMinus(cond: string): Function | undefined { // todo check low and high point logic !
 
     const regex = /(\d+)\-$/;
     const a = regex.exec(cond);
     let f1: Function;
 
     if (a != null) {
-      this.highPoints = +a[1];
-      f1 = (hand: DealHand) => hand.points() <= this.highPoints;
+      let hp = this.highPoints = +a[1];
+      f1 = (hand: DealHand) => hand.points() <= hp;
       return f1;
     } else return undefined;
   }
@@ -246,14 +258,14 @@ export class DealHandCondition {
     let f1: Function;
 
     if (a != null) {
-      this.lowPoints = +a[1];
+      let lp = +a[1];
       var suit = a[3];
       var suitNo = 0;
       if (suit == "S") suitNo = 3;
       if (suit == "H") suitNo = 2;
       if (suit == "D") suitNo = 1;
       if (suit == "C") suitNo = 0;
-      f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= this.lowPoints;
+      f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= lp;
       return f1;
     } else return undefined;
   }
@@ -318,8 +330,14 @@ export class DealHandCondition {
     const regex = /(\d+)\-(\d+)/;
     const a = regex.exec(cond);
     if (a != null) {
-      this.lowPoints = Math.max(+a[1], this.lowPoints);
-      this.highPoints = Math.min(+a[2], this.highPoints);
+      if (this.lowPoints === undefined)
+        this.lowPoints = +a[1];
+      else
+        this.lowPoints = Math.max(+a[1], this.lowPoints);
+      if (this.highPoints === undefined)
+        this.highPoints = +a[2];
+      else
+        this.highPoints = Math.min(+a[2], this.highPoints);
       return (hand: DealHand) => (hand.points() >= +a[1]) && (hand.points() <= +a[2]);
     }
     return undefined;
@@ -353,8 +371,16 @@ export class DealHandCondition {
     const a = regex.exec(cond);
 
     if (a != null) {
-      this.highPoints = (this.lowPoints + this.highPoints) / 2;
-      return (hand: DealHand) => true;
+      if (this.lowPoints === undefined) {
+        throw Error("lowpoints not defined");
+      }
+      let hp: number;
+      if (this.highPoints === undefined)
+        hp = this.lowPoints + 1;
+      else
+        hp = (this.lowPoints + this.highPoints) / 2;
+      this.highPoints = hp;
+      return (hand: DealHand) => hand.points() <= hp;
     } else return undefined;
   }
 
@@ -363,7 +389,13 @@ export class DealHandCondition {
     const a = regex.exec(cond);
 
     if (a != null) {
-      this.lowPoints = (this.lowPoints + this.highPoints) / 2;
+      if (this.highPoints === undefined) {
+        throw Error("highpoints not defined");
+      }
+      if (this.lowPoints === undefined)
+        this.lowPoints = this.highPoints - 2;
+      else
+        this.lowPoints = (this.lowPoints + this.highPoints) / 2;
       return (hand: DealHand) => true;
     } else return undefined;
   }
@@ -373,7 +405,7 @@ export class DealHandCondition {
     const a = regex.exec(cond.trim());
 
     if (a != null) {
-      this.lowPoints = (this.lowPoints + this.highPoints) / 2;
+//      this.lowPoints = (this.lowPoints + this.highPoints) / 2;
       return (hand: DealHand) => true;
     } else return undefined;
   }

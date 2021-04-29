@@ -13,14 +13,16 @@
 
   <td >
     <a *ngIf="!newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
-      <i class="material-icons">
-        delete
-      </i>
+<!--      <i class="material-icons">-->
+<!--        delete-->
+<!--      </i>-->
+      <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
     </a>
     <a *ngIf="newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
       <i class="material-icons">
         add
       </i>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
     </a>
 
 
@@ -28,4 +30,5 @@
 
   <td>
     {{bnode.id}}
+
   </td>

@@ -21,6 +21,19 @@ export class DealCondition {
       this.directionConditions[3].eval(deal.getDealHand(4));
   }
 
+
+  importNew(dealConditionSequence: string[]) {
+    if (dealConditionSequence.length > 1) {
+      for (let i = 1; i < dealConditionSequence.length; i++) {
+        this.directionConditions[(2 * i - 1) % 4].addCondition(dealConditionSequence[i]);
+      }
+    }
+    return [this.directionConditions[0].parseCondition(),
+      this.directionConditions[1].parseCondition(),
+      this.directionConditions[2].parseCondition(),
+      this.directionConditions[3].parseCondition()];
+  }
+
   import(dealConditionSequence: string[]) {
     let west = "";
     let east = "";
