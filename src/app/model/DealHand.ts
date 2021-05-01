@@ -21,7 +21,7 @@ export class DealHand {
   }
 
   distribution(): string {
-    return [3,2,1,0].map(i => this.cardsInSuit(i)).sort().reduce((a,b) => a+b, "");
+    return [3,2,1,0].map(i => this.cardsInSuit(i)).sort().reverse().reduce((a,b) => a+b, "");
   }
 
   isBalanced(): boolean {

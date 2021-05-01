@@ -227,7 +227,7 @@ export class DealHandCondition {
 
   parseForSuit(cond: string): Function | undefined {
 
-    const regex = /(\d+)(\+|\-)?(S|H|D|C)$/;
+    const regex = /(\d+)(\+|\-)?(S|H|D|C|a)$/;
     const a = regex.exec(cond.trim());
     var f1: Function;
 
@@ -235,6 +235,18 @@ export class DealHandCondition {
       var length = +a[1];
       var suit = a[3];
       var suitNo = 0;
+      if (suit === "a") {
+        if (a[2] == "+")
+          f1 = (hand: DealHand) => hand.cardsInSuit(0) >= length ||
+            hand.cardsInSuit(1) >= length ||
+            hand.cardsInSuit(2) >= length ||
+            hand.cardsInSuit(3) >= length;
+        if (a[2] == "-")
+          f1 = (hand: DealHand) => hand.cardsInSuit(0) <= length ||
+            hand.cardsInSuit(1) <= length ||
+            hand.cardsInSuit(2) <= length ||
+            hand.cardsInSuit(3) <= length;
+      }
       if (suit == "S") suitNo = 3;
       if (suit == "H") suitNo = 2;
       if (suit == "D") suitNo = 1;
