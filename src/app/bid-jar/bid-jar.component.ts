@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {BNode} from "../model/BNode";
 import {BiddingSystem} from "../model/BiddingSystem";
 import {BridgeSystemManager} from "../services/bridge-system-manager.service";
@@ -26,6 +26,8 @@ export class BidJarComponent implements OnInit {
 
   dealViewActivated = false;
   dealConditions : string[] = new Array();
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLElement>;
 
   constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
     this.bridgeSystem = new BiddingSystem(bsm);
@@ -150,6 +152,11 @@ export class BidJarComponent implements OnInit {
   activateDealView(dealConditions: string[]) {
     this.dealViewActivated = true;
     this.dealConditions = dealConditions;
+  }
+
+  triggerFileUpload() {
+    let el: HTMLElement = this.fileInput.nativeElement;
+    el.click();
   }
 
 }

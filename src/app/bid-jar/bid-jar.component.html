@@ -1,11 +1,24 @@
+<a [routerLink]="" (click)="saveIntoLocalStorage()" matTooltip="Save to local storage">
+  <mat-icon aria-hidden="false" aria-label="Example home icon">save</mat-icon>
+</a>
+<a [routerLink]="" (click)="loadFromLocalStorage()" matTooltip="Retrieve from local storage">
+  <mat-icon aria-hidden="false" aria-label="Example home icon">restore_page</mat-icon>
+</a>
+
+<a [routerLink]="" (click)="downloadSystem()" matTooltip="Download System as JSON">
+  <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
+</a>
+
+<a [routerLink]="" (click)="triggerFileUpload()"  matTooltip="Upload JSON-based System">
+
+  <mat-icon aria-hidden="false" aria-label="Example home icon">upload</mat-icon>
+</a>
+
 <a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> -
 <a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
 <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
 
-<a [routerLink]="" (click)="saveIntoLocalStorage()"> Save System to local Storage </a> -
-<a [routerLink]="" (click)="loadFromLocalStorage()"> Load System from local Storage </a> -
-<a [routerLink]="" (click)="downloadSystem()"> Download System </a>
-<input #fileInput type="file" accept=".json" (change)="processFile(fileInput)">
+
 
 <p>
 
@@ -29,3 +42,5 @@
 
   </tr>
 </table>
+
+<input #fileInput type="file" accept=".json" (change)="processFile(fileInput)" style="visibility:hidden">

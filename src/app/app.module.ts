@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MatListModule} from "@angular/material/list";
 import { ContainerComponent } from './container/container.component';
@@ -53,6 +54,7 @@ import { BiddingboxComponent } from './biddingbox/biddingbox.component';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatTooltipModule,
     FormsModule,
     HttpClientModule
   ],
