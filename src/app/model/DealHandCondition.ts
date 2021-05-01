@@ -126,6 +126,9 @@ export class DealHandCondition {
     f1 = this.parseForMax(cond)
     if (f1 != undefined) return f1;
 
+    f1 = this.parseForSpecialities(cond)
+    if (f1 != undefined) return f1;
+
     console.log("Error: " + cond + " could not be parsed.");
     throw new Error("Error: " + cond + " could not be parsed.");
 //    return undefined;
@@ -399,16 +402,17 @@ export class DealHandCondition {
   parseForMax(cond: string): Function | undefined {
     const regex = /(max)/;
     const a = regex.exec(cond);
-
     if (a != null) {
       if (this.highPoints === undefined) {
         throw Error("highpoints not defined");
       }
+      let lp: number;
       if (this.lowPoints === undefined)
-        this.lowPoints = this.highPoints - 2;
+        lp = this.highPoints - 2;
       else
-        this.lowPoints = (this.lowPoints + this.highPoints) / 2;
-      return (hand: DealHand) => true;
+        lp = (this.lowPoints + this.highPoints) / 2;
+      this.lowPoints = lp;
+      return (hand: DealHand) => hand.points() >= lp;
     } else return undefined;
   }
 
@@ -421,6 +425,25 @@ export class DealHandCondition {
       return (hand: DealHand) => true;
     } else return undefined;
   }
+
+
+  parseForSpecialities(cond: string): Function | undefined {
+
+    const regex = /(S|H|D|C)(\.8playable2void)/;
+    const a = regex.exec(cond.trim());
+    if (a != null) {
+      var suit = a[1];
+      var suitNo = 0;
+      if (suit == "S") suitNo = 3;
+      if (suit == "H") suitNo = 2;
+      if (suit == "D") suitNo = 1;
+      if (suit == "C") suitNo = 0;
+      return  (hand: DealHand) => hand.is8playable2void(suitNo);
+    }
+    return undefined;
+  }
+
+
 }
 
 
