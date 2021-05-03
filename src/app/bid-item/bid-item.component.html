@@ -2,7 +2,6 @@
   <td *ngIf="newNode">
     <input [(ngModel)]="bnode.bid" size="2"/></td>
 
-
   <td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}">
     {{bnode.bid}}
   </td>

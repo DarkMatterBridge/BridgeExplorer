@@ -22,6 +22,10 @@ export class DealHand {
       .reduce((sum, b) => sum + mapper[Math.max(Math.floor(b % 13) - 7, 0)], 0);
   }
 
+  pointsInSuitgoodSuit(suit: number): number {
+    return this.cards.filter(card => (card >= suit * 13 && card < suit * 13 + 13)).reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 7, 0), 0);
+  }
+
   cardsInSuit(suit: number): number {
     return this.cards.filter(card => (card >= suit * 13 && card < suit * 13 + 13)).length;
   }
@@ -42,6 +46,12 @@ export class DealHand {
     if (this.cardsInSuit(suit) < 8)
       return false;
     return this.pointsInSuit8(suit) > 5;
+  }
+
+  isGoodSuit(suit: number): boolean {
+    if (this.cardsInSuit(suit) < 6)
+      return false;
+    return this.pointsInSuitgoodSuit(suit) > 7;
   }
 
 }

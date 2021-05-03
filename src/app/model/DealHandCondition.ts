@@ -240,12 +240,12 @@ export class DealHandCondition {
       var suitNo = 0;
       if (suit === "a") {
         if (a[2] == "+")
-          f1 = (hand: DealHand) => hand.cardsInSuit(0) >= length ||
+          return (hand: DealHand) => hand.cardsInSuit(0) >= length ||
             hand.cardsInSuit(1) >= length ||
             hand.cardsInSuit(2) >= length ||
             hand.cardsInSuit(3) >= length;
         if (a[2] == "-")
-          f1 = (hand: DealHand) => hand.cardsInSuit(0) <= length ||
+          return (hand: DealHand) => hand.cardsInSuit(0) <= length ||
             hand.cardsInSuit(1) <= length ||
             hand.cardsInSuit(2) <= length ||
             hand.cardsInSuit(3) <= length;
@@ -314,7 +314,7 @@ export class DealHandCondition {
       } else if (a[2] == "-")
         return (hand: DealHand) => (hand.cardsInSuit(2) <= length || hand.cardsInSuit(3) <= length);
       else
-        return (hand: DealHand) => (hand.cardsInSuit(2) === length);
+        return (hand: DealHand) => (hand.cardsInSuit(2) === length || hand.cardsInSuit(3) == length);
     }
     return undefined;
   }
@@ -429,8 +429,8 @@ export class DealHandCondition {
 
   parseForSpecialities(cond: string): Function | undefined {
 
-    const regex = /(S|H|D|C)(\.8playable2void)/;
-    const a = regex.exec(cond.trim());
+    let regex = /(S|H|D|C)(\.8playable2void)/;
+    let a = regex.exec(cond.trim());
     if (a != null) {
       var suit = a[1];
       var suitNo = 0;
@@ -438,7 +438,18 @@ export class DealHandCondition {
       if (suit == "H") suitNo = 2;
       if (suit == "D") suitNo = 1;
       if (suit == "C") suitNo = 0;
-      return  (hand: DealHand) => hand.is8playable2void(suitNo);
+      return (hand: DealHand) => hand.is8playable2void(suitNo);
+    }
+    regex = /(S|H|D|C)(\.goodSuit)/;
+    a = regex.exec(cond.trim());
+    if (a != null) {
+      var suit = a[1];
+      var suitNo = 0;
+      if (suit == "S") suitNo = 3;
+      if (suit == "H") suitNo = 2;
+      if (suit == "D") suitNo = 1;
+      if (suit == "C") suitNo = 0;
+      return (hand: DealHand) => hand.isGoodSuit(suitNo);
     }
     return undefined;
   }
