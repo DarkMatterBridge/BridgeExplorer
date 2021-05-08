@@ -2,7 +2,7 @@
 <table>
   <tr *ngFor="let level of bids">
     <td *ngFor="let bid of level" (click)="addBid(bid)" [ngClass]="{'disabled': !biddingSequence.isBidLegal(bid)}">
-        {{bid}}
+<app-strain-symbol [strain]="bid"></app-strain-symbol>
     </td>
   </tr>
 </table>
