@@ -41,7 +41,7 @@ export class DealViewComponent implements OnInit, OnChanges {
     // this.parseDirection(1);
     // this.parseDirection(2);
     // this.parseDirection(3);
-    this.generateBoard(false);
+    this.generateBoard(true);
   }
 
   generateBoard(newTry = true): void {

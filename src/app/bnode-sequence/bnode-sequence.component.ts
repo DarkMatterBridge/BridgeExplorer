@@ -48,4 +48,5 @@ export class BnodeSequenceComponent implements OnInit {
     this.conditions.emit(conditions);
   }
 
+
 }
