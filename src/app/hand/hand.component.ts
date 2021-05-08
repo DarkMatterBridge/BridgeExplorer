@@ -9,6 +9,7 @@ import {Hand} from "../model/Hand";
 export class HandComponent implements OnInit {
 
   symbols = ['♣', '♦', '♥', '♠'].reverse();
+  suits = ['S', 'H', 'D', 'C'];
 
   @Input()
   hand: Hand = new Hand();

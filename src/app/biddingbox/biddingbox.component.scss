@@ -1,6 +1,15 @@
+table {
+  padding: 0px;
+  border:  0px;
+  border-collapse: revert;
+}
+
 td {
   cursor: pointer;
   background-color: honeydew;
+  padding: 2px;
+  border: black 1px;
+
 }
 
 .disabled {
@@ -9,7 +18,17 @@ td {
 }
 
 .lightbox {
-  border: #2c2748 solid 1px;
+  //border: #2c2748 ridge 1px;
   cursor: pointer;
-  background-color: #94957C;
+  background-color: darkgray;
+  text-align: center;
 }
+
+.buttonbox  {
+  display: inline-block;
+}
+
+.buttons  {
+  display: flex;
+}
+

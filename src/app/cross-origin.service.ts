@@ -20,7 +20,7 @@ export class CrossOriginService {
   }
 
   processResponse(event: MessageEvent) {
-    event.data.if(event.source == window && event.data && event.data.direction == "from-content-script")
+    if(event.source == window && event.data && event.data.direction == "from-content-script")
     {
       this.function(event.data.message);
     }
