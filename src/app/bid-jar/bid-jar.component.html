@@ -28,8 +28,25 @@
 <table>
   <tr>
     <td>
-      <a [routerLink]="" (click)="markAsLinkable()"> Add As Linkable Node </a> -
       <a [routerLink]="" (click)="showStatistics()"> Show Statistics </a>
+
+
+      <div *ngIf="!editable">
+        <a [routerLink]="" (click)="editable=true" matTooltip="Edit">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
+        </a>
+        {{bnode.bid}}    [{{bnode.con}}] [{{bnode.desc}}]
+        <a [routerLink]="" (click)="markAsLinkable()" matTooltip="Mark as linkable Node">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
+        </a>
+      </div>
+
+      <div *ngIf="editable">
+        <a [routerLink]="" (click)="editable=false" matTooltip="Leave Edit">
+          <mat-icon>edit_off</mat-icon>
+        </a>
+        <app-node-simple-edit [bnode]="bnode"></app-node-simple-edit>
+      </div>
 
       <app-bid-list [bnode]="bnode" [subject]="subject"></app-bid-list>
 

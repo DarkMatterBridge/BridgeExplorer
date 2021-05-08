@@ -1,5 +1,20 @@
-Bid:<input [(ngModel)]="bnode.bid" size="5"/>
-Condition:<input [(ngModel)]="bnode.con" size="50"/>
-Description:<input [(ngModel)]="bnode.desc" size="50"/>
-Opponent's Bidding:<input type=checkbox [(ngModel)]="bnode.ob" size="50"/>
-
+<div class="wrapper">
+  <div class="item">
+    Bid:
+  </div>
+  <div><input [(ngModel)]="bnode.bid" size="10"/></div>
+  <div class="item">
+    Condition:
+  </div>
+  <div><input [(ngModel)]="bnode.con" size="60"/></div>
+  <div class="item">
+    Description:
+  </div>
+  <div><input [(ngModel)]="bnode.desc" size="60"/></div>
+  <div class="item">
+    Opp's Bidding:
+  </div>
+  <div><input type=checkbox [(ngModel)]="bnode.ob" size="50"/></div>
+  <div>
+  </div>
+</div>

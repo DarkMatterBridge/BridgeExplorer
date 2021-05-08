@@ -27,6 +27,8 @@ export class BidJarComponent implements OnInit {
   dealViewActivated = false;
   dealConditions : string[] = new Array();
 
+  editable = false;
+
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLElement>;
 
   constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
@@ -135,10 +137,10 @@ export class BidJarComponent implements OnInit {
 
   linkBnode(linkableBnode: BNode | undefined) {
     if (linkableBnode) {
-      alert("link added");
       this.bnode.linkedNode = linkableBnode;
       this.bnode.linkedId = linkableBnode.id;
     }
+    this.bnode = {...this.bnode}; // to trigger the change detection on child component
   }
 
   showStatistics() {

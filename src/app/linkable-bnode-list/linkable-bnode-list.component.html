@@ -1,4 +1,9 @@
-<div *ngFor="let b of linkableBnodes" (click)="linkNode(b)">
+<div *ngFor="let b of linkableBnodes">
 
 {{b.bid}} - {{b.con}} - {{b.desc}}
+
+<a [routerLink]="" (click)="linkNode(b)" matTooltip="Add as Linked Node to Current Node">
+  <mat-icon aria-hidden="false" aria-label="Example home icon">add_link</mat-icon>
+</a>
 </div>
+

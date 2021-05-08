@@ -1,30 +1,24 @@
-<div *ngIf="!editable" (click)="editable=true">
-  <p>  {{bnode.bid}}    [{{bnode.con}}] [{{bnode.desc}}]
+<div class="lineheight10">
 
-  </p>
+  <table>
+    <thead>
+    <td class="min20"></td>
+    </thead>
+    <tr *ngFor="let bn of bnode.nodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
+        ($addOrDeleteNode)="addOrdeleteNode($event)">
+    </tr>
+    <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)"
+        [newNode]="true"></tr>
+
+    <tr *ngIf="linkedNodes.length >0">
+      <td> Linked</td>
+      <td>{{bnode.linkedNode?.bid}} [{{bnode.linkedNode?.con}}] -
+        <a [routerLink]="" (click)="materialize()"> materialize </a> -
+        <a [routerLink]="" (click)="unlink()"> unlink </a>
+      </td>
+    </tr>
+    <tr *ngFor="let bn of linkedNodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
+        ($addOrDeleteNode)="addOrdeleteNode($event)">
+    </tr>
+  </table>
 </div>
-<div *ngIf="editable" >
-<app-node-simple-edit [bnode]="bnode"></app-node-simple-edit>
-<span (click)="editable=false">Close</span>
-</div>
-
-<table>
-  <thead><td class="min20"></td></thead>
-  <tr *ngFor="let bn of bnode.nodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
-      ($addOrDeleteNode)="addOrdeleteNode($event)">
-  </tr>
-  <tr app-bid-item [bnode]="newBnode" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)" [newNode]="true"></tr>
-
-  <tr *ngIf="linkedNodes.length >0">
-    <td> Linked</td>
-    <td>{{bnode.linkedNode?.bid}} [{{bnode.linkedNode?.con}}] -
-      <a [routerLink]="" (click)="materialize()"> materialize </a> -
-      <a [routerLink]="" (click)="unlink()"> unlink </a>
-    </td>
-  </tr>
-  <tr *ngFor="let bn of linkedNodes" app-bid-item="bn" [bnode]="bn" [subject]="subject"
-      ($addOrDeleteNode)="addOrdeleteNode($event)">
-  </tr>
-</table>
-<p></p>
-

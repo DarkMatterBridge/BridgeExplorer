@@ -1,0 +1,35 @@
+//.dd  {
+//  //text-align: right;
+//  //
+//  //position: relative;
+//  display: inline-block;
+//  bottom: 0;
+//  left: 0;
+//}
+
+
+.ddelement {
+  position: absolute;
+  bottom: -1em;
+  right: 0;
+}
+
+.dd {
+  position: relative;
+  height: 5em;
+  width: 100%;
+}
+
+.result {
+  font-size: 9pt;
+  background-color: darkgray;
+  line-height: 10px;
+}
+
+.result td {
+  text-align: center;
+}
+
+.result :hover  {
+  font-size: 12pt;
+}

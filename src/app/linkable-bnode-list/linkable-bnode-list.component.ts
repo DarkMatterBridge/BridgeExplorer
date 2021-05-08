@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BNode} from "../model/BNode";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-linkable-bnode-list',
@@ -13,14 +14,19 @@ export class LinkableBnodeListComponent implements OnInit {
 
   @Output() linkNodeEvent = new EventEmitter<BNode | undefined>();
 
-  constructor() {
+  constructor(private matSnackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
   }
 
   linkNode(bn: BNode) {
-    this.linkNodeEvent.emit(bn);
+    const r = confirm("Really Link this?");
+
+    if (r == true) {
+      this.linkNodeEvent.emit(bn);
+      this.matSnackBar.open("Node Linked","",  {"duration": 2000});
+    }
   }
 
 }

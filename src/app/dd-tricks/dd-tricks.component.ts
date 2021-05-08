@@ -42,7 +42,14 @@ export class DdTricksComponent implements OnInit, OnChanges {
       this.ddTricks[i] = new Array();
       for (let j = 0; j < 5; j++) {
         this.ddTricks[i][j] = this.ddtricks.charAt(i * 5 + j);
-        console.log(this.ddTricks[i][j]);
+        if (this.ddTricks[i][j]==='a')
+          this.ddTricks[i][j]="10";
+        if (this.ddTricks[i][j]==='b')
+          this.ddTricks[i][j]="11";
+        if (this.ddTricks[i][j]==='c')
+          this.ddTricks[i][j]="12";
+        if (this.ddTricks[i][j]==='d')
+          this.ddTricks[i][j]="13";
       }
     }
   }

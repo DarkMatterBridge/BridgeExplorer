@@ -8,6 +8,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MatListModule} from "@angular/material/list";
 import { ContainerComponent } from './container/container.component';
@@ -57,6 +58,7 @@ import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatSnackBarModule,
     MatIconModule,
     MatTooltipModule,
     FormsModule,
