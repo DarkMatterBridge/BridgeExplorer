@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {BNode} from "../model/BNode";
 import {$a} from "codelyzer/angular/styles/chars";
 import {BiddingSequence} from "../model/BiddingSequence";
@@ -8,11 +8,11 @@ import {BiddingSequence} from "../model/BiddingSequence";
   templateUrl: './biddingbox.component.html',
   styleUrls: ['./biddingbox.component.scss']
 })
-export class BiddingboxComponent implements OnInit {
+export class BiddingboxComponent implements OnInit, OnChanges {
 
-  bids: string[][]
+  bids: string[][];
 
-  @Input() biddingSequence: BiddingSequence = new BiddingSequence();
+  @Input() biddingSequence!: BiddingSequence;
 
   @Output() $addBid = new EventEmitter<string>();
 
@@ -29,6 +29,9 @@ export class BiddingboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges() {
   }
 
   addBid(bid: string) {

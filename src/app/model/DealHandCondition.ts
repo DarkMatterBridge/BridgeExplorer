@@ -320,7 +320,7 @@ export class DealHandCondition {
   }
 
   parseForIgnorables(cond: string): Function | undefined {
-    const regex = /f1|F1|forced|asking|GF|must/;
+    const regex = /f1|F1|forced|asking|GF|must|elay|Asking|inv/;
     const a = regex.exec(cond);
     if (a != null) {
       return (hand: DealHand) => true;

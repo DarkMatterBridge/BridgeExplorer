@@ -1,29 +1,35 @@
+<td *ngIf="newNode">
+  <input [(ngModel)]="bnode.bid" size="2"/>
+</td>
+<td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}"
+style="float:right">
+<app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
+</td>
 
-  <td *ngIf="newNode">
-    <input [(ngModel)]="bnode.bid" size="2"/></td>
+<td *ngIf="normal">
+  <mat-icon *ngIf="bnode.desc" matTooltip='{{bnode.desc}}' (click)="normal=false">info</mat-icon>
+</td>
+<td *ngIf="normal">
+  <input [(ngModel)]="bnode.con" size="50" (input)="checkCondition()"
+         [ngClass]="{'parsingNotOk': !okay}"/>
+</td>
 
-  <td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}">
-    {{bnode.bid}}
-  </td>
+<td colspan="2" *ngIf="!normal">
+  <input [(ngModel)]="bnode.desc" size="50">
+  <div class="pointer">
+  <mat-icon matTooltip='{{bnode.con}}' (click)="normal=true">build</mat-icon>
+</div></td>
 
-  <td>
-    <input [(ngModel)]="bnode.con" size="50"/>
-  </td>
-
-  <td >
-    <a *ngIf="!newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
-<!--      <i class="material-icons">-->
-<!--        delete-->
-<!--      </i>-->
-      <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
-    </a>
-    <a *ngIf="newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
-      <i class="material-icons">
-        add
-      </i>
-    </a>
-
-
-  </td>
-
-<!--  <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>-->
+<td>
+  <a *ngIf="!newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
+    <!--      <i class="material-icons">-->
+    <!--        delete-->
+    <!--      </i>-->
+    <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
+  </a>
+  <a *ngIf="newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
+    <i class="material-icons">
+      add
+    </i>
+  </a>
+</td>

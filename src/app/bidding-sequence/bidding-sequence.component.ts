@@ -9,7 +9,7 @@ import {BiddingSequence} from "../model/BiddingSequence";
 export class BiddingSequenceComponent implements OnInit, OnChanges {
 
   @Input()
-  biddingSequence: BiddingSequence = new BiddingSequence();
+  biddingSequence!: BiddingSequence ;
 
   @Input()
   count = 0 ; // only needed as input to trigger ngOnChanges
@@ -26,6 +26,8 @@ export class BiddingSequenceComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    console.log("in bidding-sequence -comp");
+    console.log(this.biddingSequence.bids);
     if (this.biddingSequence.dealer.length > 0) {
       switch (this.biddingSequence.dealer) {
         case "W":

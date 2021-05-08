@@ -1,10 +1,10 @@
 <div class="b-bidding-sequence">
 
 <span (click)="reset()">R</span>
-<span *ngFor="let bn of bns.nodes; let i = index" (click)="selectBid(bn)">
+<span *ngFor="let bn of bNodeSequence.nodes; let i = index" (click)="selectBid(bn)">
 -
- <span  [ngClass]="{'fett': bn == bns.indexNode,
-                 'opp': bn.ob}"> {{bns.bids[i]}} </span>
+ <span  [ngClass]="{'fett': bn == bNodeSequence.indexNode,
+                 'opp': bn.ob}"> {{bNodeSequence.bids[i]}} </span>
 </span>
   <span style="float: right" (click)="emitCondtions()"> DealView</span>
 </div>

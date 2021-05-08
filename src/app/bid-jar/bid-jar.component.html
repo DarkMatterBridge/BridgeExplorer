@@ -18,13 +18,10 @@
 <a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
 <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
 
-
-
 <p>
-
   <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"
-                      (conditions)="activateDealView($event)" ></app-bnode-sequence>
-
+                      (bNodeSequenceEventEmitter)="activateDealView2($event)"
+  ></app-bnode-sequence>
 <table>
   <tr>
     <td>
@@ -54,7 +51,7 @@
                                (linkNodeEvent)="linkBnode($event)"></app-linkable-bnode-list>
     </td>
     <td *ngIf="dealViewActivated">
-      <app-deal-view [dealConditionSequence]="dealConditions"></app-deal-view>
+      <app-deal-view [bNodeSequence]="bNodeSequence"></app-deal-view>
     </td>
 
   </tr>

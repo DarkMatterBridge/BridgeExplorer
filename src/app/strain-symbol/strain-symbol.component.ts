@@ -10,7 +10,7 @@ export class StrainSymbolComponent implements OnInit {
   @Input() strain: string = "";
   @Input() suitNo = -1;
 
-  class = "black";
+  class = "";
   symbol: string | undefined;
   level = "";
 
@@ -29,6 +29,11 @@ export class StrainSymbolComponent implements OnInit {
 
   handleBidOrStrain() {
     let s = this.strain;
+    if (this.strain.length > 3) {
+      this.symbol = this.strain;
+      this.class = "nobid";
+      return;
+    }
     if (this.strain.length > 1) {
       this.level = this.strain.charAt(0);
       s = this.strain.charAt(1);

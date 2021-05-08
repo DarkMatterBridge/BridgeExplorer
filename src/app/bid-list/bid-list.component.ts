@@ -51,7 +51,7 @@ export class BidListComponent implements OnInit, OnChanges {
   }
 
   strainOrder(node: BNode) {
-    return (node.bid.endsWith("N")) ? node.bid.substr(0,1)+"Z" : node.bid;
+    return  (node.ob ? "b":"a") +  ((node.bid.endsWith("N")) ? node.bid.substr(0,1)+"Z" : node.bid);
   }
 
   addOrdeleteNode(bn: BNode): void {

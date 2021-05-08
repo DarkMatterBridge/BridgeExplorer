@@ -1,22 +1,26 @@
 .min20 {
-  min-width: 10px;
+  min-width: 1px;
 }
 
 .opp {
-  background-color: red;
-  color: white;
-}
-
-.icon-small{
-  transform: scale(2);
-  background-color: gray;
+  background-color: #ffe480;
+  //color: white;
 }
 
 .mat-icon {
   font-size: 15px;
 }
+.pointer {
+  cursor: pointer;
+}
 
-input{
+input {
   border: none;
   border-bottom: 1px solid olivedrab;
+}
+
+.parsingNotOk {
+  //border-color: red;
+  //border-width: 5px;
+  background-color: lightsalmon;
 }

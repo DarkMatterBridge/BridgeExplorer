@@ -5,6 +5,7 @@ import {BridgeSystemManager} from "../services/bridge-system-manager.service";
 import {Subject} from "rxjs";
 import {FileService} from "../services/file.service";
 import {LegacyBiddingSystem} from "../model/LegacyBiddingSystem";
+import {BNodeSequence} from "../model/BNodeSequence";
 
 @Component({
   selector: 'app-bid-jar',
@@ -16,7 +17,6 @@ export class BidJarComponent implements OnInit {
   bnode!: BNode;
   baseNode!: BNode;
 
-  linContent = "initial";
   subject: Subject<BNode> = new Subject<BNode>();
   bridgeSystem: BiddingSystem;
 
@@ -25,7 +25,7 @@ export class BidJarComponent implements OnInit {
   linkableBnodes: BNode[] = new Array();
 
   dealViewActivated = false;
-  dealConditions : string[] = new Array();
+  bNodeSequence: BNodeSequence = new BNodeSequence();
 
   editable = false;
 
@@ -151,9 +151,10 @@ export class BidJarComponent implements OnInit {
     alert("No of Subnodes: " + this.bsm.getTotalBidList(this.bnode).size);
   }
 
-  activateDealView(dealConditions: string[]) {
+
+  activateDealView2(bns: BNodeSequence) {
     this.dealViewActivated = true;
-    this.dealConditions = dealConditions;
+    this.bNodeSequence = {...bns} as BNodeSequence;
   }
 
   triggerFileUpload() {

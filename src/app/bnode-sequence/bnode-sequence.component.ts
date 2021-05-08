@@ -14,11 +14,12 @@ export class BnodeSequenceComponent implements OnInit {
   @Output() selectNode = new EventEmitter<BNode | undefined>();
 
   @Output() conditions = new EventEmitter<string[]>();
+  @Output() bNodeSequenceEventEmitter = new EventEmitter<BNodeSequence>();
 
-  bns: BNodeSequence;
+  bNodeSequence: BNodeSequence;
 
   constructor() {
-    this.bns = new BNodeSequence();
+    this.bNodeSequence = new BNodeSequence();
   }
 
   ngOnInit(): void {
@@ -29,23 +30,24 @@ export class BnodeSequenceComponent implements OnInit {
     if (bnode === undefined) {
       this.reset();
     } else {
-      this.bns.addNode(bnode);
+      this.bNodeSequence.addNode(bnode);
     }
   }
 
   selectBid(bn: BNode) {
-    this.bns.setIndexNode(bn);
+    this.bNodeSequence.setIndexNode(bn);
     this.selectNode.emit(bn);
   }
 
   reset() {
-    this.bns.reset();
+    this.bNodeSequence.reset();
     this.selectNode.emit(undefined);
   }
 
   emitCondtions() {
-    let conditions = this.bns.nodes.map(b => b.con); // todo include all directions & opps
-    this.conditions.emit(conditions);
+    // let conditions = this.bNodeSequence.nodes.map(b => b.con); // todo include all directions & opps
+    // this.conditions.emit(conditions);
+    this.bNodeSequenceEventEmitter.emit(this.bNodeSequence);
   }
 
 
