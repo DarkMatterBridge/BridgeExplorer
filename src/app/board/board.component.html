@@ -23,7 +23,7 @@
           <td>{{board.players[0]}}
             <app-hand [hand]="board.southHand"></app-hand>
           </td>
-          <td></td>
+          <td><app-dd-tricks [board]="board"></app-dd-tricks></td>
         </tr>
       </table>
     </td>
@@ -37,5 +37,4 @@
       <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
     </td>
   </tr>
-
 </table>

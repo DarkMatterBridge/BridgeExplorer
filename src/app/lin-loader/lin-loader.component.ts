@@ -33,18 +33,18 @@ export class LinLoaderComponent implements OnInit {
   }
 
   loadLinFromUrl() {
-    window.addEventListener("message", e => this.takeLin(e))
+   let x = window.addEventListener("message", e => this.takeLin(e));
     window.postMessage({
       direction: "from-page-script",
       message: this.url
     }, "*");
+    window.removeEventListener("message",e => this.takeLin(e));
   }
 
   takeLin(event: any){
     if (event.source == window && event.data && event.data.direction == "from-content-script"){
       this.parseLinFile(event.data.message);
     }
-
   }
 
   copyAndParse() {

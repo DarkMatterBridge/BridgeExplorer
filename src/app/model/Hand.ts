@@ -100,4 +100,8 @@ export class Hand {
     return 0
   }
 
+  getHandString() : string {
+    return this.cards[3].slice().reverse().join("")+"."+this.cards[2].slice().reverse().join("")+"."+this.cards[1].slice().reverse().join("")+"."+this.cards[0].slice().reverse().join("");
+  }
+
 }

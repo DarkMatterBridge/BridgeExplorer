@@ -26,6 +26,8 @@ import { LinkableBnodeListComponent } from './linkable-bnode-list/linkable-bnode
 import { NodeSimpleEditComponent } from './node-simple-edit/node-simple-edit.component';
 import { DealViewComponent } from './deal-view/deal-view.component';
 import { BiddingboxComponent } from './biddingbox/biddingbox.component';
+import { DdTricksComponent } from './dd-tricks/dd-tricks.component';
+import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { BiddingboxComponent } from './biddingbox/biddingbox.component';
     LinkableBnodeListComponent,
     NodeSimpleEditComponent,
     DealViewComponent,
-    BiddingboxComponent
+    BiddingboxComponent,
+    DdTricksComponent,
+    StrainSymbolComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Board} from "../model/Board";
+import {CrossOriginService} from "../cross-origin.service";
+import {strict} from "assert";
+import {stringify} from "querystring";
+import {BridgeRespsonse} from "../model/BridgeRespsonse";
 
 @Component({
   selector: 'app-board',
@@ -11,12 +15,13 @@ export class BoardComponent implements OnInit {
   @Input()
   board: Board = new Board();
 
-  constructor() { }
+  constructor(private crossOriginService: CrossOriginService) {
+  }
 
   ngOnInit(): void {
   }
 
-  addBid(bid:string) {
+  addBid(bid: string) {
     this.board.biddingSequence.addBid(bid);
   }
 

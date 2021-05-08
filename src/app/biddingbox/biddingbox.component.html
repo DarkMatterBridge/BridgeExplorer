@@ -1,11 +1,13 @@
+<div class="lightbox">
 <table>
   <tr *ngFor="let level of bids">
-    <td *ngFor="let bid of level" (click)="addBid(bid)" [ngClass]="{'fett': !biddingSequence.isBidLegal(bid)}">
+    <td *ngFor="let bid of level" (click)="addBid(bid)" [ngClass]="{'disabled': !biddingSequence.isBidLegal(bid)}">
         {{bid}}
     </td>
   </tr>
 </table>
 
 <button (click)="addBid('P')" [disabled]="!biddingSequence.isBidLegal('P')"> Passe </button>
-<button (click)="addBid('X')" [disabled]="!biddingSequence.isBidLegal('X')"> Double </button>
-<button (click)="addBid('XX')" [disabled]="!biddingSequence.isBidLegal('XX')"> Redouble </button>
+<button (click)="addBid('X')" [disabled]="!biddingSequence.isBidLegal('X')"> X </button>
+<button (click)="addBid('XX')" [disabled]="!biddingSequence.isBidLegal('XX')"> XX </button>
+</div>

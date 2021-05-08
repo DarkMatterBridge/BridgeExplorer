@@ -1,3 +1,15 @@
-.fett {
+td {
+  cursor: pointer;
+  background-color: honeydew;
+}
+
+.disabled {
   background-color: gray;
+  cursor: auto;
+}
+
+.lightbox {
+  border: #2c2748 solid 1px;
+  cursor: pointer;
+  background-color: #94957C;
 }

@@ -45,4 +45,11 @@ export class Board {
     this.eastHand.reverseSuits();
   }
 
+  constructDealString()  {
+    return "W:"+this.westHand.getHandString()+"x"
+               +this.northHand.getHandString()+"x"
+               +this.eastHand.getHandString()+"x"
+               +this.southHand.getHandString();
+  }
+
 }

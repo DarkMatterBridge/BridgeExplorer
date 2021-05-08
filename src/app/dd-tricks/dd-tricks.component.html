@@ -1,0 +1,25 @@
+<div *ngIf="ddtricks">
+  {{ddtricks}}
+  <table>
+    <thead>
+    <td></td>
+    <td>NT</td>
+    <td>♠</td>
+    <td>♥</td>
+    <td>♦</td>
+    <td>♣</td>
+    </thead>
+    <tr *ngFor="let i of [0,1,2,3]">
+      <td>{{direction[i]}}</td>
+      <td *ngFor="let j of [0,1,2,3,4]">
+        {{ddTricks[i][j]}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="!ddtricks">
+  <button (click)="getDDAnalysis()">
+    Double Dummy Analysis
+  </button>
+</div>
