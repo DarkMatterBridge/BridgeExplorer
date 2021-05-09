@@ -39,8 +39,6 @@ export class DealViewComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.dealCondition = new DealCondition();
-//    this.dealCondition.import(this.dealConditionSequence);
-//    this.parsingOK = this.dealCondition.importNew(this.dealConditionSequence);
     this.board = new Board();
     this.parsingOK = this.dealCondition.importNew(this.bNodeSequence.nodes.map(bn => bn.con));
     this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
@@ -63,7 +61,7 @@ export class DealViewComponent implements OnInit, OnChanges {
       console.log(this.board.biddingSequence.bids);
       newBoard.biddingSequence = this.board.biddingSequence;
       newBoard.biddingSequence = new BiddingSequence();
-      newBoard.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
+       newBoard.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
 
       this.board = newBoard;
       console.log(this.board.biddingSequence.bids);
