@@ -1,10 +1,15 @@
 <div class="b-bidding-sequence">
 
-<span (click)="reset()">R</span>
+  <span class="pointer">
+  <mat-icon matTooltip='Back to Root' (click)="reset()">home</mat-icon>
+
+  </span>
 <span *ngFor="let bn of bNodeSequence.nodes; let i = index" (click)="selectBid(bn)">
 -
- <span  [ngClass]="{'fett': bn == bNodeSequence.indexNode,
-                 'opp': bn.ob}"> {{bNodeSequence.bids[i]}} </span>
+ <span class="pointer" [ngClass]="{'fett': bn == bNodeSequence.indexNode,
+                 'opp': bn.ob}">
+ <app-strain-symbol [strain]="bNodeSequence.bids[i]"></app-strain-symbol>
+ </span>
 </span>
-  <span style="float: right" (click)="emitCondtions()"> DealView</span>
+  <span *ngIf="bNodeSequence.isRealBiddingSequence" style="float: right" (click)="emitCondtions()"> DealView</span>
 </div>

@@ -2,12 +2,14 @@
   <input [(ngModel)]="bnode.bid" size="2"/>
 </td>
 <td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}"
-style="float:right">
+style="float:right" class="pointer">
 <app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
 </td>
 
 <td *ngIf="normal">
+  <div class="pointer">
   <mat-icon *ngIf="bnode.desc" matTooltip='{{bnode.desc}}' (click)="normal=false">info</mat-icon>
+  </div>
 </td>
 <td *ngIf="normal">
   <input [(ngModel)]="bnode.con" size="50" (input)="checkCondition()"

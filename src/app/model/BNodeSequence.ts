@@ -1,4 +1,5 @@
 import {BNode} from "./BNode";
+import './../model/string.extension';
 
 export class BNodeSequence {
 
@@ -6,6 +7,7 @@ export class BNodeSequence {
   bids = new Array<string>();
   index: number = -1;
   indexNode: BNode | undefined;
+  isRealBiddingSequence = true;
 
   getIndex(bnode: BNode | undefined) {
     return (bnode === undefined) ? -1 : this.nodes.indexOf(bnode);
@@ -51,16 +53,17 @@ export class BNodeSequence {
   }
 
   handleBidSemantics(newBid: BNode) {
-    if (this.bids.length == 0) {
-      this.bids.push(newBid.bid);
-    } else {
+    let transformedBid = newBid.bid;
+    if (this.bids.length > 0) {
       let lastBid = this.bids[this.bids.length - 1];
-      this.bids.push(this.transformNewBid(lastBid, newBid));
+      transformedBid = this.transformNewBid(lastBid, newBid);
+      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
     }
+    this.bids.push(transformedBid);
   }
 
   transformNewBid(lastBid: string, newBid: BNode) {
-    if (isNaN(+newBid.bid)) {
+    if (!lastBid.isBid() || isNaN(+newBid.bid)) {
       return newBid.bid;
     }
     return this.addStepsToBid(lastBid, +newBid.bid);
@@ -68,6 +71,7 @@ export class BNodeSequence {
 
   // TODO: this is bidding rules logic > needs to be put elsewhere later
   addStepsToBid(bid: string, steps: number): string {
+
     let b = ['C', 'D', 'H', 'S', 'N', 'C', 'D', 'H', 'S', 'N'];
     const index = b.findIndex(x => x == bid.charAt(1));
     if (index >= 0) {
@@ -77,11 +81,9 @@ export class BNodeSequence {
       // var num = (a / b) >> 0;
       const level = +bid.charAt(0) + levelUp;
       const suitNo = newIndex % 5;
-      alert(level + b[suitNo]);
       return level + b[suitNo];
     }
     return bid;
   }
-
 
 }

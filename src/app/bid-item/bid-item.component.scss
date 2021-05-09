@@ -17,6 +17,7 @@
 input {
   border: none;
   border-bottom: 1px solid olivedrab;
+  outline: none;
 }
 
 .parsingNotOk {
@@ -24,3 +25,8 @@ input {
   //border-width: 5px;
   background-color: lightsalmon;
 }
+
+//input[type=text]:focus {
+//  outline: none;
+//  background-color: lightblue;
+//}
