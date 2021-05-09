@@ -57,13 +57,13 @@ export class BNodeSequence {
     if (this.bids.length > 0) {
       let lastBid = this.bids[this.bids.length - 1];
       transformedBid = this.transformNewBid(lastBid, newBid);
-      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
+      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isContractBid();
     }
     this.bids.push(transformedBid);
   }
 
   transformNewBid(lastBid: string, newBid: BNode) {
-    if (!lastBid.isBid() || isNaN(+newBid.bid)) {
+    if (!lastBid.isContractBid() || isNaN(+newBid.bid)) {
       return newBid.bid;
     }
     return this.addStepsToBid(lastBid, +newBid.bid);

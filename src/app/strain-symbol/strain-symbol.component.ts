@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-strain-symbol',
   templateUrl: './strain-symbol.component.html',
   styleUrls: ['./strain-symbol.component.scss']
 })
-export class StrainSymbolComponent implements OnInit {
+export class StrainSymbolComponent implements OnInit, OnChanges {
 
   @Input() strain: string = "";
   @Input() suitNo = -1;
@@ -21,6 +21,9 @@ export class StrainSymbolComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
     if (this.suitNo >= 0)
       this.handleSuitNo();
     else

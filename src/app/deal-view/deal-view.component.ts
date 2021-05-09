@@ -31,17 +31,21 @@ export class DealViewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.deal.shuffle();
-    this.board = this.deal.getBoard();
-    this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
-    this.board.biddingSequence.dealer = "W";
+//     this.deal.shuffle();
+//     this.board = this.deal.getBoard();
+// //    this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
+//     this.board.biddingSequence.dealer = "W";
+    if (!this.board.intialized)
+      this.generateBoard();
   }
 
   ngOnChanges(): void {
     this.dealCondition = new DealCondition();
     this.board = new Board();
     this.parsingOK = this.dealCondition.importNew(this.bNodeSequence.nodes.map(bn => bn.con));
-    this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
+    // this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
+    this.board.importBnodeSequence(this.bNodeSequence);
+
     this.board.biddingSequence.dealer = "W";
     this.generateBoard(true);
   }
@@ -57,14 +61,16 @@ export class DealViewComponent implements OnInit, OnChanges {
         this.deal.shuffle();
       }
       this.tries = n;
-      let newBoard = this.deal.getBoard();
-      console.log(this.board.biddingSequence.bids);
-      newBoard.biddingSequence = this.board.biddingSequence;
-      newBoard.biddingSequence = new BiddingSequence();
-       newBoard.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
 
-      this.board = newBoard;
-      console.log(this.board.biddingSequence.bids);
+      this.board.setHands(this.deal);
+      // let newBoard = this.deal.getBoard();
+      // console.log(this.board.biddingSequence.bids);
+      // newBoard.biddingSequence = this.board.biddingSequence;
+      // newBoard.biddingSequence = new BiddingSequence();
+      // newBoard.biddingSequence.bids = this.board.biddingSequence.bids;
+      //
+      //  // newBoard.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
+      // this.board = newBoard;
     } else
       alert("Parsing Error");
   }

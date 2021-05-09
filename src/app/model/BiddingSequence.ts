@@ -1,3 +1,6 @@
+import {BNodeSequence} from "./BNodeSequence";
+import {last} from "rxjs/operators";
+
 export class BiddingSequence {
 
   bids: string[] = new Array();
@@ -88,4 +91,18 @@ export class BiddingSequence {
     return this.bids.length > 3 && this.bids[this.bids.length - 3] === 'P' &&
       this.bids[this.bids.length - 2] === 'P' && this.bids[this.bids.length - 1] === 'P';
   }
+
+  importBnodeSequence(b: BNodeSequence) {
+    this.bids = b.bids.slice(1);
+    console.log("-->"+this.bids);
+    this.determineLastContractBid();
+  }
+
+  determineLastContractBid() {
+    let lastBid = this.bids.slice().reverse().find(b => b.isContractBid());
+    alert(lastBid);
+    if (lastBid)
+      this.latestContractBid = lastBid;
+  }
+
 }
