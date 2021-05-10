@@ -24,10 +24,6 @@ export class BiddingSystem {
     this.bsm.addNode(this.currentNode, bnode);
   }
 
-  getNodes() {
-    return this.currentNode?.nodes;
-  }
-
   selectNode(id: number) {
     const n = this.bsm.getNode(this.bidList, id);
     if (n !== undefined) {

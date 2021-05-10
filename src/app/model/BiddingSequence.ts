@@ -1,9 +1,10 @@
 import {BNodeSequence} from "./BNodeSequence";
 import {last} from "rxjs/operators";
+import {BNode} from "./BNode";
 
 export class BiddingSequence {
 
-  bids: string[] = new Array();
+  bids: string[] = [];
 
   latestContractBid: string | undefined;
   dealer: string = "W"; // default
@@ -50,10 +51,9 @@ export class BiddingSequence {
     if (this.latestContractBid.substr(1, 1) === "N")
       return false;
 
-    if (bid.substr(1, 1) > this.latestContractBid?.substr(1, 1)) // S,H,D,C lexical order!
-      return true;
+    return bid.substr(1, 1) > this.latestContractBid?.substr(1, 1);
 
-    return false;
+
   }
 
   isContractBid(bid: string) {
@@ -67,10 +67,9 @@ export class BiddingSequence {
       return true;
     if (this.bids.length < 3)
       return false;
-    if (this.isContractBid(this.bids[this.bids.length - 3]) &&
-      this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P')
-      return true;
-    return false;
+    return this.isContractBid(this.bids[this.bids.length - 3]) &&
+      this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P';
+
   }
 
   redoubleAllowed(): boolean {
@@ -81,10 +80,9 @@ export class BiddingSequence {
       return true;
     if (this.bids.length < 3)
       return false;
-    if (this.bids[this.bids.length - 3] === 'X' &&
-      this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P')
-      return true;
-    return false;
+    return this.bids[this.bids.length - 3] === 'X' &&
+      this.bids[this.bids.length - 2] == 'P' && this.bids[this.bids.length - 1] == 'P';
+
   }
 
   biddingFinished(): boolean {
@@ -92,9 +90,29 @@ export class BiddingSequence {
       this.bids[this.bids.length - 2] === 'P' && this.bids[this.bids.length - 1] === 'P';
   }
 
-  importBnodeSequence(b: BNodeSequence) {
-    this.bids = b.bids.slice(1);
-    console.log("-->"+this.bids);
+  importBnodeSequence(bNodeSequence: BNodeSequence) {
+    // this.bids = bNodeSequence.bids.slice(1);
+    this.bids = [];
+    alert(bNodeSequence.bids.length+" "+bNodeSequence.nodes.length);
+    let passeDefault = false;
+    for (let i = 1; i < bNodeSequence.nodes.length; i++) {
+      if ((bNodeSequence.nodes)[i].ob != undefined) {
+        passeDefault = false;
+      } else {
+        if (passeDefault) {
+          this.bids.push("P");
+        }
+        passeDefault = true;
+      }
+      this.bids.push(bNodeSequence.bids[i]);
+    }
+    console.log("-->" + this.bids);
+    this.determineLastContractBid();
+  }
+
+  importCanonicalSequence(nodes: BNode[]) {
+    this.bids = nodes.map(node => node.bid);
+    console.log("-->" + this.bids);
     this.determineLastContractBid();
   }
 

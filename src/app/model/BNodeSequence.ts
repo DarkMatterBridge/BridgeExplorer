@@ -8,6 +8,7 @@ export class BNodeSequence {
   index: number = -1;
   indexNode: BNode | undefined;
   isRealBiddingSequence = true;
+  rbNodes: BNode[] = new Array<BNode>();
 
   getIndex(bnode: BNode | undefined) {
     return (bnode === undefined) ? -1 : this.nodes.indexOf(bnode);
@@ -33,11 +34,6 @@ export class BNodeSequence {
     this.indexNode = bnode;
   }
 
-////////
-  getNode(i: number) {
-    return this.nodes[i];
-  }
-
   reset() {
     this.nodes = new Array<BNode>();
     this.bids = new Array<string>();
@@ -57,7 +53,7 @@ export class BNodeSequence {
     if (this.bids.length > 0) {
       let lastBid = this.bids[this.bids.length - 1];
       transformedBid = this.transformNewBid(lastBid, newBid);
-      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isContractBid();
+      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
     }
     this.bids.push(transformedBid);
   }
@@ -86,4 +82,25 @@ export class BNodeSequence {
     return bid;
   }
 
+  public exp(): Array<BNode> {
+    let e = new Array<BNode>();
+    let passeDefault = false;
+    for (let i = 1; i < this.nodes.length; i++) {
+      if (this.nodes[i].ob != undefined && this.nodes[i].ob) {
+        passeDefault = false;
+      } else {
+        if (passeDefault) {
+          e.push(new BNode("P", new Array<BNode>(), ""));
+        }
+        passeDefault = true;
+      }
+      let b = {...this.nodes[i]};
+      b.bid = this.bids[i];
+      e.push(b);
+    }
+    this.rbNodes = e;
+    console.log("exp");
+    console.log(this.rbNodes);
+    return e;
+  }
 }

@@ -17,7 +17,7 @@ export class BidListComponent implements OnInit, OnChanges {
 
   editable = false;
 
-  linkedNodes: BNode[] = new Array();
+  linkedNodes: BNode[] = [];
 
   newBnode = new BNode("", [], "");
 
@@ -31,7 +31,7 @@ export class BidListComponent implements OnInit, OnChanges {
     if (this.bnode.linkedNode !== undefined) {
       this.linkedNodes = this.bnode.linkedNode.nodes;
     } else {
-      this.linkedNodes = new Array();
+      this.linkedNodes = [];
     }
   }
 
@@ -65,11 +65,11 @@ export class BidListComponent implements OnInit, OnChanges {
   unlink() {
     this.bnode.linkedNode = undefined;
     this.bnode.linkedId = undefined;
-    this.linkedNodes = new Array();
+    this.linkedNodes = [];
   }
 
   materialize() {
     this.bsm.materializeLinkeNode(this.bnode);
-    this.linkedNodes = new Array();
+    this.linkedNodes = [];
   }
 }

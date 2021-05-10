@@ -16,7 +16,7 @@ export class DdTricksComponent implements OnInit, OnChanges {
   urlBridgewebs = "https://dds.bridgewebs.com/cgi-bin/bsol2/ddummy?request=m&dealstr=";
   postfix = "&vul=None";
 
-  ddTricks: string[][] = new Array();
+  ddTricks: string[][] = [];
   direction = ["N","S","E","W"];
 
   constructor(private crossOriginService: CrossOriginService) {
@@ -27,7 +27,7 @@ export class DdTricksComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.ddtricks = "";
-    this.ddTricks = new Array();
+    this.ddTricks = [];
   }
 
   getDDAnalysis() {
@@ -39,7 +39,7 @@ export class DdTricksComponent implements OnInit, OnChanges {
 
   parseDDTricks() {
     for (let i = 0; i < 4; i++) {
-      this.ddTricks[i] = new Array();
+      this.ddTricks[i] = [];
       for (let j = 0; j < 5; j++) {
         this.ddTricks[i][j] = this.ddtricks.charAt(i * 5 + j);
         if (this.ddTricks[i][j]==='a')

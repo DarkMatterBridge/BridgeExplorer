@@ -52,11 +52,11 @@ export class FileService {
 
   downloadSystem(name: string, bnode: BNode) {
     const json = this.transformToJson(bnode);
-    var wea = window.open("", "hallo");
+    const wea = window.open("", "hallo");
     if (wea) {
       wea.document.write(json);
     }
-    var text = json,
+    const text = json,
       blob = new Blob([text], {type: 'text/plain'}),
       anchor = document.createElement('a');
 
@@ -71,7 +71,7 @@ export class FileService {
 
     const fileReader = new FileReader();
     fileReader.onload = fileLoadedEvent => {
-      var datae: string | ArrayBuffer | null;
+      let datae: string | ArrayBuffer | null;
       datae = fileReader.result
       if (datae) {
         const bn = JSON.parse(datae.toString()) as BNode;

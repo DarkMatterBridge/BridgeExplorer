@@ -22,7 +22,7 @@ export class BidJarComponent implements OnInit {
 
   uploadSubject: Subject<BNode> = new Subject<BNode>();
 
-  linkableBnodes: BNode[] = new Array();
+  linkableBnodes: BNode[] = [];
 
   dealViewActivated = false;
   bNodeSequence: BNodeSequence = new BNodeSequence();

@@ -50,9 +50,8 @@ export class BidItemComponent implements OnInit {
     let cond = this.bnode.con.split("/")[0];
     if (cond.length === 0) return true;
     try {
-      if (dh.parseConditionWorker(cond) === undefined)
-        return false;
-      return true;
+      return dh.parseConditionWorker(cond) !== undefined;
+
     } catch (e: any) {
       return false;
     }

@@ -45,7 +45,7 @@ export class BiddingSequenceComponent implements OnInit, OnChanges {
       }
       this.biddingEnd = this.biddingSequence.bids.length + this.biddingStart;
       let max = this.biddingEnd / 4;
-      this.numbers = new Array();
+      this.numbers = [];
       for (let i = 0; i < max; i++)
         this.numbers[i] = i;
     }

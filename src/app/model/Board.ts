@@ -3,6 +3,7 @@ import {LinObject} from "./LinObject";
 import {BiddingSequence} from "./BiddingSequence";
 import {Deal} from "./Deal";
 import {BNodeSequence} from "./BNodeSequence";
+import {BNode} from "./BNode";
 
 export class Board {
 
@@ -68,6 +69,10 @@ export class Board {
   importBnodeSequence(bns: BNodeSequence) {
     this.biddingSequence = new BiddingSequence();
     this.biddingSequence.importBnodeSequence(bns);
+  }
+  importCanonicalSequence(bns: BNode[]) {
+    this.biddingSequence = new BiddingSequence();
+    this.biddingSequence.importCanonicalSequence(bns);
   }
 
   resetBidding() {

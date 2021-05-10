@@ -1,6 +1,5 @@
 .wrapper {
   display: grid; /* display: inline-grid;*/
-  grid-template-columns: 1fr 1fr; /* 3 x 1 fraction */
   grid-template-columns: 100px 1fr;
   border: 1px solid;
   background-color: gainsboro;

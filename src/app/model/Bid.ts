@@ -9,8 +9,8 @@ export class Bid {
   }
 
   static getBid(bidname: String) {
-    var level = bidname.charAt(0);
-    var denomination = bidname.charAt(1);
+    const level = bidname.charAt(0);
+    const denomination = bidname.charAt(1);
     if (this.isLevelOk(level) && this.isDenomOk(denomination)) {
       return new Bid(Number(level), denomination);
     } else {

@@ -13,7 +13,7 @@ export class LinObject {
     if (this.par) {
       return this.par;
     }
-    var reg = /[\w]{2}\|[^\|]*\|/g;
+    const reg = /[\w]{2}\|[^\|]*\|/g;
     var m;
     let map = new Map();
     do {
@@ -62,7 +62,7 @@ export class LinObject {
   }
 
   bids() {
-    let bids = this.parsed.get("mb").map
+    return this.parsed.get("mb").map
     (
       (bid: string) => {
         switch (bid.toUpperCase()) {
@@ -70,10 +70,8 @@ export class LinObject {
             return "P";
           case "D":
             return "X";
-            break;
           case "R":
             return "XX";
-            break;
           default: {
             if (bid.match(/\dN/)) {
               return bid[0] + "NT";
@@ -83,8 +81,7 @@ export class LinObject {
           }
         }
       }
-    )
-    return bids;
+    );
   }
 
   dealer(): string {

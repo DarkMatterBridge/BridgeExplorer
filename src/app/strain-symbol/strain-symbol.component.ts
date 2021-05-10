@@ -36,7 +36,7 @@ export class StrainSymbolComponent implements OnInit, OnChanges {
       this.class = "nobid";
       return;
     }
-    if (this.strain.length > 3) {
+    if (this.strain.length > 2) {
       this.symbol = this.strain;
       this.class = "nobid";
       return;

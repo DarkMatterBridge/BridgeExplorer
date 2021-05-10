@@ -13,7 +13,7 @@ export class Deal {
   constructor() {
     this.cardsInSuit = new Array();
     this.cards = new Array(52);
-    for (var i = 0; i < this.cards.length; i++) {
+    for (let i = 0; i < this.cards.length; i++) {
       this.cards[i] = i;
     }
   }
@@ -78,7 +78,7 @@ export class Deal {
 
   printHand(d: number) {
     let cards = this.getSortedHand(d);
-    let suit = 3;
+    let suit: number;
     let out = "";
     let j = 0;
     for (suit = 3; suit >= 0; suit--) {

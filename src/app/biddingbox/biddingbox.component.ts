@@ -24,7 +24,7 @@ export class BiddingboxComponent implements OnInit, OnChanges {
       this.bids[level][1] = level + 1 + "D";
       this.bids[level][2] = level + 1 + "H";
       this.bids[level][3] = level + 1 + "S";
-      this.bids[level][4] = level + 1 + "NT";
+      this.bids[level][4] = level + 1 + "N";
     }
   }
 

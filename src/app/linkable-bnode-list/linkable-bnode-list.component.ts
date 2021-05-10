@@ -23,7 +23,7 @@ export class LinkableBnodeListComponent implements OnInit {
   linkNode(bn: BNode) {
     const r = confirm("Really Link this?");
 
-    if (r == true) {
+    if (r) {
       this.linkNodeEvent.emit(bn);
       this.matSnackBar.open("Node Linked","",  {"duration": 2000});
     }

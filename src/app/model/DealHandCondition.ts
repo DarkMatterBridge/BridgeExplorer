@@ -43,7 +43,7 @@ export class DealHandCondition {
     if (addCondition.length === 0) return true;
     try {
       let ff = this.parseConditionWorker(this.condition);
-      if (ff && ff !== undefined) {
+      if (ff) {
         let fff = ff;
         console.log("Successfully parsed and added");
         this.eval = (hand: DealHand) => this.eval(hand) && fff(hand);
@@ -429,10 +429,11 @@ export class DealHandCondition {
 
   parseForSpecialities(cond: string): Function | undefined {
 
+    let suit;
     let regex = /(S|H|D|C)(\.8playable2void)/;
     let a = regex.exec(cond.trim());
     if (a != null) {
-      var suit = a[1];
+      suit = a[1];
       var suitNo = 0;
       if (suit == "S") suitNo = 3;
       if (suit == "H") suitNo = 2;
@@ -443,7 +444,7 @@ export class DealHandCondition {
     regex = /(S|H|D|C)(\.goodSuit)/;
     a = regex.exec(cond.trim());
     if (a != null) {
-      var suit = a[1];
+      suit = a[1];
       var suitNo = 0;
       if (suit == "S") suitNo = 3;
       if (suit == "H") suitNo = 2;

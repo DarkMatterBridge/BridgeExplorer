@@ -5,6 +5,7 @@ import {DealCondition} from "../model/DealCondition";
 import {FileService} from "../services/file.service";
 import {BNodeSequence} from "../model/BNodeSequence";
 import {BiddingSequence} from "../model/BiddingSequence";
+import {BNode} from "../model/BNode";
 
 @Component({
   selector: 'app-deal-view',
@@ -44,7 +45,10 @@ export class DealViewComponent implements OnInit, OnChanges {
     this.board = new Board();
     this.parsingOK = this.dealCondition.importNew(this.bNodeSequence.nodes.map(bn => bn.con));
     // this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
-    this.board.importBnodeSequence(this.bNodeSequence);
+    // this.board.importBnodeSequence(this.bNodeSequence);
+
+    console.log(this.bNodeSequence.rbNodes);
+    this.board.importCanonicalSequence(this.bNodeSequence.rbNodes);
 
     this.board.biddingSequence.dealer = "W";
     this.generateBoard(true);
