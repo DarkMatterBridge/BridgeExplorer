@@ -15,7 +15,7 @@ export class StrainSymbolComponent implements OnInit, OnChanges {
   level = "";
 
   static symbols = ['♣', '♦', '♥', '♠', 'NT'];
-  symbolMap: any = {'C': '♣', 'D': '♦', 'H': '♥', 'S': '♠', 'N': 'NT', 'NT': 'NT', 'P': 'P'};
+  symbolMap: any = {'C': '♣', 'D': '♦', 'H': '♥', 'S': '♠', 'N': 'NT', 'NT': 'NT'};
 
   constructor() {
   }
@@ -25,45 +25,51 @@ export class StrainSymbolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.suitNo >= 0)
-      this.handleSuitNo();
+      this.handleSuitNo(this.suitNo);
     else
       this.handleBidOrStrain();
   }
 
   handleBidOrStrain() {
-    // if (!this.strain.isBid()) {
-    //   this.symbol = this.strain;
-    //   this.class = "nobid";
-    //   return;
-    // }
-
-    if (this.strain.length == 1) {
-      this.symbol = this.strain[0];
-      this.class = "nobid";
+    if (this.strain.isStrain()) {  // a cards symbol or N (i.e. NT)
+      this.symbol = this.symbolMap[this.strain];
+      this.handleSuitChar(this.strain);
       return;
     }
-    if (this.strain.length > 2) {
+
+    if (!this.strain.isBid()) {   // no regular bid
       this.symbol = this.strain;
       this.class = "nobid";
       return;
     }
-    let s = this.strain;
-    if (this.strain.length > 1) {
-      this.level = this.strain.charAt(0);
-      s = this.strain.charAt(1);
+
+    if (!this.strain.isContractBid()) {  // thiat is then P, X or XX
+      this.symbol = this.strain;
+      this.class = "black";
+      return;
     }
-    if (s == "H" || s == "D")
-      this.class = "red";
-    if (s == "C" || s == "S")
-      this.class = "blue";
-    this.symbol = this.symbolMap[s];
+    // now at last: the normal bid, i.e. 2S or 3N
+    this.level = this.strain.charAt(0);
+    this.symbol = this.symbolMap[this.strain.charAt(1)];
+    this.handleSuitChar(this.strain.charAt(1));
   }
 
-  handleSuitNo() {
-    if (this.suitNo == 1 || this.suitNo == 2)
+  handleSuitChar(suit: string) {
+    if (suit == "H" || suit == "D")
       this.class = "red";
-    if (this.suitNo == 0 || this.suitNo == 3)
+    if (suit == "C" || suit == "S")
       this.class = "blue";
+    if (suit == "N")
+      this.class = "black";
+  }
+
+  handleSuitNo(suitNo: number) {
+    if (suitNo == 1 || suitNo == 2)
+      this.class = "red";
+    if (suitNo == 0 || suitNo == 3)
+      this.class = "blue";
+    if (suitNo == 4)
+      this.class = "black";
     this.symbol = StrainSymbolComponent.symbols[this.suitNo];
   }
 

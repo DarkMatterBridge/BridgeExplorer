@@ -1,4 +1,4 @@
-<td *ngIf="newNode">
+<td *ngIf="newNode" style="float:right">
   <input [(ngModel)]="bnode.bid" size="2"/>
 </td>
 <td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}"
