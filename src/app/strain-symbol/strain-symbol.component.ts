@@ -31,6 +31,12 @@ export class StrainSymbolComponent implements OnInit, OnChanges {
   }
 
   handleBidOrStrain() {
+    // if (!this.strain.isBid()) {
+    //   this.symbol = this.strain;
+    //   this.class = "nobid";
+    //   return;
+    // }
+
     if (this.strain.length == 1) {
       this.symbol = this.strain[0];
       this.class = "nobid";

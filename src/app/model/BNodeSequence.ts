@@ -65,7 +65,7 @@ export class BNodeSequence {
     return this.addStepsToBid(lastBid, +newBid.bid);
   }
 
-  // TODO: this is bidding rules logic > needs to be put elsewhere later
+  // TODO: this is bidding rules logic > needs to be put elsewhere later; maybe to String Class?
   addStepsToBid(bid: string, steps: number): string {
 
     let b = ['C', 'D', 'H', 'S', 'N', 'C', 'D', 'H', 'S', 'N'];
@@ -82,7 +82,8 @@ export class BNodeSequence {
     return bid;
   }
 
-  public exp(): Array<BNode> {
+  public buildCanonicalSequence(): Array<BNode> { // todo include all directions & opps
+
     let e = new Array<BNode>();
     let passeDefault = false;
     for (let i = 1; i < this.nodes.length; i++) {
