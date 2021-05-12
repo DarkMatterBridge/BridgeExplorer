@@ -12,7 +12,7 @@ export class BiddingSequenceComponent implements OnInit, OnChanges {
   biddingSequence!: BiddingSequence ;
 
   @Input()
-  count = 0 ; // only needed as input to trigger ngOnChanges
+  count = -1 ; // only needed as input to trigger ngOnChanges
 
   biddingStart = 0;
   biddingEnd = 0;
@@ -44,6 +44,7 @@ export class BiddingSequenceComponent implements OnInit, OnChanges {
           break;
       }
       this.biddingEnd = this.biddingSequence.bids.length + this.biddingStart;
+      console.log(this.biddingStart+" "+this.biddingEnd+" "+this.biddingSequence.bids.length);
       let max = this.biddingEnd / 4;
       this.numbers = [];
       for (let i = 0; i < max; i++)

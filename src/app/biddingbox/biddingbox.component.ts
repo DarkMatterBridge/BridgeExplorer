@@ -38,4 +38,9 @@ export class BiddingboxComponent implements OnInit, OnChanges {
     this.$addBid.emit(bid)
   }
 
+  revertLastBid() {
+    this.$addBid.emit("")
+
+  }
+
 }

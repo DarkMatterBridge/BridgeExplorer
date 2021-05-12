@@ -33,7 +33,7 @@
   <td>
     Dealer: {{board.biddingSequence.dealer}}
     <app-bidding-sequence [biddingSequence]="board.biddingSequence"
-                          [count]="board.biddingSequence.bids.length"></app-bidding-sequence>
+                          [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
   </td>
     <td>
       <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>

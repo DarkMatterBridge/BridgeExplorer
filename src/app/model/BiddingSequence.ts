@@ -12,9 +12,10 @@ export class BiddingSequence {
   // business logic:
 
   addBid(bid: string) {
-    if (this.isBidLegal(bid)) {
+    if (bid === "") {
+      this.revertLastBid();
+    } else if (this.isBidLegal(bid)) {
       this.bids.push(bid);
-
       if (this.isContractBid(bid))
         this.latestContractBid = bid;
     }
@@ -93,7 +94,7 @@ export class BiddingSequence {
   importBnodeSequence(bNodeSequence: BNodeSequence) {
     // this.bids = bNodeSequence.bids.slice(1);
     this.bids = [];
-    alert(bNodeSequence.bids.length+" "+bNodeSequence.nodes.length);
+    alert(bNodeSequence.bids.length + " " + bNodeSequence.nodes.length);
     let passeDefault = false;
     for (let i = 1; i < bNodeSequence.nodes.length; i++) {
       if ((bNodeSequence.nodes)[i].ob != undefined) {
@@ -118,9 +119,21 @@ export class BiddingSequence {
 
   determineLastContractBid() {
     let lastBid = this.bids.slice().reverse().find(b => b.isContractBid());
-    alert(lastBid);
-    if (lastBid)
+    if (lastBid != undefined) {
       this.latestContractBid = lastBid;
+    } else {
+      this.latestContractBid = undefined;
+    }
+  }
+
+  revertLastBid() {
+    if (this.bids.length <= 1) {
+      this.bids = [];
+      this.latestContractBid = undefined;
+    } else {
+      this.bids = this.bids.slice(0, -1);
+      this.determineLastContractBid();
+    }
   }
 
 }
