@@ -33,13 +33,15 @@
     </td>
   <tr>
     <td>
-      Dealer: {{board.biddingSequence.dealer}}
+<!--      Dealer: {{board.biddingSequence.dealer}}-->
       <div class="bidding">
         <div>
         <app-bidding-sequence [biddingSequence]="board.biddingSequence"
                               [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
-        </div><div>
-        <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
+        </div>
+        <div class="pointer" (click)="biddingBoxVisible = !biddingBoxVisible">B</div>
+        <div>
+        <app-biddingbox *ngIf="biddingBoxVisible" [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
         </div>
       </div>
 

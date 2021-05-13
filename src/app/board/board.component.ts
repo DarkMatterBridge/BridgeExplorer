@@ -15,6 +15,8 @@ export class BoardComponent implements OnInit, OnChanges {
   @Input()
   board!: Board;
 
+  biddingBoxVisible = false;
+
   constructor(private crossOriginService: CrossOriginService) {
   }
 

@@ -2,10 +2,11 @@
 
 <table class="tabl">
   <tr class="header">
-    <td class="cell" >W</td>
-    <td class="cell">N</td>
-    <td class="cell">E</td>
-    <td class="cell">S</td>
+    <td class="cell" [ngClass]="{'fett': biddingStart==0}">W</td>
+
+    <td class="cell" [ngClass]="{'fett': biddingStart==1}">N</td>
+    <td class="cell" [ngClass]="{'fett': biddingStart==2}">E</td>
+    <td class="cell" [ngClass]="{'fett': biddingStart==3}">S</td>
   </tr>
   <tr *ngFor="let i of numbers">
     <td *ngFor="let j of [0,1,2,3]">
