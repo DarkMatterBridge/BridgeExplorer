@@ -1,42 +1,50 @@
-  <table>
+<table>
   <tr>
     <td>
       <div class="board">
-      <table>
-        <tr>
-          <td></td>
-          <td>{{board.players[2]}}
-            <app-hand [hand]="board.northHand"></app-hand>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>{{board.players[1]}}
-            <app-hand [hand]="board.westHand"></app-hand>
-          </td>
-          <td></td>
-          <td>{{board.players[3]}}
-            <app-hand [hand]="board.eastHand"></app-hand>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>{{board.players[0]}}
-            <app-hand [hand]="board.southHand"></app-hand>
-          </td>
-          <td><app-dd-tricks [board]="board"></app-dd-tricks></td>
-        </tr>
-      </table>
+        <table>
+          <tr>
+            <td></td>
+            <td>{{board.players[2]}}
+              <app-hand [hand]="board.northHand"></app-hand>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{board.players[1]}}
+              <app-hand [hand]="board.westHand"></app-hand>
+            </td>
+            <td></td>
+            <td>{{board.players[3]}}
+              <app-hand [hand]="board.eastHand"></app-hand>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>{{board.players[0]}}
+              <app-hand [hand]="board.southHand"></app-hand>
+            </td>
+            <td>
+              <app-dd-tricks [board]="board"></app-dd-tricks>
+            </td>
+          </tr>
+        </table>
       </div>
     </td>
   <tr>
-  <td>
-    Dealer: {{board.biddingSequence.dealer}}
-    <app-bidding-sequence [biddingSequence]="board.biddingSequence"
-                          [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
-  </td>
     <td>
-      <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
+      Dealer: {{board.biddingSequence.dealer}}
+      <div class="bidding">
+        <div>
+        <app-bidding-sequence [biddingSequence]="board.biddingSequence"
+                              [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
+        </div><div>
+        <app-biddingbox [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
+        </div>
+      </div>
+
+    </td>
+    <td>
     </td>
   </tr>
 </table>

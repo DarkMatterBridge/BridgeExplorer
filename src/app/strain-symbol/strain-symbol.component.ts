@@ -59,7 +59,7 @@ export class StrainSymbolComponent implements OnInit, OnChanges {
       this.class = "red";
     if (suit == "C" || suit == "S")
       this.class = "blue";
-    if (suit == "N")
+    if (suit == "N" || suit == "NT")
       this.class = "black";
   }
 

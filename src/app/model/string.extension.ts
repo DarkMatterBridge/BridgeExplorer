@@ -2,7 +2,9 @@ interface String {
   center(maxLength: number, fillString?: string): string;
 
   isContractBid(): boolean;
+
   isBid(): boolean;
+
   isStrain(): boolean;
 }
 
@@ -12,24 +14,19 @@ String.prototype.center = function (maxLength: number, fillString?: string): str
 }
 
 String.prototype.isStrain = function (): boolean {
-  if (this.length !=1 ) return false;
-  return ['C', 'D', 'H', 'S', 'N'].includes(this.charAt(0));
+  // if (this.length !=1 ) return false;
+  return ['C', 'D', 'H', 'S', 'N', 'NT'].includes(this.toString());
 }
 
 String.prototype.isContractBid = function (): boolean {
-  if (this.length < 2 || this.length > 2) return false;
+  if (this.length <= 1) return false;
   const level = this.charAt(0);
   if (isNaN(+level))
     return false;
-  return ['C', 'D', 'H', 'S', 'N'].includes(this.charAt(1));
+  return ['C', 'D', 'H', 'S', 'N', 'NT'].includes(this.substr(1));
 }
 
 String.prototype.isBid = function (): boolean {
-  if (this.length > 2) return false;
   if (this == 'P' || this == 'X' || this == 'XX') return true;
-  if (this.length == 1) return false;
-  const level = this.charAt(0);
-  if (isNaN(+level))
-    return false;
-  return ['C', 'D', 'H', 'S', 'N'].includes(this.charAt(1));
+  return this.isContractBid();
 }
