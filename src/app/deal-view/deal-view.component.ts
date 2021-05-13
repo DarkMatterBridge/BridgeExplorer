@@ -19,10 +19,10 @@ export class DealViewComponent implements OnInit, OnChanges {
   dealCondition: DealCondition;
   @Input() bNodeSequence: BNodeSequence = new BNodeSequence();
 
-
   parsingOK: boolean[] = new Array();
   maxTries = 1000000;
   tries = 0;
+  dealerForImport = 'W';
 
   constructor(private fileService: FileService) {
     this.board = new Board();
@@ -43,12 +43,13 @@ export class DealViewComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.dealCondition = new DealCondition();
     this.board = new Board();
-    this.parsingOK = this.dealCondition.importNew(this.bNodeSequence.nodes.map(bn => bn.con));
+
+    console.log(this.bNodeSequence.rbNodes);
+    this.parsingOK = this.dealCondition.importNew(this.bNodeSequence.rbNodes.map(bn => bn.con), this.dealerForImport);
     // this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
     // this.board.importBnodeSequence(this.bNodeSequence);
 
-    console.log(this.bNodeSequence.rbNodes);
-    this.board.importCanonicalSequence(this.bNodeSequence.rbNodes);
+    this.board.importCanonicalSequence(this.bNodeSequence.rbNodes, this.dealerForImport);
 
     this.board.biddingSequence.dealer = "W";
     this.generateBoard(true);

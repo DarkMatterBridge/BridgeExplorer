@@ -1,6 +1,6 @@
 export class Hand {
 
-  cardsNumeric: number[] | undefined;
+  // cardsNumeric: number[] | undefined;
   cards: string[][];
 
   static suitDE = ['Treff', 'Karo', 'Herz', 'Pik'];

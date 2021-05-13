@@ -70,13 +70,38 @@ export class Board {
     this.biddingSequence = new BiddingSequence();
     this.biddingSequence.importBnodeSequence(bns);
   }
-  importCanonicalSequence(bns: BNode[]) {
+
+  importCanonicalSequence(bns: BNode[], dealer: string) {
     this.biddingSequence = new BiddingSequence();
     this.biddingSequence.importCanonicalSequence(bns);
+    this.biddingSequence.dealer = dealer;
   }
 
   resetBidding() {
     this.biddingSequence = new BiddingSequence();
   }
 
+  export(name: string) {
+    let json = JSON.stringify(this);
+    console.log(json)
+    localStorage.setItem(name, json);
+    return JSON.stringify(this);
+  }
+
+  importFromLocalStorage(key: string) {
+    let json = localStorage.getItem(key);
+    console.log(json)
+    if (json)
+      import(json);
+  }
+
+  import(json: string) {
+    let b = JSON.parse(json) as Board;
+    this.southHand.cards = b.southHand.cards;
+    this.westHand.cards = b.westHand.cards;
+    this.northHand.cards = b.northHand.cards;
+    this.eastHand.cards = b.eastHand.cards;
+    this.biddingSequence.bids = b.biddingSequence.bids;
+    this.biddingSequence.dealer = b.biddingSequence.dealer;
+  }
 }

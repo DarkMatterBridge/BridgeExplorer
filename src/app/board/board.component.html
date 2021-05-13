@@ -4,7 +4,7 @@
       <div class="board">
         <table>
           <tr>
-            <td></td>
+            <td><span (click)="save()"> Save</span><span (click)="load()"> Load</span></td>
             <td>{{board.players[2]}}
               <app-hand [hand]="board.northHand"></app-hand>
             </td>

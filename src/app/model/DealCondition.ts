@@ -22,10 +22,17 @@ export class DealCondition {
   }
 
 
-  importNew(dealConditionSequence: string[]) {
-    if (dealConditionSequence.length > 1) {
-      for (let i = 1; i < dealConditionSequence.length; i++) {
-        this.directionConditions[(2 * i - 1) % 4].addCondition(dealConditionSequence[i]);
+  importNew(dealConditionSequence: string[], dealer: string) {
+    let map = new Map([['S', 0], ['W', 1], ['N', 2], ['E', 3]]);
+    let x = map.get(dealer);
+    let start = 0;
+    if (x != undefined) {
+      start = x;
+    }
+    console.log(dealConditionSequence);
+    if (dealConditionSequence.length > 0) {
+      for (let i = 0; i < dealConditionSequence.length; i++) {
+        this.directionConditions[(i + start) % 4].addCondition(dealConditionSequence[i]);
       }
     }
     return [this.directionConditions[0].parseCondition(),
