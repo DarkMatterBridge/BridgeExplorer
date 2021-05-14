@@ -85,17 +85,23 @@ export class Board {
     let json = JSON.stringify(this);
     console.log(json)
     localStorage.setItem(name, json);
+
+    let json2 = localStorage.getItem(name);
+    console.log(json2)
+    if (json2)
+      JSON.parse(json2) as Board;
+
     return JSON.stringify(this);
   }
 
-  importFromLocalStorage(key: string) {
-    let json = localStorage.getItem(key);
+  importFromLocalStorage(name: string) {
+    let json = localStorage.getItem(name);
     console.log(json)
     if (json)
       import(json);
   }
 
-  import(json: string) {
+  importX(json: string) {
     let b = JSON.parse(json) as Board;
     this.southHand.cards = b.southHand.cards;
     this.westHand.cards = b.westHand.cards;

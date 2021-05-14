@@ -38,7 +38,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
   load() {
     // this.board.importFromLocalStorage("board");
-    this.board.import(this.boardJSON);
+    this.board.importX(this.boardJSON);
   }
 
 }
