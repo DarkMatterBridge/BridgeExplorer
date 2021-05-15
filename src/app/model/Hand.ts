@@ -16,11 +16,23 @@ export class Hand {
     this.cardsInSuit = [0, 0, 0, 0];
   }
 
-  setHandFromString(handString: string) { // Assuming currently the Lin Format
+  setHandFromLinString(handString: string) { // Assuming currently the Lin Format
     this.setSuitFromString("S", (handString.match(/S(.*)H/) || []) [0].split(/[SH]/)[1]);
     this.setSuitFromString("H", (handString.match(/H(.*)D/) || []) [0].split(/[HD]/)[1]);
     this.setSuitFromString("D", (handString.match(/D(.*)C/) || []) [0].split(/[DC]/)[1]);
     this.setSuitFromString("C", (handString.match(/C(.*)$/) || []) [0].substr(1));
+  }
+
+  setHandFromPBNString(handString: string) { // Assuming currently the PBN Format
+    let direction = handString.substr(0, 1);
+    const regex = /.(\w*)\.(\w*)\.(\w*)\.(\w*)/;
+    const r = regex.exec(handString);
+    if (r) {
+      this.setSuitFromString("S", r[0]);
+      this.setSuitFromString("H", r[1]);
+      this.setSuitFromString("D", r[2]);
+      this.setSuitFromString("C", r[3]);
+    }
   }
 
   setSuitFromString(suitEN: string, valuesEN: string) {
@@ -88,7 +100,7 @@ export class Hand {
     this.cards[suit].reduce((a, b) => a + this.points(b), 0);
   }
 
-  points(c: string) : number{
+  points(c: string): number {
     if (c === 'A')
       return 4;
     if (c === 'K')
@@ -100,8 +112,8 @@ export class Hand {
     return 0
   }
 
-  getHandString() : string {
-    return this.cards[3].slice().reverse().join("")+"."+this.cards[2].slice().reverse().join("")+"."+this.cards[1].slice().reverse().join("")+"."+this.cards[0].slice().reverse().join("");
+  getHandString(): string {
+    return this.cards[3].slice().reverse().join("") + "." + this.cards[2].slice().reverse().join("") + "." + this.cards[1].slice().reverse().join("") + "." + this.cards[0].slice().reverse().join("");
   }
 
 }

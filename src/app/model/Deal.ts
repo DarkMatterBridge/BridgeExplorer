@@ -41,10 +41,10 @@ export class Deal {
 
   getBoard(): Board {
     const board = new Board();
-    board.southHand.setHandFromString(this.printHand(1));
-    board.westHand.setHandFromString(this.printHand(2));
-    board.northHand.setHandFromString(this.printHand(3));
-    board.eastHand.setHandFromString(this.printHand(4));
+    board.southHand.setHandFromLinString(this.printLinHand(1));
+    board.westHand.setHandFromLinString(this.printLinHand(2));
+    board.northHand.setHandFromLinString(this.printLinHand(3));
+    board.eastHand.setHandFromLinString(this.printLinHand(4));
     board.reverseCardsInSuits();
     return board;
   }
@@ -76,7 +76,7 @@ export class Deal {
     return new DealHand(this.cards.slice(d * 13 - 13, d * 13));
   }
 
-  printHand(d: number) {
+  printLinHand(d: number) {
     let cards = this.getSortedHand(d);
     let suit: number;
     let out = "";

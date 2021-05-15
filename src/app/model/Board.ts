@@ -12,15 +12,16 @@ export class Board {
   northHand: Hand = new Hand();
   eastHand: Hand = new Hand();
 
-  players = new Array();
+  players = [];
+
   biddingSequence: BiddingSequence = new BiddingSequence();
 
   intialized = false;
 
   importLinObject(linobject: LinObject) {
-    this.southHand.setHandFromString(linobject.south());
-    this.westHand.setHandFromString(linobject.west());
-    this.northHand.setHandFromString(linobject.north());
+    this.southHand.setHandFromLinString(linobject.south());
+    this.westHand.setHandFromLinString(linobject.west());
+    this.northHand.setHandFromLinString(linobject.north());
     this.constructEastHand();
     this.biddingSequence.bids = linobject.bids();
     this.biddingSequence.dealer = linobject.dealer();
@@ -58,17 +59,12 @@ export class Board {
   }
 
   setHands(d: Deal) {
-    this.southHand.setHandFromString(d.printHand(1));
-    this.westHand.setHandFromString(d.printHand(2));
-    this.northHand.setHandFromString(d.printHand(3));
-    this.eastHand.setHandFromString(d.printHand(4));
+    this.southHand.setHandFromLinString(d.printLinHand(1));
+    this.westHand.setHandFromLinString(d.printLinHand(2));
+    this.northHand.setHandFromLinString(d.printLinHand(3));
+    this.eastHand.setHandFromLinString(d.printLinHand(4));
     this.reverseCardsInSuits();
     this.intialized = true;
-  }
-
-  importBnodeSequence(bns: BNodeSequence) {
-    this.biddingSequence = new BiddingSequence();
-    this.biddingSequence.importBnodeSequence(bns);
   }
 
   importCanonicalSequence(bns: BNode[], dealer: string) {
@@ -110,4 +106,15 @@ export class Board {
     this.biddingSequence.bids = b.biddingSequence.bids;
     this.biddingSequence.dealer = b.biddingSequence.dealer;
   }
+
+  importPBNObject() {
+
+  }
+
+  importPBNHands(hands: string[]) {
+
+  }
+
+
+
 }

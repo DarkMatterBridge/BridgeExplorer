@@ -30,6 +30,8 @@ import { DealViewComponent } from './deal-view/deal-view.component';
 import { BiddingboxComponent } from './biddingbox/biddingbox.component';
 import { DdTricksComponent } from './dd-tricks/dd-tricks.component';
 import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
+import { BoardInputComponent } from './board-input/board-input.component';
+import { BoardEditorComponent } from './board-editor/board-editor.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
     DealViewComponent,
     BiddingboxComponent,
     DdTricksComponent,
-    StrainSymbolComponent
+    StrainSymbolComponent,
+    BoardInputComponent,
+    BoardEditorComponent
   ],
   imports: [
     BrowserModule,
