@@ -29,10 +29,10 @@ export class PBNObject {
    const a = regex.exec(deal);
    if (a != null) {
      let hands = [];
-     hands.push(a[0]);
      hands.push(a[1]);
      hands.push(a[2]);
      hands.push(a[3]);
+     hands.push(a[4]);
      return hands;
    }
    throw  new Error("invalid PBN: hands missing");

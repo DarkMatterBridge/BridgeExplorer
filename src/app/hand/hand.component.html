@@ -1,7 +1,7 @@
-<div *ngFor="let suit of hand.cards.reverse(); let i = index">
+<div *ngFor="let suit of hand.cards.slice().reverse(); let i = index">
 
   <app-strain-symbol [suitNo]="3-i"></app-strain-symbol>
-<span *ngFor="let card of suit.reverse()"> {{card}}</span>
+<span *ngFor="let card of suit"> {{card}}</span>
 </div>
 
 

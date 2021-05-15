@@ -15,7 +15,6 @@ export class BoardComponent implements OnInit, OnChanges {
   @Input()
   board!: Board;
   biddingBoxVisible = false;
-  boardJSON!: string;
 
   constructor(private crossOriginService: CrossOriginService) {
   }
@@ -33,12 +32,11 @@ export class BoardComponent implements OnInit, OnChanges {
   }
 
   save() {
-    this.boardJSON = this.board.export("board");
+    this.board.export("board");
   }
 
   load() {
-    // this.board.importFromLocalStorage("board");
-    this.board.importX(this.boardJSON);
+    this.board.importFromLocalStorage("board");
   }
 
 }

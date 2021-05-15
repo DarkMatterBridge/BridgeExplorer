@@ -4,6 +4,7 @@ import {BiddingSequence} from "./BiddingSequence";
 import {Deal} from "./Deal";
 import {BNodeSequence} from "./BNodeSequence";
 import {BNode} from "./BNode";
+import {PBNObject} from "./PBNObject";
 
 export class Board {
 
@@ -23,6 +24,7 @@ export class Board {
     this.westHand.setHandFromLinString(linobject.west());
     this.northHand.setHandFromLinString(linobject.north());
     this.constructEastHand();
+    this.reverseCardsInSuits();
     this.biddingSequence.bids = linobject.bids();
     this.biddingSequence.dealer = linobject.dealer();
     this.players = linobject.players();
@@ -51,11 +53,22 @@ export class Board {
     this.eastHand.reverseSuits();
   }
 
-  constructDealString() {
-    return "W:" + this.westHand.getHandString() + "x"
-      + this.northHand.getHandString() + "x"
-      + this.eastHand.getHandString() + "x"
+  constructDealString(separator: string) {
+    return "W:" + this.westHand.getHandString() + separator
+      + this.northHand.getHandString() + separator
+      + this.eastHand.getHandString() + separator
       + this.southHand.getHandString();
+  }
+
+  importFromDealString(dealstring: string, separator: string) {
+    this.resetHands();
+    console.log(dealstring);
+    let hands = PBNObject.hands(dealstring);
+    console.log(hands);
+    this.westHand.setHandFromPBNString(hands[0]);
+    this.northHand.setHandFromPBNString(hands[1]);
+    this.eastHand.setHandFromPBNString(hands[2]);
+    this.southHand.setHandFromPBNString(hands[3]);
   }
 
   setHands(d: Deal) {
@@ -63,7 +76,7 @@ export class Board {
     this.westHand.setHandFromLinString(d.printLinHand(2));
     this.northHand.setHandFromLinString(d.printLinHand(3));
     this.eastHand.setHandFromLinString(d.printLinHand(4));
-    this.reverseCardsInSuits();
+    // this.reverseCardsInSuits();
     this.intialized = true;
   }
 
@@ -77,35 +90,25 @@ export class Board {
     this.biddingSequence = new BiddingSequence();
   }
 
+  resetHands() {
+    this.southHand = new Hand();
+    this.westHand = new Hand();
+    this.northHand = new Hand();
+    this.eastHand = new Hand();
+  }
+
   export(name: string) {
-    let json = JSON.stringify(this);
-    console.log(json)
-    localStorage.setItem(name, json);
-
-    let json2 = localStorage.getItem(name);
-    console.log(json2)
-    if (json2)
-      JSON.parse(json2) as Board;
-
-    return JSON.stringify(this);
+    let dealstring = (this.constructDealString(" "));
+    localStorage.setItem(name, dealstring);
+    this.importFromDealString(dealstring, " ");
   }
 
   importFromLocalStorage(name: string) {
-    let json = localStorage.getItem(name);
-    console.log(json)
-    if (json)
-      import(json);
+    let dealstring = localStorage.getItem(name);
+    if (dealstring)
+      this.importFromDealString(dealstring, " ");
   }
 
-  importX(json: string) {
-    let b = JSON.parse(json) as Board;
-    this.southHand.cards = b.southHand.cards;
-    this.westHand.cards = b.westHand.cards;
-    this.northHand.cards = b.northHand.cards;
-    this.eastHand.cards = b.eastHand.cards;
-    this.biddingSequence.bids = b.biddingSequence.bids;
-    this.biddingSequence.dealer = b.biddingSequence.dealer;
-  }
 
   importPBNObject() {
 
@@ -114,7 +117,6 @@ export class Board {
   importPBNHands(hands: string[]) {
 
   }
-
 
 
 }

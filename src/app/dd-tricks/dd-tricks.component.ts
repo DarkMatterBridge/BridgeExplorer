@@ -31,7 +31,7 @@ export class DdTricksComponent implements OnInit, OnChanges {
   }
 
   getDDAnalysis() {
-    const dealstring = this.board.constructDealString();
+    const dealstring = this.board.constructDealString("x");
     // window.open("https://dds.bridgewebs.com/cgi-bin/bsol2/ddummy?request=m&dealstr=W:J6.742.KQ85.J972x7432.AKQJT95.7.5xA5.6.A964.AQT864xKQT98.83.JT32.K3&vul=None");
     let url = this.urlBridgewebs + dealstring + this.postfix;
     this.crossOriginService.loadFromUrl(url, (e: string) => this.showResponse(e));
