@@ -64,11 +64,12 @@ export class Board {
     this.resetHands();
     console.log(dealstring);
     let hands = PBNObject.hands(dealstring);
-    console.log(hands);
-    this.westHand.setHandFromPBNString(hands[0]);
-    this.northHand.setHandFromPBNString(hands[1]);
-    this.eastHand.setHandFromPBNString(hands[2]);
-    this.southHand.setHandFromPBNString(hands[3]);
+    let direction = dealstring.substr(0,1);
+    let dirNum = direction.getDirectionNo();
+    this.westHand.setHandFromPBNString(hands[(4+1-dirNum)%4]);
+    this.northHand.setHandFromPBNString(hands[(4+2-dirNum)%4]);
+    this.eastHand.setHandFromPBNString(hands[(4+3-dirNum)%4]);
+    this.southHand.setHandFromPBNString(hands[(4+0-dirNum)%4]);
   }
 
   setHands(d: Deal) {

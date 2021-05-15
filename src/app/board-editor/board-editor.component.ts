@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Board} from "../model/Board";
 
 @Component({
@@ -9,9 +9,16 @@ import {Board} from "../model/Board";
 export class BoardEditorComponent implements OnInit {
 
   board = new Board();
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
+
+  importHands(hands: string) {
+    this.board.importFromDealString(hands," ");
+  }
+
 
 }

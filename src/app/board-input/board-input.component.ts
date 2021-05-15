@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PBNObject} from "../model/PBNObject";
+import {BNode} from "../model/BNode";
 
 @Component({
   selector: 'app-board-input',
@@ -10,6 +11,8 @@ export class BoardInputComponent implements OnInit {
 
   contentx : string = "";
 
+  @Output() $giveBoard = new EventEmitter<string>();
+
   constructor() {
   }
 
@@ -19,8 +22,7 @@ export class BoardInputComponent implements OnInit {
   processx() {
     console.log(this.contentx);
     let hands = PBNObject.hands(this.contentx);
-    
-    alert(this.contentx+"aa");
+    this.$giveBoard.next(this.contentx);
 
   }
 }

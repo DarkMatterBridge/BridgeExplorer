@@ -27,7 +27,7 @@ export class PBNObject {
  static hands(deal: string): string[] {
    const regex = /(.*)\s(.*)\s(.*)\s(.*)/;
    const a = regex.exec(deal);
-   if (a != null) {
+   if (a != null && a.length == 5) {
      let hands = [];
      hands.push(a[1]);
      hands.push(a[2]);
@@ -35,8 +35,7 @@ export class PBNObject {
      hands.push(a[4]);
      return hands;
    }
-   throw  new Error("invalid PBN: hands missing");
-
+   throw  new Error("invalid PBN: hands incomplete");
  }
 
 //   [Deal
