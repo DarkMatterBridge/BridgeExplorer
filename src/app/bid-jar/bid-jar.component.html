@@ -1,28 +1,51 @@
 <div class="bidjar">
-  <a [routerLink]="" (click)="saveIntoLocalStorage()" matTooltip="Save to local storage">
-    <mat-icon aria-hidden="false" aria-label="Example home icon">save</mat-icon>
-  </a>
-  <a [routerLink]="" (click)="loadFromLocalStorage()" matTooltip="Retrieve from local storage">
-    <mat-icon aria-hidden="false" aria-label="Example home icon">restore_page</mat-icon>
-  </a>
-
-  <a [routerLink]="" (click)="downloadSystem()" matTooltip="Download System as JSON">
-    <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
-  </a>
-
-  <a [routerLink]="" (click)="triggerFileUpload()" matTooltip="Upload JSON-based System">
-
-    <mat-icon aria-hidden="false" aria-label="Example home icon">upload</mat-icon>
-  </a>
-
-  <a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> -
-  <a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
-  <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
-
   <p>
+
+    <div class="topline">
     <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"
                         (bNodeSequenceEventEmitter)="activateDealView2($event)"
     ></app-bnode-sequence>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu2" style="text-align: right">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu2="matMenu">
+
+      <a [routerLink]="" (click)="saveIntoLocalStorage()" matTooltip="Save to local storage">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">save</mat-icon>
+      </a>
+      <a [routerLink]="" (click)="loadFromLocalStorage()" matTooltip="Retrieve from local storage">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">restore_page</mat-icon>
+      </a>
+
+      <a [routerLink]="" (click)="downloadSystem()" matTooltip="Download System as JSON">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
+      </a>
+
+      <a [routerLink]="" (click)="triggerFileUpload()" matTooltip="Upload JSON-based System">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">upload</mat-icon>
+      </a>
+
+
+      <button mat-menu-item>
+        <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
+      </button>
+      <button mat-menu-item>
+        <a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> -
+      </button>
+      <button mat-menu-item>
+        <a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
+      </button>
+
+
+    </mat-menu>
+</div>
+
+
+
+
+
+
   <table>
     <tr>
       <td>

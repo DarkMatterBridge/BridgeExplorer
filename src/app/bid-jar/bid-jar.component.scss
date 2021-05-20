@@ -2,13 +2,14 @@ table td {
   vertical-align: top;
 }
 
-
 .mat-icon {
   //font-size: 15px;
 }
 
 .bidjar {
-  background: #eeffff;
+  background: white;
+  display: inline-block;
+  margin: 10px;
 }
 
 .con {
@@ -24,4 +25,15 @@ table td {
 
 .opp {
   background: #ffe480;
+}
+
+.topline {
+  display:grid;
+  grid-template-columns: 1fr auto;
+}
+
+
+.mat-menu-trigger {
+  background: white;
+  border: none;
 }
