@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CrossOriginService} from "../cross-origin.service";
-import {BridgeRespsonse} from "../model/BridgeRespsonse";
+import {CrossOriginService} from '../cross-origin.service';
+import * as cheerio from 'cheerio';
 
 @Component({
   selector: 'app-bbo-hand-records',
@@ -9,21 +9,30 @@ import {BridgeRespsonse} from "../model/BridgeRespsonse";
 })
 export class BboHandRecordsComponent implements OnInit {
 
-  url = "";
-  response = "";
+  url = 'https://www.bridgebase.com/myhands/hands.php?tourney=TT%3A31123%3A%2Cb%3D6%2Cr%3D5%2Cv%3D2%3A%2C-1621617668-&username=roesrath';
+  response = '';
+  parsed = '';
+  selector = 'table';
   constructor(private crossOriginService: CrossOriginService) { }
 
   ngOnInit(): void {
   }
 
-
-  loadUrl() {
+  loadUrl(): void {
     this.crossOriginService.loadFromUrl(this.url, (e: string) => this.getResponse(e));
   }
 
 
-  getResponse(response: string) {
+  getResponse(response: string): void{
     this.response = response;
   }
 
+  parse(): void {
+    const c = cheerio.load(this.response);
+    const parsed = c(this.selector);
+    console.log(parsed);
+    parsed.each( (idx, elem) => { console.log( c(elem).attr('onclick')); });
+    this.parsed = parsed.text();
+
+  }
 }
