@@ -25,19 +25,19 @@ export class DdTricksComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.ddtricks = '';
     this.ddTricks = [];
   }
 
-  getDDAnalysis() {
+  getDDAnalysis(): void {
     const dealstring = this.board.constructDealString('x');
     // window.open("https://dds.bridgewebs.com/cgi-bin/bsol2/ddummy?request=m&dealstr=W:J6.742.KQ85.J972x7432.AKQJT95.7.5xA5.6.A964.AQT864xKQT98.83.JT32.K3&vul=None");
     const url = this.urlBridgewebs + dealstring + this.postfix;
     this.crossOriginService.loadFromUrlViaMessage(url, (e: string) => this.showResponse(e));
   }
 
-  parseDDTricks() {
+  parseDDTricks(): void {
     for (let i = 0; i < 4; i++) {
       this.ddTricks[i] = [];
       for (let j = 0; j < 5; j++) {
@@ -58,7 +58,7 @@ export class DdTricksComponent implements OnInit, OnChanges {
     }
   }
 
-  showResponse(response: string) {
+  showResponse(response: string): void {
     const br = JSON.parse(response) as BridgeRespsonse;
     alert(response);
     this.ddtricks = br.sess.ddtricks;
