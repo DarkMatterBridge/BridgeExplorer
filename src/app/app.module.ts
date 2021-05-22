@@ -33,6 +33,7 @@ import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
 import { BoardInputComponent } from './board-input/board-input.component';
 import { BoardEditorComponent } from './board-editor/board-editor.component';
 import { BboHandRecordsComponent } from './bbo-hand-records/bbo-hand-records.component';
+import { WebScraperComponent } from './web-scraper/web-scraper.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { BboHandRecordsComponent } from './bbo-hand-records/bbo-hand-records.com
     StrainSymbolComponent,
     BoardInputComponent,
     BoardEditorComponent,
-    BboHandRecordsComponent
+    BboHandRecordsComponent,
+    WebScraperComponent
   ],
   imports: [
     BrowserModule,
