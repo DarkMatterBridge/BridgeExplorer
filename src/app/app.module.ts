@@ -32,6 +32,7 @@ import { DdTricksComponent } from './dd-tricks/dd-tricks.component';
 import { StrainSymbolComponent } from './strain-symbol/strain-symbol.component';
 import { BoardInputComponent } from './board-input/board-input.component';
 import { BoardEditorComponent } from './board-editor/board-editor.component';
+import { BboHandRecordsComponent } from './bbo-hand-records/bbo-hand-records.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { BoardEditorComponent } from './board-editor/board-editor.component';
     DdTricksComponent,
     StrainSymbolComponent,
     BoardInputComponent,
-    BoardEditorComponent
+    BoardEditorComponent,
+    BboHandRecordsComponent
   ],
   imports: [
     BrowserModule,

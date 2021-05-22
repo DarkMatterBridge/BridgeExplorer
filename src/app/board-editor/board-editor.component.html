@@ -1,2 +1,3 @@
 <app-board [board]="board"></app-board>
-<app-board-input ($giveBoard)="importHands($event)"></app-board-input>
+<app-board-input ($giveBoard)="importHands($event)" ($givePBN)="generateBoard($event)"
+($giveLin)="generateBoardFromLin($event)" ></app-board-input>

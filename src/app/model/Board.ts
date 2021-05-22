@@ -2,7 +2,6 @@ import {Hand} from "./Hand";
 import {LinObject} from "./LinObject";
 import {BiddingSequence} from "./BiddingSequence";
 import {Deal} from "./Deal";
-import {BNodeSequence} from "./BNodeSequence";
 import {BNode} from "./BNode";
 import {PBNObject} from "./PBNObject";
 
@@ -13,7 +12,7 @@ export class Board {
   northHand: Hand = new Hand();
   eastHand: Hand = new Hand();
 
-  players = [];
+  players :string[] = [];
 
   biddingSequence: BiddingSequence = new BiddingSequence();
 
@@ -121,3 +120,8 @@ export class Board {
 
 
 }
+// &7C > |
+// , > ,
+//
+//                                                            pn|desert,Chricker,pfreche,cg64|st||md|3S368AHTJKAD35C37A,S459TJH2349D9C8TK,S7QKH7D248TQKAC45,|rh||ah|Board 5|sv|n|mb|1C|an|16+|mb|p|mb|2H|an|14+ BAL|mb|p|mb|3D|mb|p|mb|3H|an|4er LÃ¤nge kein !D Fit|mb|p|mb|4D|an|SI, Turbo|mb|p|mb|4S|an|ungerade Anzahl KC, Pik Cue|mb|p|mb|5D|mb|p|mb|5H|an|Coeur 2t Rundenkontrolle 3 KC|mb|p|mb|7D|mb|p|mb|p|mb|p|pg||pc|D6|pc|D3|pc|D9|pc|DT|pg||mc|13|
+// https://www.bridgebase.com/tools/handviewer.html?bbo=y&lin=pn|desert,Chricker,pfreche,cg64|st||md|3S368AHTJKAD35C37A,S459TJH2349D9C8TK,S7QKH7D248TQKAC45,|rh||ah|Board%205|sv|n|mb|1C|an|16%2B|mb|p|mb|2H|an|14%2B%20BAL|mb|p|mb|3D|mb|p|mb|3H|an|4er%20L%C3%83%C2%A4nge%20kein%20%21D%20Fit|mb|p|mb|4D|an|SI,%20Turbo|mb|p|mb|4S|an|ungerade%20Anzahl%20KC,%20Pik%20Cue|mb|p|mb|5D|mb|p|mb|5H|an|Coeur%202t%20Rundenkontrolle%203%20KC|mb|p|mb|7D|mb|p|mb|p|mb|p|pc|D6|pc|D3|pc|D9|pc|DT|mc|13|
