@@ -1,3 +1,11 @@
 <div> <input [(ngModel)]="url" size="150"/></div>
+<div> <input [(ngModel)]="selector" size="100"/></div>
+
+<button (click)="parse()">Parse</button>
+<div> {{parsed}}</div>
 <button (click)="loadUrl()">get Hands</button>
 <div> {{response}}</div>
+
+
+
+<!--https://www.bridgebase.com/myhands/hands.php?tourney=TT%3A31123%3A%2Cb%3D6%2Cr%3D5%2Cv%3D2%3A%2C-1621617668-&username=roesrath&from_login=0-->
