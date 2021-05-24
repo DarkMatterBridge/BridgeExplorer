@@ -52,7 +52,7 @@ export class Board {
     this.eastHand.reverseSuits();
   }
 
-  constructDealString(separator: string): void {
+  constructDealString(separator: string): string {
     return 'W:' + this.westHand.getHandString() + separator
       + this.northHand.getHandString() + separator
       + this.eastHand.getHandString() + separator
