@@ -12,11 +12,11 @@ export class DdTricksComponent implements OnInit, OnChanges {
 
   @Input() board: Board = new Board();
 
-  ddtricks = '';
+  ddtricks = ''; // contains all tricks as string for each direction/strain
   urlBridgewebs = 'https://dds.bridgewebs.com/cgi-bin/bsol2/ddummy?request=m&dealstr=';
   postfix = '&vul=None';
 
-  ddTricks: string[][] = [];
+  ddTrickTable: string[][] = [];
   direction = ['N', 'S', 'E', 'W'];
 
   constructor(private crossOriginService: CrossOriginService) {
@@ -27,32 +27,32 @@ export class DdTricksComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.ddtricks = '';
-    this.ddTricks = [];
+    this.ddTrickTable = [];
   }
 
   getDDAnalysis(): void {
     const dealstring = this.board.constructDealString('x');
-    // window.open("https://dds.bridgewebs.com/cgi-bin/bsol2/ddummy?request=m&dealstr=W:J6.742.KQ85.J972x7432.AKQJT95.7.5xA5.6.A964.AQT864xKQT98.83.JT32.K3&vul=None");
     const url = this.urlBridgewebs + dealstring + this.postfix;
-    this.crossOriginService.loadFromUrlViaMessage(url, (e: string) => this.showResponse(e));
+    // this.crossOriginService.loadFromUrlViaMessage(url, (e: string) => this.showResponse(e));
+    this.crossOriginService.loadDirectFromUrl(url).subscribe( response => this.showResponse(response));
   }
 
   parseDDTricks(): void {
     for (let i = 0; i < 4; i++) {
-      this.ddTricks[i] = [];
+      this.ddTrickTable[i] = [];
       for (let j = 0; j < 5; j++) {
-        this.ddTricks[i][j] = this.ddtricks.charAt(i * 5 + j);
-        if (this.ddTricks[i][j] === 'a') {
-          this.ddTricks[i][j] = '10';
+        this.ddTrickTable[i][j] = this.ddtricks.charAt(i * 5 + j);
+        if (this.ddTrickTable[i][j] === 'a') {
+          this.ddTrickTable[i][j] = '10';
         }
-        if (this.ddTricks[i][j] === 'b') {
-          this.ddTricks[i][j] = '11';
+        if (this.ddTrickTable[i][j] === 'b') {
+          this.ddTrickTable[i][j] = '11';
         }
-        if (this.ddTricks[i][j] === 'c') {
-          this.ddTricks[i][j] = '12';
+        if (this.ddTrickTable[i][j] === 'c') {
+          this.ddTrickTable[i][j] = '12';
         }
-        if (this.ddTricks[i][j] === 'd') {
-          this.ddTricks[i][j] = '13';
+        if (this.ddTrickTable[i][j] === 'd') {
+          this.ddTrickTable[i][j] = '13';
         }
       }
     }

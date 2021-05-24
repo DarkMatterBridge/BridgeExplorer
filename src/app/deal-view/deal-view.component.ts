@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {Board} from "../model/Board";
-import {Deal} from "../model/Deal";
-import {DealCondition} from "../model/DealCondition";
-import {FileService} from "../services/file.service";
-import {BNodeSequence} from "../model/BNodeSequence";
-import {BiddingSequence} from "../model/BiddingSequence";
-import {BNode} from "../model/BNode";
+import {Board} from '../model/Board';
+import {Deal} from '../model/Deal';
+import {DealCondition} from '../model/DealCondition';
+import {FileService} from '../services/file.service';
+import {BNodeSequence} from '../model/BNodeSequence';
+import {BiddingSequence} from '../model/BiddingSequence';
+import {BNode} from '../model/BNode';
 
 @Component({
   selector: 'app-deal-view',
@@ -36,8 +36,9 @@ export class DealViewComponent implements OnInit, OnChanges {
 //     this.board = this.deal.getBoard();
 // //    this.board.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
 //     this.board.biddingSequence.dealer = "W";
-    if (!this.board.intialized)
+    if (!this.board.intialized) {
       this.generateBoard();
+    }
   }
 
   ngOnChanges(): void {
@@ -51,7 +52,7 @@ export class DealViewComponent implements OnInit, OnChanges {
 
     this.board.importCanonicalSequence(this.bNodeSequence.rbNodes, this.dealerForImport);
 
-    this.board.biddingSequence.dealer = "W";
+    this.board.biddingSequence.dealer = 'W';
     this.generateBoard(true);
   }
 
@@ -59,14 +60,16 @@ export class DealViewComponent implements OnInit, OnChanges {
 
     if (this.parsingOK[0] && this.parsingOK[1] && this.parsingOK[2] && this.parsingOK[3]) {
       let n = 0;
-      if (newTry)
+      if (newTry) {
         this.deal.shuffle();
+      }
       while (!this.dealCondition.check(this.deal) && n < this.maxTries) {
         n++;
         this.deal.shuffle();
       }
       this.tries = n;
 
+      this.board = new Board();
       this.board.setHands(this.deal);
       // let newBoard = this.deal.getBoard();
       // console.log(this.board.biddingSequence.bids);
@@ -76,16 +79,18 @@ export class DealViewComponent implements OnInit, OnChanges {
       //
       //  // newBoard.biddingSequence.bids = this.bNodeSequence.bids.slice(1);
       // this.board = newBoard;
-    } else
-      alert("Parsing Error");
+    } else {
+      alert('Parsing Error');
+    }
   }
 
-  parseDirection(direction: number) {
+  parseDirection(direction: number): void {
     this.parsingOK[direction] = this.dealCondition.directionConditions[direction].parseCondition();
   }
 
-  getTricks() {
-    this.fileService.getTricks().subscribe(
-      a => alert(a));
+  getTricks(): void {
+    const x = this.board.constructBcaclString();
+    alert(x);
+    navigator.clipboard.writeText(x);
   }
 }

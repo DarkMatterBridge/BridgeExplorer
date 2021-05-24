@@ -22,12 +22,13 @@ export class WebScraperComponent implements OnInit {
 
   loadUrl(): void {
     this.crossOriginService.loadFromUrlViaMessage(this.url, (e: string) => this.getResponse(e));
-    //   this.crossOriginService.loadFromUrl(this.url, (e: string) => this.getResponse(e));
+      // this.crossOriginService.loadFromUrl(this.url, (e: string) => this.getResponse(e));
+    // this.crossOriginService.xaahttp(this.url,  (e: string) => this.getResponse(e));
   }
 
 
   getResponse(response: string): void {
-    alert(response)
+    alert(response);
     this.response = response;
   }
 
