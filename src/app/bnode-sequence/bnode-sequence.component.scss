@@ -1,7 +1,8 @@
 .fett {
   color: darkred;
-  border: 2px solid red;
+  //border: 2px solid red;
  font-weight: bold;
+  box-shadow: 0 3px 0 darkgray;
 }
 
 .opp {
@@ -12,6 +13,12 @@
 .b-bidding-sequence {
   margin: 10px;
   border: 1px solid #555;
-  padding: 3px;
+  padding: 0;
   display: inline-block;
+line-height: 6px;
+
+}
+
+span {
+  vertical-align: middle;
 }

@@ -4,8 +4,6 @@ import {Deal} from '../model/Deal';
 import {DealCondition} from '../model/DealCondition';
 import {FileService} from '../services/file.service';
 import {BNodeSequence} from '../model/BNodeSequence';
-import {BiddingSequence} from '../model/BiddingSequence';
-import {BNode} from '../model/BNode';
 
 @Component({
   selector: 'app-deal-view',
@@ -94,3 +92,11 @@ export class DealViewComponent implements OnInit, OnChanges {
     navigator.clipboard.writeText(x);
   }
 }
+
+//
+// content-script
+//   install
+// html von bis
+//   construct loop (2 weeks intervall)
+//   run loop > load hands
+//   save result into storage

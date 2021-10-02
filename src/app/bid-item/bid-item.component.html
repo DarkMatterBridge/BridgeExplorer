@@ -2,7 +2,7 @@
   <input [(ngModel)]="bnode.bid" size="2"/>
 </td>
 <td *ngIf="!newNode" (click)="selectBid(bnode)" class="min20" [ngClass]="{'opp': bnode.ob}"
-style="float:right" class="pointer">
+style="float:right; font-size: 13pt" class="pointer">
 <app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
 </td>
 

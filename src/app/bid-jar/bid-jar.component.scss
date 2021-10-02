@@ -9,15 +9,17 @@ table td {
 .bidjar {
   background: white;
   display: inline-block;
-  margin-left: 50px;
+  vertical-align: middle;
+  margin-left: 40px;
   margin-top: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .con {
-  background: green;
-  color: white;
-  margin: 3px;
+  //background: green;
+  //color: white;
+  margin: 5px;
+  font-size: 13pt;
 }
 .desc {
   background: blue;
