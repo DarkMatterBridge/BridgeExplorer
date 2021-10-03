@@ -13,7 +13,7 @@ export class BridgeSystemManager {
     node.nodes.push(subNode);
   }
 
-  addBid(node: BNode, bid: string, con: string): void {
+  addBid(node: BNode, bid: string, con: string): BNode {
     const b = new BNode(bid, new Array<BNode>(), con);
     this.addNode(node, b);
     return b;
