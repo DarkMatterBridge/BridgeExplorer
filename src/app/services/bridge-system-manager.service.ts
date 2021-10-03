@@ -1,40 +1,39 @@
 import {Injectable} from '@angular/core';
-import {BNode} from "../model/BNode";
-import {FileService} from "./file.service";
+import {BNode} from '../model/BNode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BridgeSystemManager {
 
-  constructor(private fileService: FileService) {
+  constructor() {
   }
 
-  addNode(node: BNode, subNode: BNode) {
+  addNode(node: BNode, subNode: BNode): void {
     node.nodes.push(subNode);
   }
 
-  addBid(node: BNode, bid: string, con: string) {
-    let b = new BNode(bid, new Array<BNode>(), con);
+  addBid(node: BNode, bid: string, con: string): void {
+    const b = new BNode(bid, new Array<BNode>(), con);
     this.addNode(node, b);
     return b;
   }
 
-  getNode(bidList: Map<number, BNode>, id: number) {
+  getNode(bidList: Map<number, BNode>, id: number): BNode |undefined{
     return bidList.get(id);
   }
 
-  getBidAtCurrentNode(node: BNode, id: number | undefined) {
-    const x = node.nodes.find(bid => bid.id == id);
-    if (x != undefined) {
+  getBidAtCurrentNode(node: BNode, id: number | undefined): BNode {
+    const x = node.nodes.find(bid => bid.id === id);
+    if (x !== undefined) {
       return x;
     } else {
-      throw new Error("given id " + id + " undefined");
+      throw new Error('given id ' + id + ' undefined');
     }
   }
 
   determineHighestId(node: BNode): number {
-    return node.nodes.length == 0 ? -1 : Math.max(...node.nodes.map(b => Math.max(b.id, this.determineHighestId(b))));
+    return node.nodes.length === 0 ? -1 : Math.max(...node.nodes.map(b => Math.max(b.id, this.determineHighestId(b))));
   }
 
   determineAndSetHighestId(node: BNode): number {
@@ -43,18 +42,18 @@ export class BridgeSystemManager {
   }
 
   determineLinkedNodes(bidList: Map<number, BNode>): BNode[] {
-    return [...bidList].filter(([id, node]) => node.linkedId != undefined).map(([a, b]) => b);
+    return [...bidList].filter(([_, node]) => node.linkedId !== undefined).map(([_, b]) => b);
   }
 
-  connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>) {
+  connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>): void{
 //    alert("linked nodes: "+ linkedNodes.length);
-    for (let nwl of linkedNodes) {
-      nwl.linkedNode = bidList.get(nwl.linkedId||-1);
-      alert(nwl.linkedId+" "+nwl.linkedNode?.bid);
+    for (const nwl of linkedNodes) {
+      nwl.linkedNode = bidList.get(nwl.linkedId || -1);
+      // alert(nwl.linkedId+" "+nwl.linkedNode?.bid);
     }
   }
 
-  makeUsable(bn: BNode) {
+  makeUsable(bn: BNode): void {
     const bidList = this.getTotalBidList(bn);
     this.connectLinkedNodesW(this.determineLinkedNodes(bidList), bidList);
     this.determineAndSetHighestId(bn);
@@ -62,21 +61,22 @@ export class BridgeSystemManager {
 
   determineLinkedNodesDirect(node: BNode): BNode[] {
     const linkedNodes = new Array<BNode>();
-    if (node.linkedId != undefined) {
+    if (node.linkedId !== undefined) {
       linkedNodes.push(node);
     }
     if (node.nodes.length > 0) {
       return linkedNodes.concat(node.nodes.map(b => this.determineLinkedNodesDirect(b)).reduce((accumulator, value) => accumulator.concat(value), []));
-    } else
+    } else {
       return linkedNodes;
+    }
   }
 
-  connectLinkedNodesDirect(node: BNode, bidList: Map<number, BNode>) {
+  connectLinkedNodesDirect(node: BNode, bidList: Map<number, BNode>): void {
     this.connectLinkedNodesWorker(bidList, this.determineLinkedNodesDirect(node));
   }
 
-  connectLinkedNodesWorker(bidlist: Map<number, BNode>, nodesWithLinks: BNode[]) {
-    for (let nwl of nodesWithLinks) {
+  connectLinkedNodesWorker(bidlist: Map<number, BNode>, nodesWithLinks: BNode[]): void {
+    for (const nwl of nodesWithLinks) {
       nwl.linkedNode = bidlist.get(nwl.id);
     }
   }
@@ -85,24 +85,19 @@ export class BridgeSystemManager {
     if (node.nodes.length > 0) {
       return node.nodes.map(b => this.getTotalBidList(b)).reduce((accumulator, value) => new Map([...accumulator, ...value]), new Map()).set(node.id, node);
     } else {
-      const map = new Map();
-      map.set(node.id, node);
-      return map;
+      return new Map([[node.id, node]]);
     }
   }
 
-  persistNode(bnode: BNode) {
+  persistNode(bnode: BNode): void {
     BNode.highestId += 1;
     bnode.id = BNode.highestId;
   }
 
-  materializeLinkeNode(bnode: BNode) {
+  materializeLinkeNode(bnode: BNode): void {
     if (bnode.linkedNode) {
       // bnode.nodes = [...bnode.linkedNode.nodes];
-      console.log(bnode);
-      console.log(this.copyBNode(bnode));
       bnode.nodes = this.copyBNode(bnode.linkedNode).nodes;
-
       bnode.linkedNode = undefined;
       bnode.linkedId = undefined;
     }
@@ -113,7 +108,7 @@ export class BridgeSystemManager {
   }
 
   transformToJson(bnode: BNode): string {
-    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "ob", "linkedId", "linkedNode"]);
+    return JSON.stringify(bnode, ['id', 'bid', 'con', 'desc', 'nodes', 'ob', 'linkedId', 'linkedNode']);
   }
 
 

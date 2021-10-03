@@ -11,7 +11,8 @@
  <app-strain-symbol [strain]="bNodeSequence.bids[i]"></app-strain-symbol>
  </span>
 </span>
-  <span *ngIf="bNodeSequence.isRealBiddingSequence" style="float: right" (click)="emitSequence()"
-  class="pointer" style="padding-left: 2em;">           <mat-icon>preview</mat-icon>
+  <span (click)="generateRandomSequenceFromIndex()"> Random</span>
+  <span *ngIf="bNodeSequence.isRealBiddingSequence"  (click)="emitSequence()"
+  class="pointer" style="padding-left: 2em;float: right">          <mat-icon>preview</mat-icon>
 </span>
 </div>

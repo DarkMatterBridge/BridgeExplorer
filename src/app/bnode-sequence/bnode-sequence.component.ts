@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subject} from "rxjs";
-import {BNode} from "../model/BNode";
-import {BNodeSequence} from "../model/BNodeSequence";
+import {Subject} from 'rxjs';
+import {BNode} from '../model/BNode';
+import {BNodeSequence} from '../model/BNodeSequence';
 
 @Component({
   selector: 'app-bnode-sequence',
@@ -26,7 +26,7 @@ export class BnodeSequenceComponent implements OnInit {
     this.subject.asObservable().subscribe(b => this.addBNode(b));
   }
 
-  addBNode(bnode: BNode) {
+  addBNode(bnode: BNode): void {
     if (bnode === undefined) {
       this.reset();
     } else {
@@ -34,19 +34,23 @@ export class BnodeSequenceComponent implements OnInit {
     }
   }
 
-  selectBid(bn: BNode) {
+  selectBid(bn: BNode): void {
     this.bNodeSequence.setIndexNode(bn);
     this.selectNode.emit(bn);
   }
 
-  reset() {
+  reset(): void {
     this.bNodeSequence.reset();
     this.selectNode.emit(undefined);
   }
 
-  emitSequence() {
+  emitSequence(): void {
     this.bNodeSequence.buildCanonicalSequence();
     this.bNodeSequenceEventEmitter.emit(this.bNodeSequence);
+  }
+
+  generateRandomSequenceFromIndex(): void {
+    this.bNodeSequence.generateRandomSequenceFromIndex();
   }
 
 }
