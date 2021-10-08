@@ -29,6 +29,7 @@ export class ContainerComponent implements OnInit {
     b1M.linkedId = 2;
     const bidlist = this.bsm.getTotalBidList(this.biddingSystem);
     console.log('bidlist');
+    console.log('bidlist');
     console.log(bidlist);
 
     let x = this.bsm.determineLinkedNodesDirect(this.biddingSystem);
