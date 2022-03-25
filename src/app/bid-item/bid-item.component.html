@@ -13,7 +13,7 @@ style="float:right; font-size: 13pt" class="pointer">
 </td>
 <td *ngIf="normal">
   <input [(ngModel)]="bnode.con" size="50" (input)="checkCondition()"
-         [ngClass]="{'parsingNotOk': !okay}"/>
+         [ngClass]="{'parsingNotOk': !okay}" [disabled]="true"/>
 </td>
 
 <td colspan="2" *ngIf="!normal">

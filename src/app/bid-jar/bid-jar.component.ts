@@ -100,7 +100,7 @@ export class BidJarComponent implements OnInit {
     this.resetBidding();
   }
 
-  saveIntoLocalStorage(): void{
+  saveIntoLocalStorage(): void {
     const name = 'precision';
     this.fileService.saveIntoLocalStorage(name, this.baseNode);
   }
