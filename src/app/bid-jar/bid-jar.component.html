@@ -8,33 +8,37 @@
     <button mat-icon-button [matMenuTriggerFor]="menu2" style="text-align: right">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #menu2="matMenu">
+    <mat-menu #menu2="matMenu" xPosition="before">
 
-      <a [routerLink]="" (click)="saveIntoLocalStorage()" matTooltip="Save to local storage">
+      <button mat-menu-item (click)="saveIntoLocalStorage()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">save</mat-icon>
-      </a>
-      <a [routerLink]="" (click)="downloadSystem()" matTooltip="Download System as JSON">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
-      </a>
-      -
-      <a [routerLink]="" (click)="loadFromLocalStorage()" matTooltip="Retrieve from local storage">
+        Save to Browser Storage
+      </button>
+      <button mat-menu-item (click)="loadFromLocalStorage()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">restore_page</mat-icon>
-      </a>
-      <a [routerLink]="" (click)="triggerFileUpload()" matTooltip="Upload JSON-based System">
+        Load from Browser Storage
+      </button>
+      <button mat-menu-item (click)="downloadSystem()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
+        Save to local File
+      </button>
+      <button mat-menu-item (click)="triggerFileUpload()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">upload</mat-icon>
-      </a>
-
-
-      <button mat-menu-item>
-        <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a> -
+        Load from local File
+      </button>
+      <button mat-menu-item (click)="showRawSystem()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">Raw on</mat-icon>
+        Show raw system
       </button>
       <button mat-menu-item>
-        <a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> -
+        <a [routerLink]="" (click)="loadElementarySystem()"> Load Elementary System </a>
       </button>
+      <!--      <button mat-menu-item>-->
+      <!--        <a [routerLink]="" (click)="loadLegacySystem()"> Load Legacy System </a> - -->
+      <!--      </button>-->
       <button mat-menu-item>
         <a [routerLink]="" (click)="resetSystem()"> Load new System </a> -
       </button>
-
 
     </mat-menu>
   </div>
@@ -42,27 +46,27 @@
 
   <div *ngIf="!editable" class="topline">
     <div>
-            <span style="visibility: hidden"> ---
-          </span>
-      <span [ngClass]="{'opp': bnode.ob}" style="  font-size: 14pt;">
+      <span style="visibility: hidden"> --- </span>
+      <span [ngClass]="{'opp': bnode.ob}" style="  font-size: 14pt;"
+            (click)="editable=true"  (mouseover)="calcStatistics()" matTooltip="Number of Subnodes: {{noNodes}}">
             <app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
         </span>
       <span style="visibility: hidden"> - </span>
 
-      <span class="con"> {{bnode.con}}</span>
+      <span class="con" (click)="editable=true"> {{bnode.con}}</span>
       <span class="desc"> {{bnode.desc}}</span>
 
     </div>
     <div>
-      <a [routerLink]="" (click)="editable=true" matTooltip="Edit">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
-      </a>
+      <!--      <a [routerLink]="" (click)="editable=true" matTooltip="Edit">-->
+      <!--        <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>-->
+      <!--      </a>-->
       <a [routerLink]="" (click)="markAsLinkable()" matTooltip="Mark as linkable Node">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
       </a>
-      <a [routerLink]="" (click)="showStatistics()">
-        <mat-icon>analytics</mat-icon>
-      </a>
+<!--      <a [routerLink]="" (click)="showStatistics()" matTooltip="statistics">-->
+<!--        <mat-icon>analytics</mat-icon>-->
+<!--      </a>-->
 
     </div>
   </div>

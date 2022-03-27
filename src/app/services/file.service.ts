@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BNode} from "../model/BNode";
-import {Subject} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {BNode} from '../model/BNode';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +29,11 @@ export class FileService {
   //   return getter;
   // }
 
-  getLocalBridgeSystem() {
-    return this.http.get(this.bridgeSystemUrl);
+  getLocalBridgeSystem(): Observable<string> {
+    return this.http.get<string>(this.bridgeSystemUrl);
   }
 
-  saveIntoLocalStorage(name: string, bnode: BNode) {
+  saveIntoLocalStorage(name: string, bnode: BNode): void {
     const json = this.transformToJson(bnode);
     localStorage.setItem(name, json.toString());
   }
@@ -47,52 +47,60 @@ export class FileService {
   }
 
   transformToJson(bnode: BNode): string {
-    return JSON.stringify(bnode, ["id", "bid", "con", "desc", "nodes", "ob", "linkedId"]);
+    return JSON.stringify(bnode, ['id', 'bid', 'con', 'desc', 'nodes', 'ob', 'linkedId']);
   }
 
-  downloadSystem(name: string, bnode: BNode) {
+  showRawSystem(name: string, bnode: BNode): void {
     const json = this.transformToJson(bnode);
-    const wea = window.open("", "hallo");
+    const wea = window.open('', 'hallo');
     if (wea) {
       wea.document.write(json);
     }
-    const text = json,
-      blob = new Blob([text], {type: 'text/plain'}),
-      anchor = document.createElement('a');
+  }
 
-    anchor.download = bnode.bid+"_"+ (new Date())+".json";
+  downloadSystem(name: string, bnode: BNode): void {
+    const json = this.transformToJson(bnode);
+    const wea = window.open('', 'hallo');
+    if (wea) {
+      wea.document.write(json);
+    }
+    const text = json;
+    const blob = new Blob([text], {type: 'text/plain'});
+    const anchor = document.createElement('a');
+
+    anchor.download = bnode.bid + '_' + (new Date()) + '.json';
 //    anchor.download = "bs.json";
     anchor.href = (window.URL).createObjectURL(blob);
     anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
     anchor.click();
   }
 
-  uploadSystem(file: File, uploadSubject: Subject<BNode>) {
+  uploadSystem(file: File, uploadSubject: Subject<BNode>): void {
 
     const fileReader = new FileReader();
     fileReader.onload = fileLoadedEvent => {
       let datae: string | ArrayBuffer | null;
-      datae = fileReader.result
+      datae = fileReader.result;
       if (datae) {
         const bn = JSON.parse(datae.toString()) as BNode;
-        bn.linkedNode = new BNode("1x", new Array<BNode>(), "");
+        bn.linkedNode = new BNode('1x', new Array<BNode>(), '');
         uploadSubject.next(bn);
       }
-    }
+    };
     fileReader.readAsText(file);
 
   }
 
-  uploadLinFile(file: File, uploadSubject: Subject<string>) {
+  uploadLinFile(file: File, uploadSubject: Subject<string>): void {
 
     const fileReader = new FileReader();
     fileReader.onload = fileLoadedEvent => {
-      var data: string | ArrayBuffer | null;
+      let data: string | ArrayBuffer | null;
       data = fileReader.result;
       if (data) {
         uploadSubject.next(data.toString());
       }
-    }
+    };
     fileReader.readAsText(file);
 
   }
@@ -103,8 +111,8 @@ export class FileService {
   //   return this.http.get("https://www.bridgebase.com/myhands/fetchlin.php?id=1022970755&when_played=1616782848");
   // }
 
-  getTricks() {
-    return this.http.get("http://localhost:8081?key=test",  {responseType: 'text'});
+  getTricks(): Observable<string> {
+    return this.http.get('http://localhost:8081?key=test', {responseType: 'text'});
   }
 
 

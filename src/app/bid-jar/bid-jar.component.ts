@@ -28,6 +28,7 @@ export class BidJarComponent implements OnInit {
   bNodeSequence: BNodeSequence = new BNodeSequence();
 
   editable = false;
+  noNodes = 0;
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLElement>;
 
@@ -67,6 +68,7 @@ export class BidJarComponent implements OnInit {
     alert('Highest ID: ' + hid + ' No of bids: ' + nobids);
   }
 
+  // the load function for the legacy format before April 2021
   loadLegacySystem(): void {
     this.fileService.getLocalBridgeSystem().subscribe(
       (data: {}) => {
@@ -119,6 +121,11 @@ export class BidJarComponent implements OnInit {
     this.fileService.downloadSystem(name, this.baseNode);
   }
 
+  showRawSystem(): void {
+    const name = 'precision';
+    this.fileService.showRawSystem(name, this.baseNode);
+  }
+
   processFile(input: HTMLInputElement): void {
     const files = input.files;
     if (files) {
@@ -143,12 +150,18 @@ export class BidJarComponent implements OnInit {
     this.bnode = {...this.bnode}; // to trigger the change detection on child component
   }
 
-  showStatistics(): void {
+  calcStatistics(): void {
+    this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
+    }
+
+    showStatistics(): number {
 
     // this.bsm.getTotalBidList(this.bnode).forEach((a, b) => {
     //   a.ob = a.who ? undefined : true;
     // })
-    alert('No of Subnodes: ' + this.bsm.getTotalBidList(this.bnode).size);
+    this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
+    alert('No of Subnodes: ' + this.noNodes);
+    return  this.noNodes;
   }
 
 

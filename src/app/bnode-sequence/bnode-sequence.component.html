@@ -4,15 +4,21 @@
   <mat-icon matTooltip='Back to Root' (click)="reset()">home</mat-icon>
 
   </span>
-<span *ngFor="let bn of bNodeSequence.nodes; let i = index" (click)="selectBid(bn)">
+  <span *ngFor="let bn of bNodeSequence.nodes; let i = index" (click)="selectBid(bn)">
 -
  <span class="pointer" [ngClass]="{'fett': bn == bNodeSequence.indexNode,
                  'opp': bn.ob}">
  <app-strain-symbol [strain]="bNodeSequence.bids[i]"></app-strain-symbol>
  </span>
 </span>
-  <span (click)="generateRandomSequenceFromIndex()"> Random</span>
-  <span *ngIf="bNodeSequence.isRealBiddingSequence"  (click)="emitSequence()"
-  class="pointer" style="padding-left: 2em;float: right">          <mat-icon>preview</mat-icon>
-</span>
+
+  <span style="padding-left: 2em;float: right">
+
+  <span (click)="generateRandomSequenceFromIndex()" class="pointer">
+    ↝
+  </span>
+  <span *ngIf="bNodeSequence.isRealBiddingSequence" (click)="emitSequence()"
+        class="pointer">
+    <mat-icon>preview</mat-icon></span>
+    </span>
 </div>
