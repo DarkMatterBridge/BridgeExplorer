@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {BNode} from "../model/BNode";
-import {Subject} from "rxjs";
-import {BridgeSystemManager} from "../services/bridge-system-manager.service";
+import {BNode} from '../model/BNode';
+import {Subject} from 'rxjs';
+import {BridgeSystemManager} from '../services/bridge-system-manager.service';
 
 @Component({
   selector: 'app-bid-list',
@@ -14,12 +14,12 @@ export class BidListComponent implements OnInit, OnChanges {
   bnode!: BNode;
   @Input()
   subject!: Subject<BNode>;
-
+  @Input()
   editable = false;
 
   linkedNodes: BNode[] = [];
 
-  newBnode = new BNode("", [], "");
+  newBnode = new BNode('', [], '');
 
   constructor(private bsm: BridgeSystemManager) {
   }
@@ -42,7 +42,7 @@ export class BidListComponent implements OnInit, OnChanges {
     this.bsm.persistNode(this.newBnode);
     this.bnode.nodes.push(this.newBnode);
     this.sortNodes();
-    this.newBnode = new BNode("", [], "");
+    this.newBnode = new BNode('', [], '');
   }
 
   sortNodes(): void {
@@ -50,8 +50,8 @@ export class BidListComponent implements OnInit, OnChanges {
       .sort((a, b) => this.strainOrder(a).localeCompare(this.strainOrder(b)));
   }
 
-  strainOrder(node: BNode) {
-    return  (node.ob ? "b":"a") +  ((node.bid.endsWith("N")) ? node.bid.substr(0,1)+"Z" : node.bid);
+  strainOrder(node: BNode): string {
+    return  (node.ob ? 'b' : 'a') +  ((node.bid.endsWith('N')) ? node.bid.substr(0, 1) + 'Z' : node.bid);
   }
 
   addOrdeleteNode(bn: BNode): void {
@@ -62,13 +62,13 @@ export class BidListComponent implements OnInit, OnChanges {
     }
   }
 
-  unlink() {
+  unlink(): void {
     this.bnode.linkedNode = undefined;
     this.bnode.linkedId = undefined;
     this.linkedNodes = [];
   }
 
-  materialize() {
+  materialize(): void {
     this.bsm.materializeLinkeNode(this.bnode);
     this.linkedNodes = [];
   }

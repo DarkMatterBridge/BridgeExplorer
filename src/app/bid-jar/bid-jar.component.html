@@ -5,9 +5,16 @@
                         (bNodeSequenceEventEmitter)="activateDealView2($event)"
     ></app-bnode-sequence>
 
+    <div>
+          <a [routerLink]="" (click)="editable=!editable" matTooltip="Edit" >
+            <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
+          </a>
+
     <button mat-icon-button [matMenuTriggerFor]="menu2" style="text-align: right">
       <mat-icon>more_vert</mat-icon>
     </button>
+    </div>
+    f
     <mat-menu #menu2="matMenu" xPosition="before">
 
       <button mat-menu-item (click)="saveIntoLocalStorage()">
@@ -44,16 +51,16 @@
   </div>
 
 
-  <div *ngIf="!editable" class="topline">
+  <div *ngIf="!bidEditable" class="topline">
     <div>
       <span style="visibility: hidden"> --- </span>
       <span [ngClass]="{'opp': bnode.ob}" style="  font-size: 14pt;"
-            (click)="editable=true"  (mouseover)="calcStatistics()" matTooltip="Number of Subnodes: {{noNodes}}">
+            (click)="editBid()" (mouseover)="calcStatistics()" matTooltip="Number of Subnodes: {{noNodes}}">
             <app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
         </span>
       <span style="visibility: hidden"> - </span>
 
-      <span class="con" (click)="editable=true"> {{bnode.con}}</span>
+      <span class="con" (click)="editBid()"> {{bnode.con}}</span>
       <span class="desc"> {{bnode.desc}}</span>
 
     </div>
@@ -74,8 +81,8 @@
 
   <div class="topline">
 
-    <span *ngIf="editable">
-        <a [routerLink]="" (click)="editable=false" matTooltip="Leave Edit">
+    <span *ngIf="bidEditable">
+        <a [routerLink]="" (click)="bidEditable=false" matTooltip="Leave Edit">
           <mat-icon>edit_off</mat-icon>
         </a>
         <app-node-simple-edit [bnode]="bnode"></app-node-simple-edit>
@@ -83,7 +90,7 @@
 
   </div>
 
-  <app-bid-list [bnode]="bnode" [subject]="subject"></app-bid-list>
+  <app-bid-list [bnode]="bnode" [subject]="subject" [editable]="editable"></app-bid-list>
 
   <app-linkable-bnode-list [linkableBnodes]="linkableBnodes"
                            (linkNodeEvent)="linkBnode($event)"></app-linkable-bnode-list>

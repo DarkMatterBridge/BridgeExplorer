@@ -13,7 +13,7 @@ style="float:right; font-size: 13pt" class="pointer">
 </td>
 <td *ngIf="normal">
   <input [(ngModel)]="bnode.con" size="50" (input)="checkCondition()"
-         [ngClass]="{'parsingNotOk': !okay}" [disabled]="true"/>
+         [ngClass]="{'parsingNotOk': !okay}" [disabled]="!bidEditable" />
 </td>
 
 <td colspan="2" *ngIf="!normal">
@@ -23,7 +23,7 @@ style="float:right; font-size: 13pt" class="pointer">
 </div></td>
 
 <td>
-  <a *ngIf="!newNode" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
+  <a *ngIf="!newNode && bidEditable" [routerLink]="" (click)="addOdeleteBid(bnode)" class="mat-cell">
     <!--      <i class="material-icons">-->
     <!--        delete-->
     <!--      </i>-->

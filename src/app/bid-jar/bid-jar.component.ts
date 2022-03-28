@@ -28,6 +28,7 @@ export class BidJarComponent implements OnInit {
   bNodeSequence: BNodeSequence = new BNodeSequence();
 
   editable = false;
+  bidEditable = false;
   noNodes = 0;
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLElement>;
@@ -152,16 +153,16 @@ export class BidJarComponent implements OnInit {
 
   calcStatistics(): void {
     this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
-    }
+  }
 
-    showStatistics(): number {
+  showStatistics(): number {
 
     // this.bsm.getTotalBidList(this.bnode).forEach((a, b) => {
     //   a.ob = a.who ? undefined : true;
     // })
     this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
     alert('No of Subnodes: ' + this.noNodes);
-    return  this.noNodes;
+    return this.noNodes;
   }
 
 
@@ -174,5 +175,12 @@ export class BidJarComponent implements OnInit {
     const el: HTMLElement = this.fileInput.nativeElement;
     el.click();
   }
+
+  editBid(): void {
+    if (this.editable) {
+      this.bidEditable = true;
+    }
+  }
+
 
 }
