@@ -54,14 +54,14 @@
   <div *ngIf="!bidEditable" class="topline">
     <div>
       <span style="visibility: hidden"> --- </span>
-      <span [ngClass]="{'opp': bnode.ob}" style="  font-size: 14pt;"
+      <span [ngClass]="{'opp': bnc.bnode.ob}" style="  font-size: 14pt;"
             (click)="editBid()" (mouseover)="calcStatistics()" matTooltip="Number of Subnodes: {{noNodes}}">
-            <app-strain-symbol [strain]="bnode.bid"></app-strain-symbol>
+            <app-strain-symbol [strain]="bnc.bnode.bid"></app-strain-symbol>
         </span>
       <span style="visibility: hidden"> - </span>
 
-      <span class="con" (click)="editBid()"> {{bnode.con}}</span>
-      <span class="desc"> {{bnode.desc}}</span>
+      <span class="con" (click)="editBid()"> {{bnc.bnode.con}}</span>
+      <span class="desc"> {{bnc.bnode.desc}}</span>
 
     </div>
     <div>
@@ -85,12 +85,12 @@
         <a [routerLink]="" (click)="bidEditable=false" matTooltip="Leave Edit">
           <mat-icon>edit_off</mat-icon>
         </a>
-        <app-node-simple-edit [bnode]="bnode"></app-node-simple-edit>
+        <app-node-simple-edit [bnode]="bnc.bnode"></app-node-simple-edit>
       </span>
 
   </div>
 
-  <app-bid-list [bnode]="bnode" [subject]="subject" [editable]="editable"></app-bid-list>
+  <app-bid-list [bnc]="bnc" [subject]="subject" [editable]="editable"></app-bid-list>
 
   <app-linkable-bnode-list [linkableBnodes]="linkableBnodes"
                            (linkNodeEvent)="linkBnode($event)"></app-linkable-bnode-list>

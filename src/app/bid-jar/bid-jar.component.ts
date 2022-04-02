@@ -6,6 +6,7 @@ import {Subject} from 'rxjs';
 import {FileService} from '../services/file.service';
 import {LegacyBiddingSystem} from '../model/LegacyBiddingSystem';
 import {BNodeSequence} from '../model/BNodeSequence';
+import {BNodeComposite} from '../model/BNodeComposite';
 
 @Component({
   selector: 'app-bid-jar',
@@ -14,10 +15,11 @@ import {BNodeSequence} from '../model/BNodeSequence';
 })
 export class BidJarComponent implements OnInit {
 
-  bnode!: BNode;
+  // bnode!: BNode;
+  bnc!: BNodeComposite;
   baseNode!: BNode;
 
-  subject: Subject<BNode> = new Subject<BNode>();
+  subject: Subject<BNodeComposite> = new Subject<BNodeComposite>();
   bridgeSystem: BiddingSystem;
 
   uploadSubject: Subject<BNode> = new Subject<BNode>();
@@ -26,6 +28,7 @@ export class BidJarComponent implements OnInit {
 
   dealViewActivated = false;
   bNodeSequence: BNodeSequence = new BNodeSequence();
+
 
   editable = false;
   bidEditable = false;
@@ -41,22 +44,24 @@ export class BidJarComponent implements OnInit {
     this.subject.asObservable().subscribe(b => this.setBnode(b));
     this.resetSystem();
     this.loadFromLocalStorage();
-
     this.uploadSubject.subscribe(bn => this.setSystem(bn));
-
   }
 
   setSystem(bn: BNode): void {
-    this.baseNode = this.bnode = bn;
     this.bsm.makeUsable(bn);
+    this.baseNode = bn;
+    this.bnc = new BNodeComposite(bn, '', '');
+    // this.bnode = bn;
   }
 
 
-  setBnode(bn: BNode | undefined): void {
-    if (bn === undefined) {
-      this.bnode = this.baseNode;
+  setBnode(bnc: BNodeComposite | undefined): void {
+    if (bnc === undefined) {
+      this.bnc = new BNodeComposite(this.baseNode, '', '');
+      // this.bnode = this.baseNode;
     } else {
-      this.bnode = bn;
+      console.log(bnc);
+      this.bnc = bnc;
     }
   }
 
@@ -92,7 +97,7 @@ export class BidJarComponent implements OnInit {
   resetSystem(): void {
     this.bridgeSystem = new BiddingSystem(this.bsm);
     this.baseNode = this.bridgeSystem.bridgeSystem;
-    this.bnode = this.baseNode;
+    this.bnc = new BNodeComposite(this.baseNode, '', '');
     this.resetBidding();
   }
 
@@ -140,27 +145,27 @@ export class BidJarComponent implements OnInit {
 
   ///
   markAsLinkable(): void {
-    this.linkableBnodes.push(this.bnode);
+    this.linkableBnodes.push(this.bnc.bnode);
   }
 
   linkBnode(linkableBnode: BNode | undefined): void {
     if (linkableBnode) {
-      this.bnode.linkedNode = linkableBnode;
-      this.bnode.linkedId = linkableBnode.id;
+      this.bnc.bnode.linkedNode = linkableBnode;
+      this.bnc.bnode.linkedId = linkableBnode.id;
     }
-    this.bnode = {...this.bnode}; // to trigger the change detection on child component
+    // tslint:disable-next-line:max-line-length
+    this.bnc = new BNodeComposite(this.bnc.bnode, this.bnc.bid, this.bnc.lastContractBid); // to trigger the change detection on child component
   }
 
   calcStatistics(): void {
-    this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
+    this.noNodes = this.bsm.getTotalBidList(this.bnc.bnode).size;
   }
 
   showStatistics(): number {
-
     // this.bsm.getTotalBidList(this.bnode).forEach((a, b) => {
     //   a.ob = a.who ? undefined : true;
     // })
-    this.noNodes = this.bsm.getTotalBidList(this.bnode).size;
+    this.noNodes = this.bsm.getTotalBidList(this.bnc.bnode).size;
     alert('No of Subnodes: ' + this.noNodes);
     return this.noNodes;
   }

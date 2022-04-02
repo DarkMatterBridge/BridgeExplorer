@@ -1,5 +1,5 @@
-import {DealHand} from "./DealHand";
-import {HandAttributes} from "./HandAttributes";
+import {DealHand} from './DealHand';
+import {HandAttributes} from './HandAttributes';
 
 export class DealHandCondition {
 
@@ -7,7 +7,7 @@ export class DealHandCondition {
     lowPoints: number | undefined;
     highPoints: number | undefined;
 
-    condition = "";
+    condition = '';
 
     public eval: Function;
 
@@ -28,27 +28,29 @@ export class DealHandCondition {
         return this.addConditionDynamically(cond);
     }
 
-    addCondition(cond: string) {
+    addCondition(cond: string): void {
 
-        cond = this.handAttributes.parse(cond);
+        cond = this.handAttributes.parse(cond);  // todo  - move out of dealhandcondition
 
-        if (this.condition === "")
+        if (this.condition === '') {
             this.condition = cond;
-        else
-            this.condition += " & " + cond;
+        }
+        else {
+            this.condition += ' & ' + cond;
+        }
     }
 
-    addConditionDynamically(cond: string) {
-        let addCondition = this.condition.trim();
-        if (addCondition.length === 0) return true;
+    addConditionDynamically(cond: string): void{
+        const addCondition = this.condition.trim();
+        if (addCondition.length === 0) { return true; }
         try {
-            let ff = this.parseConditionWorker(this.condition);
+            const ff = this.parseConditionWorker(this.condition);
             if (ff) {
-                let fff = ff;
-                console.log("Successfully parsed and added");
+                const fff = ff;
+                console.log('Successfully parsed and added');
                 this.eval = (hand: DealHand) => this.eval(hand) && fff(hand);
                 return true;
-            } else return false;
+            } else { return false; }
         } catch (e: any) {
             return false;
         }
@@ -56,13 +58,13 @@ export class DealHandCondition {
 
     parseCondition(): boolean {
         this.condition = this.condition.trim();
-        if (this.condition.length === 0) return true;
+        if (this.condition.length === 0) { return true; }
         try {
-            let ff = this.parseConditionWorker(this.condition);
+            const ff = this.parseConditionWorker(this.condition);
             if (ff) {
                 this.eval = ff;
                 return true;
-            } else return false;
+            } else { return false; }
         } catch (e: any) {
             return false;
         }
@@ -71,66 +73,66 @@ export class DealHandCondition {
 
     parseConditionWorker(cond: string): Function | undefined {
 
-        console.log("Parsing: " + cond);
+        console.log('Parsing: ' + cond);
 
         let f1: Function | undefined;
 
-        f1 = this.parseForPrioAnd(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForPrioAnd(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForOr(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForOr(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForAnd(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForAnd(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForNegation(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForNegation(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForIgnorables(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForIgnorables(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForMajor(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForMajor(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForMinor(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForMinor(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForSuit(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForSuit(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForPlusInSuit(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForPlusInSuit(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForDistribution(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForDistribution(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForPlus(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForPlus(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForMinus(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForMinus(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForInterval(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForInterval(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForUnbalanced(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForUnbalanced(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForBalanced(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForBalanced(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForMin(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForMin(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForMax(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForMax(cond);
+        if (f1 != undefined) { return f1; }
 
-        f1 = this.parseForSpecialities(cond)
-        if (f1 != undefined) return f1;
+        f1 = this.parseForSpecialities(cond);
+        if (f1 != undefined) { return f1; }
 
-        console.log("Error: " + cond + " could not be parsed.");
-        throw new Error("Error: " + cond + " could not be parsed.");
+        console.log('Error: ' + cond + ' could not be parsed.');
+        throw new Error('Error: ' + cond + ' could not be parsed.');
 //    return undefined;
 
     }
@@ -141,7 +143,7 @@ export class DealHandCondition {
         const a = regex.exec(cond);
 
         if (a != null) {
-            let cond = a[2];
+            const cond = a[2];
             const f1 = this.parseConditionWorker(cond);
             if (f1 !== undefined) {
                 return (hand: DealHand) => !f1(hand);
@@ -157,10 +159,10 @@ export class DealHandCondition {
         let f1: Function;
 
         if (a != null) {
-            let lp = this.lowPoints = +a[1];
+            const lp = this.lowPoints = +a[1];
             f1 = (hand: DealHand) => hand.points() >= lp;
             return f1;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForMinus(cond: string): Function | undefined { // todo check low and high point logic !
@@ -170,10 +172,10 @@ export class DealHandCondition {
         let f1: Function;
 
         if (a != null) {
-            let hp = this.highPoints = +a[1];
+            const hp = this.highPoints = +a[1];
             f1 = (hand: DealHand) => hand.points() <= hp;
             return f1;
-        } else return undefined;
+        } else { return undefined; }
     }
 
 
@@ -182,12 +184,12 @@ export class DealHandCondition {
         const regex = /(.+)\s(or|\|)(.*)/;
         const a = regex.exec(cond);
         if (a != null) {
-            let evax = a[1];
-            let evay = a[3];
+            const evax = a[1];
+            const evay = a[3];
             const f1 = this.parseConditionWorker(evax);
             const f2 = this.parseConditionWorker(evay);
             if (f1 !== undefined && f2 !== undefined) {
-                console.log("Or successfully parsed");
+                console.log('Or successfully parsed');
                 return (hand: DealHand) => f1(hand) || f2(hand);
             }
         }
@@ -199,12 +201,12 @@ export class DealHandCondition {
         const regex = /(.+)(\&)(.*)/;
         const a = regex.exec(cond);
         if (a != null) {
-            let evax = a[1];
-            let evay = a[3];
+            const evax = a[1];
+            const evay = a[3];
             const f1 = this.parseConditionWorker(evax);
             const f2 = this.parseConditionWorker(evay);
             if (f1 !== undefined && f2 !== undefined) {
-                console.log("And successfully parsed");
+                console.log('And successfully parsed');
                 return (hand: DealHand) => f1(hand) && f2(hand);
             }
         }
@@ -216,12 +218,12 @@ export class DealHandCondition {
         const regex = /(.+)(,|with)(.*)/;
         const a = regex.exec(cond);
         if (a != null) {
-            let evax = a[1];
-            let evay = a[3];
+            const evax = a[1];
+            const evay = a[3];
             const f1 = this.parseConditionWorker(evax);
             const f2 = this.parseConditionWorker(evay);
             if (f1 !== undefined && f2 !== undefined) {
-                console.log("And successfully parsed");
+                console.log('And successfully parsed');
                 return (hand: DealHand) => f1(hand) && f2(hand);
             }
         }
@@ -232,32 +234,36 @@ export class DealHandCondition {
 
         const regex = /(\d+)(\+|\-)?(S|H|D|C|a)$/;
         const a = regex.exec(cond.trim());
-        var f1: Function;
+        let f1: Function;
 
         if (a != null) {
-            var length = +a[1];
-            var suit = a[3];
-            var suitNo = 0;
-            if (suit === "a") {
-                if (a[2] == "+")
+            const length = +a[1];
+            const suit = a[3];
+            let suitNo = 0;
+            if (suit === 'a') {
+                if (a[2] == '+') {
                     return (hand: DealHand) => hand.cardsInSuit(0) >= length ||
                         hand.cardsInSuit(1) >= length ||
                         hand.cardsInSuit(2) >= length ||
                         hand.cardsInSuit(3) >= length;
-                if (a[2] == "-")
+                }
+                if (a[2] == '-') {
                     return (hand: DealHand) => hand.cardsInSuit(0) <= length ||
                         hand.cardsInSuit(1) <= length ||
                         hand.cardsInSuit(2) <= length ||
                         hand.cardsInSuit(3) <= length;
+                }
             }
-            if (suit == "S") suitNo = 3;
-            if (suit == "H") suitNo = 2;
-            if (suit == "D") suitNo = 1;
-            if (suit == "C") suitNo = 0;
-            if (a[2] == "+")
+            if (suit == 'S') { suitNo = 3; }
+            if (suit == 'H') { suitNo = 2; }
+            if (suit == 'D') { suitNo = 1; }
+            if (suit == 'C') { suitNo = 0; }
+            if (a[2] == '+') {
                 f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) >= length;
-            else if (a[2] == "-")
+            }
+            else if (a[2] == '-') {
                 f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) <= length;
+ }
             else {
                 f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) === length;
             }
@@ -273,33 +279,35 @@ export class DealHandCondition {
         let f1: Function;
 
         if (a != null) {
-            let lp = +a[1];
-            var suit = a[3];
-            var suitNo = 0;
-            if (suit == "S") suitNo = 3;
-            if (suit == "H") suitNo = 2;
-            if (suit == "D") suitNo = 1;
-            if (suit == "C") suitNo = 0;
+            const lp = +a[1];
+            const suit = a[3];
+            let suitNo = 0;
+            if (suit == 'S') { suitNo = 3; }
+            if (suit == 'H') { suitNo = 2; }
+            if (suit == 'D') { suitNo = 1; }
+            if (suit == 'C') { suitNo = 0; }
             f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= lp;
             return f1;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForDistribution(cond: string): Function | undefined {
 
         const regex = /(\d\d\d\d)(.?)/;
         const a = regex.exec(cond);
-        var f1: Function;
+        let f1: Function;
 
         if (a != null) {
-            var distri = a[1];
-            if (a[2] === 'a')
+            const distri = a[1];
+            if (a[2] === 'a') {
                 return (hand: DealHand) => hand.distribution() === distri;
-            else
+            }
+            else {
                 return (hand: DealHand) => hand.cardsInSuit(3) === +distri.substr(0, 1) &&
                     hand.cardsInSuit(2) === +distri.substr(1, 1) &&
                     hand.cardsInSuit(1) === +distri.substr(2, 1) &&
                     hand.cardsInSuit(0) === +distri.substr(3, 1);
+            }
         }
         return undefined;
     }
@@ -308,13 +316,15 @@ export class DealHandCondition {
         const regex = /(\d+)(\+|\-)?M/;
         const a = regex.exec(cond);
         if (a != null) {
-            var length = +a[1];
-            if (a[2] == "+") {
+            const length = +a[1];
+            if (a[2] == '+') {
                 return (hand: DealHand) => (hand.cardsInSuit(2) >= length || hand.cardsInSuit(3) >= length);
-            } else if (a[2] == "-")
+            } else if (a[2] == '-') {
                 return (hand: DealHand) => (hand.cardsInSuit(2) <= length || hand.cardsInSuit(3) <= length);
-            else
+ }
+            else {
                 return (hand: DealHand) => (hand.cardsInSuit(2) === length || hand.cardsInSuit(3) == length);
+ }
         }
         return undefined;
     }
@@ -333,11 +343,11 @@ export class DealHandCondition {
         const regex = /(\d+)(\+|\-)?m/;
         const a = regex.exec(cond);
         if (a != null) {
-            var length = +a[1];
-            if (a[2] == "+") {
+            const length = +a[1];
+            if (a[2] == '+') {
                 return (hand: DealHand) => (hand.cardsInSuit(0) >= length || hand.cardsInSuit(1) >= length);
             }
-            if (a[2] == "-") {
+            if (a[2] == '-') {
                 return (hand: DealHand) => (hand.cardsInSuit(0) <= length || hand.cardsInSuit(1) <= length);
             }
             return (hand: DealHand) => (hand.cardsInSuit(0) === length || hand.cardsInSuit(1) == length);
@@ -349,14 +359,18 @@ export class DealHandCondition {
         const regex = /(\d+)\-(\d+)/;
         const a = regex.exec(cond);
         if (a != null) {
-            if (this.lowPoints === undefined)
+            if (this.lowPoints === undefined) {
                 this.lowPoints = +a[1];
-            else
+            }
+            else {
                 this.lowPoints = Math.max(+a[1], this.lowPoints);
-            if (this.highPoints === undefined)
+            }
+            if (this.highPoints === undefined) {
                 this.highPoints = +a[2];
-            else
+            }
+            else {
                 this.highPoints = Math.min(+a[2], this.highPoints);
+            }
             return (hand: DealHand) => (hand.points() >= +a[1]) && (hand.points() <= +a[2]);
         }
         return undefined;
@@ -371,7 +385,7 @@ export class DealHandCondition {
         if (a != null) {
             f1 = (hand: DealHand) => hand.isBalanced();
             return f1;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForUnbalanced(cond: string): Function | undefined {
@@ -382,7 +396,7 @@ export class DealHandCondition {
         if (a != null) {
             f1 = (hand: DealHand) => !hand.isBalanced();
             return f1;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForMin(cond: string): Function | undefined {
@@ -391,16 +405,18 @@ export class DealHandCondition {
 
         if (a != null) {
             if (this.lowPoints === undefined) {
-                throw Error("lowpoints not defined");
+                throw Error('lowpoints not defined');
             }
             let hp: number;
-            if (this.highPoints === undefined)
+            if (this.highPoints === undefined) {
                 hp = this.lowPoints + 1;
-            else
+            }
+            else {
                 hp = (this.lowPoints + this.highPoints) / 2;
+            }
             this.highPoints = hp;
             return (hand: DealHand) => hand.points() <= hp;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForMax(cond: string): Function | undefined {
@@ -408,16 +424,18 @@ export class DealHandCondition {
         const a = regex.exec(cond);
         if (a != null) {
             if (this.highPoints === undefined) {
-                throw Error("highpoints not defined");
+                throw Error('highpoints not defined');
             }
             let lp: number;
-            if (this.lowPoints === undefined)
+            if (this.lowPoints === undefined) {
                 lp = this.highPoints - 2;
-            else
+            }
+            else {
                 lp = (this.lowPoints + this.highPoints) / 2;
+            }
             this.lowPoints = lp;
             return (hand: DealHand) => hand.points() >= lp;
-        } else return undefined;
+        } else { return undefined; }
     }
 
     parseForSI(cond: string): Function | undefined {
@@ -427,7 +445,7 @@ export class DealHandCondition {
         if (a != null) {
 //      this.lowPoints = (this.lowPoints + this.highPoints) / 2;
             return (hand: DealHand) => true;
-        } else return undefined;
+        } else { return undefined; }
     }
 
 
@@ -438,22 +456,22 @@ export class DealHandCondition {
         let a = regex.exec(cond.trim());
         if (a != null) {
             suit = a[1];
-            var suitNo = 0;
-            if (suit == "S") suitNo = 3;
-            if (suit == "H") suitNo = 2;
-            if (suit == "D") suitNo = 1;
-            if (suit == "C") suitNo = 0;
+            let suitNo = 0;
+            if (suit == 'S') { suitNo = 3; }
+            if (suit == 'H') { suitNo = 2; }
+            if (suit == 'D') { suitNo = 1; }
+            if (suit == 'C') { suitNo = 0; }
             return (hand: DealHand) => hand.is8playable2void(suitNo);
         }
         regex = /(S|H|D|C)(\.goodSuit)/;
         a = regex.exec(cond.trim());
         if (a != null) {
             suit = a[1];
-            var suitNo = 0;
-            if (suit == "S") suitNo = 3;
-            if (suit == "H") suitNo = 2;
-            if (suit == "D") suitNo = 1;
-            if (suit == "C") suitNo = 0;
+            let suitNo = 0;
+            if (suit == 'S') { suitNo = 3; }
+            if (suit == 'H') { suitNo = 2; }
+            if (suit == 'D') { suitNo = 1; }
+            if (suit == 'C') { suitNo = 0; }
             return (hand: DealHand) => hand.isGoodSuit(suitNo);
         }
         return undefined;
@@ -463,4 +481,4 @@ export class DealHandCondition {
 }
 
 
-//3+Dpoints
+// 3+Dpoints

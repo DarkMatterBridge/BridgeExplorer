@@ -5,6 +5,9 @@ export class BNodeComposite {
   bnode: BNode;
   bid: string;
   lastContractBid: string;
+  // contextualizedCondition: string = '';  //todo
+  // handAttributes: HandAttributes = new HandAttributes(); //todo
+
 
   constructor(bnode: BNode, bid: string, lastContractBid: string) {
     this.bnode = bnode;

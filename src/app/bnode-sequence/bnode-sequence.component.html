@@ -4,11 +4,11 @@
   <mat-icon matTooltip='Back to Root' (click)="reset()">home</mat-icon>
 
   </span>
-  <span *ngFor="let bn of bNodeSequence.nodes; let i = index" (click)="selectBid(bn)">
+  <span *ngFor="let bnc of bNodeSequence.compositeNodes; let i = index" (click)="selectBid(bnc)">
 -
- <span class="pointer" [ngClass]="{'fett': bn == bNodeSequence.indexNode,
-                 'opp': bn.ob}">
- <app-strain-symbol [strain]="bNodeSequence.bids[i]"></app-strain-symbol>
+ <span class="pointer" [ngClass]="{'fett': bnc == bNodeSequence.indexNode,
+                 'opp': bnc.bnode.ob}">
+ <app-strain-symbol [strain]="bNodeSequence.compositeNodes[i].bid"></app-strain-symbol>
  </span>
 </span>
 

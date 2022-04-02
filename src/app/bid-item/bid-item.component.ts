@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BNode} from "../model/BNode";
-import {Subject} from "rxjs";
-import {DealHandCondition} from "../model/DealHandCondition";
+import {BNode} from '../model/BNode';
+import {Subject} from 'rxjs';
+import {DealHandCondition} from '../model/DealHandCondition';
+import {BNodeComposite} from '../model/BNodeComposite';
 
 @Component({
   selector: '[app-bid-item]',
@@ -11,9 +12,11 @@ import {DealHandCondition} from "../model/DealHandCondition";
 export class BidItemComponent implements OnInit {
 
   @Input()
-  bnode!: BNode;
+  bnc!: BNodeComposite;
+  // bnode!: BNode;
   @Input()
-  subject!: Subject<BNode>;
+  subject!: Subject<BNodeComposite>;
+  // subject!: Subject<BNode>;
   @Input()
   newNode = false;
   @Input()
@@ -25,33 +28,35 @@ export class BidItemComponent implements OnInit {
   normal = true;
 
   constructor() {
-    this.bnode = new BNode("", [], "");
+    this.bnc = new BNodeComposite(new BNode('', [], ''), '', '');
+    // this.bnode = new BNode('', [], '');
   }
 
   ngOnInit(): void {
     this.checkCondition();
   }
 
-  selectBid(bn: BNode) {
-    this.subject.next(bn);
+  selectBid(bnc: BNodeComposite): void {
+    this.subject.next(bnc);
 //    this.selectNode.emit(bn);
   }
 
-  addOdeleteBid(bn: BNode) {
+  addOdeleteBid(bn: BNode): void {
     this.$addOrDeleteNode.next(bn);
   }
 
-  checkCondition() {
-    this.okay =  this.checkCond();
+  checkCondition(): void {
+    this.okay = this.checkCond();
   }
 
-  checkCond() {
-    let dh = new DealHandCondition();
-    let cond = this.bnode.con.split("/")[0];
-    if (cond.length === 0) return true;
+  checkCond(): boolean {
+    const dh = new DealHandCondition();
+    const cond = this.bnc.bnode.con.split('/')[0];
+    if (cond.length === 0) {
+      return true;
+    }
     try {
       return dh.parseConditionWorker(cond) !== undefined;
-
     } catch (e: any) {
       return false;
     }

@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {BNode} from '../model/BNode';
 import {Subject} from 'rxjs';
 import {BridgeSystemManager} from '../services/bridge-system-manager.service';
+import {BNodeComposite} from '../model/BNodeComposite';
 
 @Component({
   selector: 'app-bid-list',
@@ -11,65 +12,90 @@ import {BridgeSystemManager} from '../services/bridge-system-manager.service';
 export class BidListComponent implements OnInit, OnChanges {
 
   @Input()
-  bnode!: BNode;
+  bnc!: BNodeComposite;
+  // bnode!: BNode;
   @Input()
-  subject!: Subject<BNode>;
+    // subject!: Subject<BNode>;
+  subject!: Subject<BNodeComposite>;
   @Input()
   editable = false;
 
   linkedNodes: BNode[] = [];
 
-  newBnode = new BNode('', [], '');
+  newBnc!: BNodeComposite;
+
+  bncList: BNodeComposite[] = [];
 
   constructor(private bsm: BridgeSystemManager) {
   }
 
   ngOnInit(): void {
+    console.log(this.bnc);
   }
 
   ngOnChanges(): void {
-    if (this.bnode.linkedNode !== undefined) {
-      this.linkedNodes = this.bnode.linkedNode.nodes;
+    if (this.bnc.bnode.linkedNode !== undefined) {
+      this.linkedNodes = this.bnc.bnode.linkedNode.nodes;
     } else {
       this.linkedNodes = [];
     }
+    this.newBnc = this.bnc.newBNC(new BNode('', [], ''));
+    this.bncList = this.getBncList();
   }
 
   addNode(): void {
-    if (this.newBnode.bid.length === 0) {
+    if (this.newBnc.bnode.bid.length === 0) {
       return;
     }
-    this.bsm.persistNode(this.newBnode);
-    this.bnode.nodes.push(this.newBnode);
+    this.bsm.persistNode(this.newBnc.bnode);
+    this.bnc.bnode.nodes.push(this.newBnc.bnode);
     this.sortNodes();
-    this.newBnode = new BNode('', [], '');
+    this.newBnc = this.bnc.newBNC(new BNode('', [], ''));
   }
 
   sortNodes(): void {
-    this.bnode.nodes = this.bnode.nodes
+    this.bnc.bnode.nodes = this.bnc.bnode.nodes
       .sort((a, b) => this.strainOrder(a).localeCompare(this.strainOrder(b)));
   }
 
   strainOrder(node: BNode): string {
-    return  (node.ob ? 'b' : 'a') +  ((node.bid.endsWith('N')) ? node.bid.substr(0, 1) + 'Z' : node.bid);
+    return (node.ob ? 'b' : 'a') + ((node.bid.endsWith('N')) ? node.bid.substr(0, 1) + 'Z' : node.bid);
   }
 
   addOrdeleteNode(bn: BNode): void {
     if (bn.id !== -1) {
-      this.bnode.nodes = this.bnode.nodes.filter(b => b !== bn);
+      this.bnc.bnode.nodes = this.bnc.bnode.nodes.filter(b => b !== bn);
     } else {
       this.addNode();
     }
   }
 
   unlink(): void {
-    this.bnode.linkedNode = undefined;
-    this.bnode.linkedId = undefined;
+    this.bnc.bnode.linkedNode = undefined;
+    this.bnc.bnode.linkedId = undefined;
     this.linkedNodes = [];
   }
 
   materialize(): void {
-    this.bsm.materializeLinkeNode(this.bnode);
+    this.bsm.materializeLinkeNode(this.bnc.bnode);
     this.linkedNodes = [];
   }
+
+  getBncList(): BNodeComposite[] {
+    return this.bnc.bnode.nodes.map(
+      node => this.bnc.newBNC(node)
+    );
+    // return [this.bnc.newBNC(this.bnc.bnode.nodes[0])];
+  }
+
+  getLinkedBncList(): BNodeComposite[] {
+    if (this.bnc.bnode.linkedNode !== undefined) {
+      return this.bnc.bnode.linkedNode.nodes.map(
+        node => this.bnc.newBNC(node)
+      );
+    } else {
+      return [];
+    }
+  }
+
 }

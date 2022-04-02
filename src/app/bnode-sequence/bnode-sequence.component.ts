@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
-import {BNode} from '../model/BNode';
 import {BNodeSequence} from '../model/BNodeSequence';
+import {BNodeComposite} from '../model/BNodeComposite';
 
 @Component({
   selector: 'app-bnode-sequence',
@@ -10,8 +10,8 @@ import {BNodeSequence} from '../model/BNodeSequence';
 })
 export class BnodeSequenceComponent implements OnInit {
 
-  @Input() subject!: Subject<BNode>;
-  @Output() selectNode = new EventEmitter<BNode | undefined>();
+  @Input() subject!: Subject<BNodeComposite>;
+  @Output() selectNode = new EventEmitter<BNodeComposite | undefined>();
 
   @Output() conditions = new EventEmitter<string[]>();
   @Output() bNodeSequenceEventEmitter = new EventEmitter<BNodeSequence>();
@@ -26,17 +26,17 @@ export class BnodeSequenceComponent implements OnInit {
     this.subject.asObservable().subscribe(b => this.addBNode(b));
   }
 
-  addBNode(bnode: BNode): void {
-    if (bnode === undefined) {
+  addBNode(bnc: BNodeComposite): void {
+    if (bnc === undefined) {
       this.reset();
     } else {
-      this.bNodeSequence.addNode(bnode);
+      this.bNodeSequence.addNode(bnc);
     }
   }
 
-  selectBid(bn: BNode): void {
-    this.bNodeSequence.setIndexNode(bn);
-    this.selectNode.emit(bn);
+  selectBid(bnc: BNodeComposite): void {
+    this.bNodeSequence.setIndexNode(bnc);
+    this.selectNode.emit(bnc);
   }
 
   reset(): void {

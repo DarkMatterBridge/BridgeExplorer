@@ -1,62 +1,64 @@
 import {BNode} from './BNode';
 import './../model/string.extension';
+import {BNodeComposite} from './BNodeComposite';
 
 export class BNodeSequence {
 
-  nodes: BNode[] = new Array<BNode>();
-  bids = new Array<string>();
+  // bids = new Array<string>();
   index = -1;
-  indexNode: BNode | undefined;
+  indexNode: BNodeComposite | undefined;
   isRealBiddingSequence = true;
-  rbNodes: BNode[] = new Array<BNode>();
+  rbNodes: BNode[] = new Array<BNode>(); // real bnodes  todo -> to be replaced
 
-  getIndex(bnode: BNode | undefined): number {
-    return (bnode === undefined) ? -1 : this.nodes.indexOf(bnode);
+  compositeNodes: BNodeComposite[] = new Array<BNodeComposite>();
+
+  getIndex(bnc: BNodeComposite | undefined): number {
+    return (bnc === undefined) ? -1 : this.compositeNodes.indexOf(bnc);
   }
 
-  addNode = (bnode: BNode) => {
+  addNode = (bnc: BNodeComposite) => {
     this.index = this.getIndex(this.indexNode);
     if (this.index === -1) {
     } else {
       this.cutAt(this.index + 1);
     }
-    this.nodes.push(bnode);
-    this.handleBidSemantics(bnode);
-    this.indexNode = bnode;
+    this.compositeNodes.push(bnc);
+//    this.handleBidSemantics(bnode); todo  not necessary
+    this.indexNode = bnc;
   }
 
   cutAt(i: number): void {
-    this.nodes = this.nodes.slice(0, i);
-    this.bids = this.bids.slice(0, i);
+    this.compositeNodes = this.compositeNodes.slice(0, i);
+    // this.bids = this.bids.slice(0, i);
   }
 
-  setIndexNode(bnode: BNode): void {
-    this.indexNode = bnode;
+  setIndexNode(bnc: BNodeComposite): void {
+    this.indexNode = bnc;
   }
 
   reset(): void {
-    this.nodes = new Array<BNode>();
-    this.bids = new Array<string>();
+    this.compositeNodes = new Array<BNodeComposite>();
+    // this.bids = new Array<string>();
     this.indexNode = undefined;
   }
 
   getLength(): number {
-    return this.nodes.length;
+    return this.compositeNodes.length;
   }
 
-  positionOfBNode(bn: BNode): number {
-    return this.nodes.indexOf(bn);
+  positionOfBNode(bnc: BNodeComposite): number {
+    return this.compositeNodes.indexOf(bnc);
   }
 
-  handleBidSemantics(newBid: BNode): void {
-    let transformedBid = newBid.bid;
-    if (this.bids.length > 0) {
-      const lastBid = this.bids[this.bids.length - 1];
-      transformedBid = this.transformNewBid(lastBid, newBid);
-      this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
-    }
-    this.bids.push(transformedBid);
-  }
+  // handleBidSemantics(newBid: BNode): void {
+  //   let transformedBid = newBid.bid;
+  //   if (this.bids.length > 0) {
+  //     const lastBid = this.bids[this.bids.length - 1];
+  //     transformedBid = this.transformNewBid(lastBid, newBid);
+  //     this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
+  //   }
+  //   this.bids.push(transformedBid);
+  // }
 
   transformNewBid(lastBid: string, newBid: BNode): string {
     if (!lastBid.isContractBid() || isNaN(+newBid.bid)) {
@@ -86,8 +88,8 @@ export class BNodeSequence {
 
     const e = new Array<BNode>();
     let passeDefault = false;
-    for (let i = 1; i < this.nodes.length; i++) {
-      if (this.nodes[i].ob !== undefined && this.nodes[i].ob) {
+    for (let i = 1; i < this.compositeNodes.length; i++) {
+      if (this.compositeNodes[i].bnode.ob !== undefined && this.compositeNodes[i].bnode.ob) {
         passeDefault = false;
       } else {
         if (passeDefault) {
@@ -95,8 +97,8 @@ export class BNodeSequence {
         }
         passeDefault = true;
       }
-      const b = {...this.nodes[i]};
-      b.bid = this.bids[i];
+      const b = {...this.compositeNodes[i].bnode};
+      b.bid = this.compositeNodes[i].bid; // todo : check if this is right
       e.push(b);
     }
     this.rbNodes = e;
@@ -106,16 +108,17 @@ export class BNodeSequence {
   }
 
   public generateRandomSequenceFromIndex(): void {
-    const indexNode = this.indexNode;
-    if (indexNode !== undefined) {
-      const lll = indexNode;
-      const len = lll.nodes?.length;
-      if (len !== null && len > 0) {
-        const z = Math.floor(Math.random() * (lll.nodes.length));
-        this.addNode(indexNode.nodes[z]);
-        this.generateRandomSequenceFromIndex();
-      }
-      this.indexNode = indexNode;
-    }
+    // TODO
+    //   const indexNode = this.indexNode;
+    //   if (indexNode !== undefined) {
+    //     const lll = indexNode;
+    //     const len = lll.nodes?.length;
+    //     if (len !== null && len > 0) {
+    //       const z = Math.floor(Math.random() * (lll.nodes.length));
+    //       this.addNode(indexNode.nodes[z]);
+    //       this.generateRandomSequenceFromIndex();
+    //     }
+    //     this.indexNode = indexNode;
+    //   }
   }
 }
