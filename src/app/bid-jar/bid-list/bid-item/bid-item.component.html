@@ -2,25 +2,27 @@
   <input [(ngModel)]="bnc.bnode.bid" size="2"/>
 </td>
 <td *ngIf="!newNode" (click)="selectBid(bnc)" class="min20" [ngClass]="{'opp': bnc.bnode.ob}"
-style="float:right; font-size: 13pt" class="pointer">
-<app-strain-symbol [strain]="bnc.bnode.bid"></app-strain-symbol>
+    style="float:right; font-size: 13pt" class="pointer">
+  <app-strain-symbol *ngIf="!bidEditable" [strain]="bnc.bid"></app-strain-symbol>
+  <app-strain-symbol *ngIf="bidEditable" [strain]="bnc.bnode.bid"></app-strain-symbol>
 </td>
 
 <td *ngIf="normal">
   <div class="pointer">
-  <mat-icon *ngIf="bnc.bnode.desc" matTooltip='{{bnc.bnode.desc}}' (click)="normal=false">info</mat-icon>
+    <mat-icon *ngIf="bnc.bnode.desc" matTooltip='{{bnc.bnode.desc}}' (click)="normal=false">info</mat-icon>
   </div>
 </td>
 <td *ngIf="normal">
   <input [(ngModel)]="bnc.bnode.con" size="50" (input)="checkCondition()"
-         [ngClass]="{'parsingNotOk': !okay}" [disabled]="!bidEditable" />
+         [ngClass]="{'parsingNotOk': !okay}" [disabled]="!bidEditable"/>
 </td>
 
 <td colspan="2" *ngIf="!normal">
   <input [(ngModel)]="bnc.bnode.desc" size="50">
   <div class="pointer">
-  <mat-icon matTooltip='{{bnc.bnode.con}}' (click)="normal=true">build</mat-icon>
-</div></td>
+    <mat-icon matTooltip='{{bnc.bnode.con}}' (click)="normal=true">build</mat-icon>
+  </div>
+</td>
 
 <td>
   <a *ngIf="!newNode && bidEditable" [routerLink]="" (click)="addOdeleteBid(bnc.bnode)" class="mat-cell">

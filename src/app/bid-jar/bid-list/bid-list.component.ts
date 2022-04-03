@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {BNode} from '../model/BNode';
+import {BNode} from '../../model/BNode';
 import {Subject} from 'rxjs';
-import {BridgeSystemManager} from '../services/bridge-system-manager.service';
-import {BNodeComposite} from '../model/BNodeComposite';
+import {BridgeSystemManager} from '../../services/bridge-system-manager.service';
+import {BNodeComposite} from '../../model/BNodeComposite';
 
 @Component({
   selector: 'app-bid-list',
@@ -25,6 +25,7 @@ export class BidListComponent implements OnInit, OnChanges {
   newBnc!: BNodeComposite;
 
   bncList: BNodeComposite[] = [];
+  bncLinkedList: BNodeComposite[] = [];
 
   constructor(private bsm: BridgeSystemManager) {
   }
@@ -41,6 +42,7 @@ export class BidListComponent implements OnInit, OnChanges {
     }
     this.newBnc = this.bnc.newBNC(new BNode('', [], ''));
     this.bncList = this.getBncList();
+    this.bncLinkedList = this.getLinkedBncList();
   }
 
   addNode(): void {
@@ -68,6 +70,7 @@ export class BidListComponent implements OnInit, OnChanges {
     } else {
       this.addNode();
     }
+    this.bncList = this.getBncList();
   }
 
   unlink(): void {
@@ -85,7 +88,6 @@ export class BidListComponent implements OnInit, OnChanges {
     return this.bnc.bnode.nodes.map(
       node => this.bnc.newBNC(node)
     );
-    // return [this.bnc.newBNC(this.bnc.bnode.nodes[0])];
   }
 
   getLinkedBncList(): BNodeComposite[] {

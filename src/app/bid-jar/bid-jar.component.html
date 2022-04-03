@@ -2,19 +2,19 @@
 
   <div class="topline">
     <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)"
-                        (bNodeSequenceEventEmitter)="activateDealView2($event)"
-    ></app-bnode-sequence>
+                        (bNodeSequenceEventEmitter)="activateDealView2($event)">
+    </app-bnode-sequence>
 
     <div>
-          <a [routerLink]="" (click)="editable=!editable" matTooltip="Edit" >
-            <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
-          </a>
+      <a [routerLink]="" (click)="editable=!editable" matTooltip="Edit">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
+      </a>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu2" style="text-align: right">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu2" style="text-align: right">
+        <mat-icon>more_vert</mat-icon>
+      </button>
     </div>
-    f
+
     <mat-menu #menu2="matMenu" xPosition="before">
 
       <button mat-menu-item (click)="saveIntoLocalStorage()">
@@ -56,8 +56,9 @@
       <span style="visibility: hidden"> --- </span>
       <span [ngClass]="{'opp': bnc.bnode.ob}" style="  font-size: 14pt;"
             (click)="editBid()" (mouseover)="calcStatistics()" matTooltip="Number of Subnodes: {{noNodes}}">
-            <app-strain-symbol [strain]="bnc.bnode.bid"></app-strain-symbol>
-        </span>
+        <app-strain-symbol *ngIf="!bidEditable" [strain]="bnc.bid"></app-strain-symbol>
+        <app-strain-symbol *ngIf="bidEditable" [strain]="bnc.bnode.bid"></app-strain-symbol>
+      </span>
       <span style="visibility: hidden"> - </span>
 
       <span class="con" (click)="editBid()"> {{bnc.bnode.con}}</span>
@@ -69,11 +70,11 @@
       <!--        <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>-->
       <!--      </a>-->
       <a [routerLink]="" (click)="markAsLinkable()" matTooltip="Mark as linkable Node">
-      <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
       </a>
-<!--      <a [routerLink]="" (click)="showStatistics()" matTooltip="statistics">-->
-<!--        <mat-icon>analytics</mat-icon>-->
-<!--      </a>-->
+      <!--      <a [routerLink]="" (click)="showStatistics()" matTooltip="statistics">-->
+      <!--        <mat-icon>analytics</mat-icon>-->
+      <!--      </a>-->
 
     </div>
   </div>

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BNode} from '../model/BNode';
+import {BNode} from '../../../model/BNode';
 import {Subject} from 'rxjs';
-import {DealHandCondition} from '../model/DealHandCondition';
-import {BNodeComposite} from '../model/BNodeComposite';
+import {DealHandCondition} from '../../../model/DealHandCondition';
+import {BNodeComposite} from '../../../model/BNodeComposite';
 
 @Component({
   selector: '[app-bid-item]',

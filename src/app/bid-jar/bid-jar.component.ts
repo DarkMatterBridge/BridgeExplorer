@@ -170,12 +170,10 @@ export class BidJarComponent implements OnInit {
     return this.noNodes;
   }
 
-
   activateDealView2(bns: BNodeSequence): void {
     this.dealViewActivated = true;
     this.bNodeSequence = {...bns} as BNodeSequence;
   }
-
   triggerFileUpload(): void {
     const el: HTMLElement = this.fileInput.nativeElement;
     el.click();

@@ -2,17 +2,20 @@
 
   <table>
     <thead>
-    <td class="min20"></td>
+    <tr>
+      <td class="min20"></td>
+    </tr>
     </thead>
-    <tr *ngFor="let bnc of bncList" app-bid-item="bn" [bnc]="bnc" [subject]="subject" [bidEditable]="editable"
+    <tr *ngFor="let bnc of bncList" app-bid-item [bnc]="bnc" [subject]="subject" [bidEditable]="editable"
         ($addOrDeleteNode)="addOrdeleteNode($event)">
     </tr>
-    <tr *ngIf="editable" app-bid-item [bnc]="newBnc" [subject]="subject" ($addOrDeleteNode)="addOrdeleteNode($event)"
-        [newNode]="true"></tr>
+    <tr *ngIf="editable" app-bid-item [bnc]="newBnc" [subject]="subject" [bidEditable]="editable"
+        ($addOrDeleteNode)="addOrdeleteNode($event)" [newNode]="true">
+    </tr>
 
     <tr *ngIf="linkedNodes.length >0" class="linkeNodes">
       <td> Linked</td>
-      <td> </td>
+      <td></td>
       <td><strong>{{bnc.bnode.linkedNode?.bid}}  </strong>
 
         <a [routerLink]="" (click)="materialize()" matTooltip="Materialize">
@@ -25,8 +28,8 @@
       </a>
       </td>
     </tr>
-    <tr *ngFor="let bnc of getLinkedBncList()" app-bid-item="bn" [bnc]="bnc" [subject]="subject" [bidEditable]="editable"
-        ($addOrDeleteNode)="addOrdeleteNode($event)"  class="linkeNodes">
+    <tr *ngFor="let bnc of bncLinkedList" app-bid-item="bn" [bnc]="bnc" [subject]="subject" [bidEditable]="false"
+        ($addOrDeleteNode)="addOrdeleteNode($event)" class="linkeNodes">
     </tr>
   </table>
 </div>
