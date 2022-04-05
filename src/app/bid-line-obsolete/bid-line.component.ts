@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {BNode} from "../model/BNode";
+import {BNode} from '../model/BNode';
 import {EventEmitter, Injectable} from '@angular/core';
-import {Subject} from "rxjs";
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-bid-line',
@@ -22,7 +22,7 @@ export class BidLineComponent implements OnInit {
   @Output() $deleteNode = new EventEmitter<BNode>();
 
   constructor() {
-    this.bnode = new BNode("", [], "");
+    this.bnode = new BNode('', [], '');
   }
 
   ngOnInit(): void {
