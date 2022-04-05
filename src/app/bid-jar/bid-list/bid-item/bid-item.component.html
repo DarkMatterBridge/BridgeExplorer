@@ -3,8 +3,8 @@
 </td>
 <td *ngIf="!newNode" (click)="selectBid(bnc)" class="min20" [ngClass]="{'opp': bnc.bnode.ob}"
     style="float:right; font-size: 13pt" class="pointer">
-  <app-strain-symbol *ngIf="!bidEditable" [strain]="bnc.bid"></app-strain-symbol>
-  <app-strain-symbol *ngIf="bidEditable" [strain]="bnc.bnode.bid"></app-strain-symbol>
+  <app-strain-symbol *ngIf="!editable" [strain]="bnc.bid"></app-strain-symbol>
+  <app-strain-symbol *ngIf="editable" [strain]="bnc.bnode.bid"></app-strain-symbol>
 </td>
 
 <td *ngIf="normal">
@@ -12,9 +12,13 @@
     <mat-icon *ngIf="bnc.bnode.desc" matTooltip='{{bnc.bnode.desc}}' (click)="normal=false">info</mat-icon>
   </div>
 </td>
-<td *ngIf="normal">
+<td *ngIf="normal && editable ">
   <input [(ngModel)]="bnc.bnode.con" size="50" (input)="checkCondition()"
-         [ngClass]="{'parsingNotOk': !okay}" [disabled]="!bidEditable"/>
+         [ngClass]="{'parsingNotOk': !okay}" [disabled]="false" matTooltip='{{parsingErrorText}}'/>
+</td>
+<td *ngIf="normal  && !editable">
+  <input [(ngModel)]="bnc.contextualizedCondition" size="50" (input)="checkCondition()"
+         [ngClass]="{'parsingNotOk': !okay}" [disabled]="true"/>
 </td>
 
 <td colspan="2" *ngIf="!normal">
@@ -25,7 +29,7 @@
 </td>
 
 <td>
-  <a *ngIf="!newNode && bidEditable" [routerLink]="" (click)="addOdeleteBid(bnc.bnode)" class="mat-cell">
+  <a *ngIf="!newNode && editable" [routerLink]="" (click)="addOdeleteBid(bnc.bnode)" class="mat-cell">
     <!--      <i class="material-icons">-->
     <!--        delete-->
     <!--      </i>-->

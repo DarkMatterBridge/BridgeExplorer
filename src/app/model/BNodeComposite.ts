@@ -5,14 +5,15 @@ export class BNodeComposite {
   bnode: BNode;
   bid: string;
   lastContractBid: string;
-  // contextualizedCondition: string = '';  //todo
+  contextualizedCondition: string; // todo
   // handAttributes: HandAttributes = new HandAttributes(); //todo
 
 
-  constructor(bnode: BNode, bid: string, lastContractBid: string) {
+  constructor(bnode: BNode, bid: string, lastContractBid: string, contextualizedCondition: string) {
     this.bnode = bnode;
     this.bid = bid;
     this.lastContractBid = lastContractBid;
+    this.contextualizedCondition = contextualizedCondition;
   }
 
   newBNC(newBnode: BNode): BNodeComposite {
@@ -21,11 +22,11 @@ export class BNodeComposite {
       if (newBnode.bid.isContractBid()) {
         lcb = newBnode.bid;
       }
-      return new BNodeComposite(newBnode, newBnode.bid, lcb);
+      return new BNodeComposite(newBnode, newBnode.bid, lcb, newBnode.con);
     }
     // so newBnode.bid is a number
     const newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
-    return new BNodeComposite(newBnode, newBid, newBid);
+    return new BNodeComposite(newBnode, newBid, newBid, newBnode.con);
   }
 
   addStepsToBid(bid: string, steps: number): string {

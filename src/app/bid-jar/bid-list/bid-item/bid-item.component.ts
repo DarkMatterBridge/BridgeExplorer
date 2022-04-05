@@ -20,15 +20,17 @@ export class BidItemComponent implements OnInit {
   @Input()
   newNode = false;
   @Input()
-  bidEditable = false;
+  editable = false;
 
   @Output() $addOrDeleteNode = new EventEmitter<BNode>();
 
   okay = true;
+  parsingErrorText = '';
+
   normal = true;
 
   constructor() {
-    this.bnc = new BNodeComposite(new BNode('', [], ''), '', '');
+    this.bnc = new BNodeComposite(new BNode('', [], ''), '', '', '');
     // this.bnode = new BNode('', [], '');
   }
 
@@ -46,19 +48,21 @@ export class BidItemComponent implements OnInit {
   }
 
   checkCondition(): void {
-    this.okay = this.checkCond();
+    this.parsingErrorText = this.checkCond();
+    this.okay = this.parsingErrorText === '' ? true : false;
   }
 
-  checkCond(): boolean {
+  checkCond(): string {
     const dh = new DealHandCondition();
     const cond = this.bnc.bnode.con.split('/')[0];
     if (cond.length === 0) {
-      return true;
+      return '';
     }
     try {
-      return dh.parseConditionWorker(cond) !== undefined;
+      return dh.parseConditionWorker(cond) !== undefined ? '' : 'undefined error';
     } catch (e: any) {
-      return false;
+      console.log(e);
+      return e.toString();
     }
   }
 }

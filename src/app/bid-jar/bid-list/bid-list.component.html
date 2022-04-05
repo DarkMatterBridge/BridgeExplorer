@@ -6,10 +6,10 @@
       <td class="min20"></td>
     </tr>
     </thead>
-    <tr *ngFor="let bnc of bncList" app-bid-item [bnc]="bnc" [subject]="subject" [bidEditable]="editable"
+    <tr *ngFor="let bnc of bncList" app-bid-item [bnc]="bnc" [subject]="subject" [editable]="editable"
         ($addOrDeleteNode)="addOrdeleteNode($event)">
     </tr>
-    <tr *ngIf="editable" app-bid-item [bnc]="newBnc" [subject]="subject" [bidEditable]="editable"
+    <tr *ngIf="editable" app-bid-item [bnc]="newBnc" [subject]="subject" [editable]="editable"
         ($addOrDeleteNode)="addOrdeleteNode($event)" [newNode]="true">
     </tr>
 
@@ -28,7 +28,7 @@
       </a>
       </td>
     </tr>
-    <tr *ngFor="let bnc of bncLinkedList" app-bid-item="bn" [bnc]="bnc" [subject]="subject" [bidEditable]="false"
+    <tr *ngFor="let bnc of bncLinkedList" app-bid-item="bn" [bnc]="bnc" [subject]="subject" [editable]="false"
         ($addOrDeleteNode)="addOrdeleteNode($event)" class="linkeNodes">
     </tr>
   </table>

@@ -50,14 +50,14 @@ export class BidJarComponent implements OnInit {
   setSystem(bn: BNode): void {
     this.bsm.makeUsable(bn);
     this.baseNode = bn;
-    this.bnc = new BNodeComposite(bn, '', '');
+    this.bnc = new BNodeComposite(bn, '', '', '');
     // this.bnode = bn;
   }
 
 
   setBnode(bnc: BNodeComposite | undefined): void {
     if (bnc === undefined) {
-      this.bnc = new BNodeComposite(this.baseNode, '', '');
+      this.bnc = new BNodeComposite(this.baseNode, '', '', '');
       // this.bnode = this.baseNode;
     } else {
       console.log(bnc);
@@ -97,7 +97,7 @@ export class BidJarComponent implements OnInit {
   resetSystem(): void {
     this.bridgeSystem = new BiddingSystem(this.bsm);
     this.baseNode = this.bridgeSystem.bridgeSystem;
-    this.bnc = new BNodeComposite(this.baseNode, '', '');
+    this.bnc = new BNodeComposite(this.baseNode, '', '', '');
     this.resetBidding();
   }
 
@@ -154,7 +154,7 @@ export class BidJarComponent implements OnInit {
       this.bnc.bnode.linkedId = linkableBnode.id;
     }
     // tslint:disable-next-line:max-line-length
-    this.bnc = new BNodeComposite(this.bnc.bnode, this.bnc.bid, this.bnc.lastContractBid); // to trigger the change detection on child component
+    this.bnc = new BNodeComposite(this.bnc.bnode, this.bnc.bid, this.bnc.lastContractBid, this.bnc.contextualizedCondition); // to trigger the change detection on child component
   }
 
   calcStatistics(): void {
