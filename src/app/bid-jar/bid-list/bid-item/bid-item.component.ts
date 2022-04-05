@@ -49,7 +49,7 @@ export class BidItemComponent implements OnInit {
 
   checkCondition(): void {
     this.parsingErrorText = this.checkCond();
-    this.okay = this.parsingErrorText === '' ? true : false;
+    this.okay = this.parsingErrorText === '';
   }
 
   checkCond(): string {

@@ -69,7 +69,7 @@
       <!--      <a [routerLink]="" (click)="editable=true" matTooltip="Edit">-->
       <!--        <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>-->
       <!--      </a>-->
-      <a [routerLink]="" (click)="markAsLinkable()" matTooltip="Mark as linkable Node">
+      <a *ngIf="editable" [routerLink]="" (click)="markAsLinkable()" matTooltip="Mark as linkable Node">
         <mat-icon aria-hidden="false" aria-label="Example home icon">link</mat-icon>
       </a>
       <!--      <a [routerLink]="" (click)="showStatistics()" matTooltip="statistics">-->

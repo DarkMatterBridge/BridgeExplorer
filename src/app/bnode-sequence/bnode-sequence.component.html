@@ -1,15 +1,15 @@
-<div class="b-bidding-sequence">
-
-  <span class="pointer">
+<span class="pointer">
   <mat-icon matTooltip='Back to Root' (click)="reset()">home</mat-icon>
 
   </span>
+<div class="b-bidding-sequence">
+<span>&nbsp;</span>
   <span *ngFor="let bnc of bNodeSequence.compositeNodes; let i = index" (click)="selectBid(bnc)">
--
+
  <span class="pointer" [ngClass]="{'fett': bnc == bNodeSequence.indexNode,
                  'opp': bnc.bnode.ob}">
  <app-strain-symbol [strain]="bNodeSequence.compositeNodes[i].bid"></app-strain-symbol>
- </span>
+ </span>&nbsp;-
 </span>
 
   <span style="padding-left: 2em;float: right">
