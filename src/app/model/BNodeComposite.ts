@@ -1,4 +1,5 @@
 import {BNode} from './BNode';
+import {HandAttributes} from "./HandAttributes";
 
 export class BNodeComposite {
 
@@ -6,27 +7,30 @@ export class BNodeComposite {
   bid: string;
   lastContractBid: string;
   contextualizedCondition: string; // todo
-  // handAttributes: HandAttributes = new HandAttributes(); //todo
+  handAttributes: HandAttributes = new HandAttributes();
 
-
-  constructor(bnode: BNode, bid: string, lastContractBid: string, contextualizedCondition: string) {
+  constructor(bnode: BNode, bid: string = '', lastContractBid: string = '', contextualizedCondition: string = '',
+              handAttributes: HandAttributes = new HandAttributes()) {
     this.bnode = bnode;
     this.bid = bid;
     this.lastContractBid = lastContractBid;
     this.contextualizedCondition = contextualizedCondition;
+    this.handAttributes = handAttributes;
   }
 
-  newBNC(newBnode: BNode): BNodeComposite {
+  buildNextBNC(newBnode: BNode): BNodeComposite {
     let lcb = this.lastContractBid;
-    if (isNaN(+newBnode.bid)) {
+    let newBid = '';
+    if (isNaN(+newBnode.bid)) { // so newBnode.bid is a not number
+      newBid = newBnode.bid;
       if (newBnode.bid.isContractBid()) {
         lcb = newBnode.bid;
       }
-      return new BNodeComposite(newBnode, newBnode.bid, lcb, newBnode.con);
+    } else {       // so newBnode.bid is a number
+      newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
+      lcb = newBid;
     }
-    // so newBnode.bid is a number
-    const newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
-    return new BNodeComposite(newBnode, newBid, newBid, newBnode.con);
+    return new BNodeComposite(newBnode, newBid, lcb, newBnode.con, {...this.handAttributes} as HandAttributes);
   }
 
   addStepsToBid(bid: string, steps: number): string {

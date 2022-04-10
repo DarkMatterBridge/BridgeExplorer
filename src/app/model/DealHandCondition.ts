@@ -563,3 +563,9 @@ export class DealHandCondition {
 
 
 // 3+Dpoints
+
+// A or B and C
+// (A or B) and C
+// (A or B) and C or D
+// (A and B or C ) and D
+

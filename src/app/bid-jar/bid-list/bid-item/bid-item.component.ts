@@ -3,6 +3,7 @@ import {BNode} from '../../../model/BNode';
 import {Subject} from 'rxjs';
 import {DealHandCondition} from '../../../model/DealHandCondition';
 import {BNodeComposite} from '../../../model/BNodeComposite';
+import {HandAttributes} from "../../../model/HandAttributes";
 
 @Component({
   selector: '[app-bid-item]',
@@ -30,7 +31,7 @@ export class BidItemComponent implements OnInit {
   normal = true;
 
   constructor() {
-    this.bnc = new BNodeComposite(new BNode('', [], ''), '', '', '');
+    this.bnc = new BNodeComposite(new BNode('', [], ''));
     // this.bnode = new BNode('', [], '');
   }
 
