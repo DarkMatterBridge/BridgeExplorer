@@ -24,14 +24,14 @@ export class ConditionManager {
     const handAttributes = new HandAttributes();
     handAttributes.attributes = new Map(bNodeComposite.handAttributes.attributes);
 
+    // replace condition (important for part after "/")
+    const allVariablesReplaced = this.substituteCondition(newBnode.con, handAttributes);
     // split condition to cond  + newdefintions
-    const [start, end] = this.split(newBnode.con);
+    const [conditionPart, definitionPart] = this.split(allVariablesReplaced);
     // parse new definitions to attributes
-    this.addAttributes(handAttributes, end);
-
+    this.addAttributes(handAttributes, definitionPart);
     // replace cond by attributes as new condition
-    const substitutedCondition = this.substituteCondition(start, handAttributes);
-    // const handAtributes = bNodeComposite.handAttributes.copyAndHandleCondition(substitutedCondition);
+    const substitutedCondition = this.substituteCondition(conditionPart, handAttributes);
 
     return new BNodeComposite(newBnode, newBid, lcb, substitutedCondition, handAttributes);
   }

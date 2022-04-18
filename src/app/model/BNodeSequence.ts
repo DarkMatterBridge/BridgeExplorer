@@ -4,7 +4,6 @@ import {BNodeComposite} from './BNodeComposite';
 
 export class BNodeSequence {
 
-  // bids = new Array<string>();
   index = -1;
   indexNode: BNodeComposite | undefined;
   isRealBiddingSequence = true;
@@ -60,29 +59,29 @@ export class BNodeSequence {
   //   this.bids.push(transformedBid);
   // }
 
-  transformNewBid(lastBid: string, newBid: BNode): string {
-    if (!lastBid.isContractBid() || isNaN(+newBid.bid)) {
-      return newBid.bid;
-    }
-    return this.addStepsToBid(lastBid, +newBid.bid);
-  }
+  // transformNewBid(lastBid: string, newBid: BNode): string {
+  //   if (!lastBid.isContractBid() || isNaN(+newBid.bid)) {
+  //     return newBid.bid;
+  //   }
+  //   return this.addStepsToBid(lastBid, +newBid.bid);
+  // }
 
   // TODO: this is bidding rules logic > needs to be put elsewhere later; maybe to String Class?
-  addStepsToBid(bid: string, steps: number): string {
-
-    const b = ['C', 'D', 'H', 'S', 'N', 'C', 'D', 'H', 'S', 'N'];
-    const index = b.findIndex(x => x === bid.charAt(1));
-    if (index >= 0) {
-      const newIndex = index + steps;
-      const levelUp = Math.floor(newIndex / 5);
-      // var num = ~~(a / b);
-      // var num = (a / b) >> 0;
-      const level = +bid.charAt(0) + levelUp;
-      const suitNo = newIndex % 5;
-      return level + b[suitNo];
-    }
-    return bid;
-  }
+  // addStepsToBid(bid: string, steps: number): string {
+  //
+  //   const b = ['C', 'D', 'H', 'S', 'N', 'C', 'D', 'H', 'S', 'N'];
+  //   const index = b.findIndex(x => x === bid.charAt(1));
+  //   if (index >= 0) {
+  //     const newIndex = index + steps;
+  //     const levelUp = Math.floor(newIndex / 5);
+  //     // var num = ~~(a / b);
+  //     // var num = (a / b) >> 0;
+  //     const level = +bid.charAt(0) + levelUp;
+  //     const suitNo = newIndex % 5;
+  //     return level + b[suitNo];
+  //   }
+  //   return bid;
+  // }
 
   public buildCanonicalSequence(): Array<BNode> { // todo include all directions & opps
 
@@ -99,6 +98,7 @@ export class BNodeSequence {
       }
       const b = {...this.compositeNodes[i].bnode};
       b.bid = this.compositeNodes[i].bid; // todo : check if this is right
+      b.con = this.compositeNodes[i].contextualizedCondition;
       e.push(b);
     }
     this.rbNodes = e;

@@ -30,7 +30,7 @@ export class DealHandCondition {
 
   addCondition(cond: string): void {
 
-    cond = this.handAttributes.parse(cond);  // todo  - move out of dealhandcondition
+    // cond = this.handAttributes.parse(cond);  // todo  - move out of dealhandcondition; not necessary any longer; done before
 
     if (this.condition === '') {
       this.condition = cond;
