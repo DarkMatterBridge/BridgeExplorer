@@ -1,8 +1,11 @@
 import {BNode} from '../model/BNode';
 import {HandAttributes} from '../model/HandAttributes';
 import {BNodeComposite} from '../model/BNodeComposite';
-import {Hand} from '../model/Hand';
+import {Injectable} from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ConditionManager {
 
   buildNextBNC(bNodeComposite: BNodeComposite, newBnode: BNode): BNodeComposite {

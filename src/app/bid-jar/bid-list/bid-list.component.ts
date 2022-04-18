@@ -41,7 +41,8 @@ export class BidListComponent implements OnInit, OnChanges {
     } else {
       this.linkedNodes = [];
     }
-    this.newBnc = this.bnc.buildNextBNC(new BNode('', [], ''));
+    // this.newBnc = this.bnc.buildNextBNC(new BNode('', [], ''));
+    this.newBnc = this.conditionManager.buildNextBNC(this.bnc, new BNode('', [], ''));
     this.bncList = this.getBncList();
     this.bncLinkedList = this.getLinkedBncList();
   }
@@ -53,7 +54,8 @@ export class BidListComponent implements OnInit, OnChanges {
     this.bsm.persistNode(this.newBnc.bnode);
     this.bnc.bnode.nodes.push(this.newBnc.bnode);
     this.sortNodes();
-    this.newBnc = this.bnc.buildNextBNC(new BNode('', [], ''));
+    // this.newBnc = this.bnc.buildNextBNC(new BNode('', [], ''));
+    this.newBnc = this.conditionManager.buildNextBNC(this.bnc, new BNode('', [], ''));
   }
 
   sortNodes(): void {
@@ -87,14 +89,16 @@ export class BidListComponent implements OnInit, OnChanges {
 
   getBncList(): BNodeComposite[] {
     return this.bnc.bnode.nodes.map(
-      node => this.bnc.buildNextBNC(node)
+      // node => this.bnc.buildNextBNC(node)
+      node => this.conditionManager.buildNextBNC(this.bnc, node)
     );
   }
 
   getLinkedBncList(): BNodeComposite[] {
     if (this.bnc.bnode.linkedNode !== undefined) {
       return this.bnc.bnode.linkedNode.nodes.map(
-        node => this.bnc.buildNextBNC(node)
+        // node => this.bnc.buildNextBNC(node)
+        node => this.conditionManager.buildNextBNC(this.bnc, node)
       );
     } else {
       return [];
