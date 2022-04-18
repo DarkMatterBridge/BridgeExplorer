@@ -3,6 +3,7 @@ import {BNode} from '../../model/BNode';
 import {Subject} from 'rxjs';
 import {BridgeSystemManager} from '../../services/bridge-system-manager.service';
 import {BNodeComposite} from '../../model/BNodeComposite';
+import {ConditionManager} from '../../services/ConditionManager';
 
 @Component({
   selector: 'app-bid-list',
@@ -27,7 +28,7 @@ export class BidListComponent implements OnInit, OnChanges {
   bncList: BNodeComposite[] = [];
   bncLinkedList: BNodeComposite[] = [];
 
-  constructor(private bsm: BridgeSystemManager) {
+  constructor(private bsm: BridgeSystemManager, private conditionManager: ConditionManager) {
   }
 
   ngOnInit(): void {

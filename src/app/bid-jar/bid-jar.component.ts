@@ -7,7 +7,6 @@ import {FileService} from '../services/file.service';
 import {LegacyBiddingSystem} from '../model/LegacyBiddingSystem';
 import {BNodeSequence} from '../model/BNodeSequence';
 import {BNodeComposite} from '../model/BNodeComposite';
-import {HandAttributes} from "../model/HandAttributes";
 
 @Component({
   selector: 'app-bid-jar',
@@ -52,6 +51,8 @@ export class BidJarComponent implements OnInit {
     this.bsm.makeUsable(bn);
     this.baseNode = bn;
     this.bnc = new BNodeComposite(bn);
+    // this.bnc.handAttributes = new HandAttributes();
+
     // this.bnode = bn;
   }
 

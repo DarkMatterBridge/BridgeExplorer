@@ -1,5 +1,5 @@
 import {BNode} from './BNode';
-import {HandAttributes} from "./HandAttributes";
+import {HandAttributes} from './HandAttributes';
 
 export class BNodeComposite {
 
@@ -15,7 +15,9 @@ export class BNodeComposite {
     this.bid = bid;
     this.lastContractBid = lastContractBid;
     this.contextualizedCondition = contextualizedCondition;
-    this.handAttributes = handAttributes;
+    // this.handAttributes = {...this.handAttributes} as HandAttributes;
+    // this.handAttributes = new HandAttributes();
+    // this.handAttributes.attributes = new Map( this.handAttributes.attributes);
   }
 
   buildNextBNC(newBnode: BNode): BNodeComposite {
@@ -30,6 +32,11 @@ export class BNodeComposite {
       newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
       lcb = newBid;
     }
+    const handAtributes = this.handAttributes.copyAndHandleCondition(this.bnode.con);
+
+    // split condition to cond  + newdefintions
+    // parse new definitions to attributes
+    // replace cond by attributes as new condition
     return new BNodeComposite(newBnode, newBid, lcb, newBnode.con, {...this.handAttributes} as HandAttributes);
   }
 
