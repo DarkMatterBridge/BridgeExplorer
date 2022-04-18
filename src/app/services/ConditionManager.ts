@@ -30,7 +30,7 @@ export class ConditionManager {
     this.addAttributes(handAttributes, end);
 
     // replace cond by attributes as new condition
-    const substitutedCondition = this.substituteCondition(newBnode.con, handAttributes);
+    const substitutedCondition = this.substituteCondition(start, handAttributes);
     // const handAtributes = bNodeComposite.handAttributes.copyAndHandleCondition(substitutedCondition);
 
     return new BNodeComposite(newBnode, newBid, lcb, substitutedCondition, handAttributes);

@@ -15,30 +15,31 @@ export class BNodeComposite {
     this.bid = bid;
     this.lastContractBid = lastContractBid;
     this.contextualizedCondition = contextualizedCondition;
+    this.handAttributes = handAttributes;
     // this.handAttributes = {...this.handAttributes} as HandAttributes;
     // this.handAttributes = new HandAttributes();
     // this.handAttributes.attributes = new Map( this.handAttributes.attributes);
   }
 
-  buildNextBNC(newBnode: BNode): BNodeComposite {
-    let lcb = this.lastContractBid;
-    let newBid = '';
-    if (isNaN(+newBnode.bid)) { // so newBnode.bid is a not number
-      newBid = newBnode.bid;
-      if (newBnode.bid.isContractBid()) {
-        lcb = newBnode.bid;
-      }
-    } else {       // so newBnode.bid is a number
-      newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
-      lcb = newBid;
-    }
-    const handAtributes = this.handAttributes.copyAndHandleCondition(this.bnode.con);
-
-    // split condition to cond  + newdefintions
-    // parse new definitions to attributes
-    // replace cond by attributes as new condition
-    return new BNodeComposite(newBnode, newBid, lcb, newBnode.con, {...this.handAttributes} as HandAttributes);
-  }
+  // buildNextBNC(newBnode: BNode): BNodeComposite {
+  //   let lcb = this.lastContractBid;
+  //   let newBid = '';
+  //   if (isNaN(+newBnode.bid)) { // so newBnode.bid is a not number
+  //     newBid = newBnode.bid;
+  //     if (newBnode.bid.isContractBid()) {
+  //       lcb = newBnode.bid;
+  //     }
+  //   } else {       // so newBnode.bid is a number
+  //     newBid = this.addStepsToBid(this.lastContractBid, +newBnode.bid);
+  //     lcb = newBid;
+  //   }
+  //   const handAtributes = this.handAttributes.copyAndHandleCondition(this.bnode.con);
+  //
+  //   // split condition to cond  + newdefintions
+  //   // parse new definitions to attributes
+  //   // replace cond by attributes as new condition
+  //   return new BNodeComposite(newBnode, newBid, lcb, newBnode.con, {...this.handAttributes} as HandAttributes);
+  // }
 
   addStepsToBid(bid: string, steps: number): string {
 

@@ -134,7 +134,7 @@ export class BidJarComponent implements OnInit {
     this.fileService.showRawSystem(name, this.baseNode);
   }
 
-  processFile(input: HTMLInputElement): void {
+  processFile(input: HTMLInputElement): void {  // TODO Bug > does not triggger if file name did not change
     const files = input.files;
     if (files) {
       this.fileService.uploadSystem(files[0], this.uploadSubject);

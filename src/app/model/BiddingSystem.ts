@@ -32,14 +32,14 @@ export class BiddingSystem {
   }
 
   setElementarySystem(): void {
-    this.bridgeSystem.nodes.push(new BNode('opening', [], 'opening', ));
-    this.bridgeSystem.nodes.push(new BNode('2T', [], 'Stayman'));
+    this.bridgeSystem.nodes.push(new BNode('opening', [], '', ));
+    this.bridgeSystem.nodes.push(new BNode('2C', [], ''));
     let nodes = this.bridgeSystem.nodes[0].nodes;
-    nodes.push(new BNode('1T', [],  'P>15'));
-    nodes.push(new BNode('1D', [],  'P>9, P<16, 2+D'));
+    nodes.push(new BNode('1C', [],  '15+'));
+    nodes.push(new BNode('1D', [],  '10+, 15-, 2+D'));
     nodes = nodes[0].nodes;
-    nodes.push(new BNode('1D', [],  'P<8'));
-    nodes.push(new BNode('1H', [],  'P>7, P<13'));
+    nodes.push(new BNode('1D', [],  '7-'));
+    nodes.push(new BNode('1H', [],  '8-11'));
 
     this.bidList = this.bsm.getTotalBidList(this.bridgeSystem);
   }
