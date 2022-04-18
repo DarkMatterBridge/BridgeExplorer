@@ -51,16 +51,12 @@ export class BidJarComponent implements OnInit {
     this.bsm.makeUsable(bn);
     this.baseNode = bn;
     this.bnc = new BNodeComposite(bn);
-    // this.bnc.handAttributes = new HandAttributes();
-
-    // this.bnode = bn;
+    // this.setToOpening();  since it does not work
   }
-
 
   setBnode(bnc: BNodeComposite | undefined): void {
     if (bnc === undefined) {
       this.bnc = new BNodeComposite(this.baseNode);
-      // this.bnode = this.baseNode;
     } else {
       console.log(bnc);
       this.bnc = bnc;
@@ -187,6 +183,19 @@ export class BidJarComponent implements OnInit {
     if (this.editable) {
       this.bidEditable = true;
     }
+  }
+
+  setToOpening(): void {  // todo does not work correctly  - sequence event triggering + buggy behaviour
+    this.baseNode.nodes.forEach(n => {
+      if (n.bid === 'opening') {
+        alert(n.bid);
+        const opening = new BNodeComposite(n);
+        this.setBnode(opening);
+        this.subject.next(opening);
+        return;
+      }
+    });
+
   }
 
 

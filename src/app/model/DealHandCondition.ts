@@ -197,7 +197,7 @@ export class DealHandCondition {
 
   parseForPlus(cond: string): ((hand: DealHand) => boolean) | undefined {
 
-    const regex = /(\d+)\+/;
+    const regex = /(\d+)\+$/;
     const a = regex.exec(cond);
 
     if (a !== null) {
@@ -277,14 +277,13 @@ export class DealHandCondition {
 
   parseForSuit(cond: string): Function | undefined {
 
-    const regex = /(\d+)(\+|\-)?(S|H|D|C|a)$/;
+    const regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+)$/;
     const a = regex.exec(cond.trim());
     let f1: Function;
 
     if (a !== null) {
       const length = +a[1];
       const suit = a[3];
-      let suitNo = 0;
       if (suit === 'a') {
         if (a[2] === '+') {
           return (hand: DealHand) => hand.cardsInSuit(0) >= length ||
@@ -298,19 +297,14 @@ export class DealHandCondition {
             hand.cardsInSuit(2) <= length ||
             hand.cardsInSuit(3) <= length;
         }
+        if (a[2] === undefined) {
+          return (hand: DealHand) => hand.cardsInSuit(0) === length ||
+            hand.cardsInSuit(1) === length ||
+            hand.cardsInSuit(2) === length ||
+            hand.cardsInSuit(3) === length;
+        }
       }
-      if (suit === 'S') {
-        suitNo = 3;
-      }
-      if (suit === 'H') {
-        suitNo = 2;
-      }
-      if (suit === 'D') {
-        suitNo = 1;
-      }
-      if (suit === 'C') {
-        suitNo = 0;
-      }
+      const suitNo  = this.determineSuit(suit);
       if (a[2] === '+') {
         f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) >= length;
       } else if (a[2] === '-') {
@@ -325,26 +319,14 @@ export class DealHandCondition {
 
   parseForPlusInSuit(cond: string): Function | undefined {
 
-    const regex = /(\d+)(\+|\-)?(S|H|D|C)points/;
+    const regex = /(\d+)(\+|\-)?(S|H|D|C|\$[A-z0-9]+)points/;
     const a = regex.exec(cond.trim());
     let f1: Function;
 
     if (a !== null) {
       const lp = +a[1];
       const suit = a[3];
-      let suitNo = 0;
-      if (suit === 'S') {
-        suitNo = 3;
-      }
-      if (suit === 'H') {
-        suitNo = 2;
-      }
-      if (suit === 'D') {
-        suitNo = 1;
-      }
-      if (suit === 'C') {
-        suitNo = 0;
-      }
+      const suitNo = this.determineSuit(suit);
       f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= lp;
       return f1;
     } else {
@@ -360,7 +342,7 @@ export class DealHandCondition {
 
     if (a !== null) {
       const distri = a[1];
-      if (a[2] === 'a') {
+      if (a[2] === 'c') {
         return (hand: DealHand) => hand.distribution() === distri;
       } else {
         return (hand: DealHand) => hand.cardsInSuit(3) === +distri.substr(0, 1) &&
@@ -517,48 +499,38 @@ export class DealHandCondition {
   parseForSpecialities(cond: string): Function | undefined {
 
     let suit;
-    let regex = /(S|H|D|C)(\.8playable2void)/;
+    let regex = /(S|H|D|C|\$[A-z0-9]+)(\.8playable2void)/;
     let a = regex.exec(cond.trim());
     if (a !== null) {
       suit = a[1];
-      let suitNo = 0;
-      if (suit === 'S') {
-        suitNo = 3;
-      }
-      if (suit === 'H') {
-        suitNo = 2;
-      }
-      if (suit === 'D') {
-        suitNo = 1;
-      }
-      if (suit === 'C') {
-        suitNo = 0;
-      }
+      const suitNo = this.determineSuit(suit);
       return (hand: DealHand) => hand.is8playable2void(suitNo);
     }
-    regex = /(S|H|D|C)(\.goodSuit)/;
+    regex = /(S|H|D|C|\$[A-z0-9]+)(\.goodSuit)/;
     a = regex.exec(cond.trim());
     if (a !== null) {
       suit = a[1];
-      let suitNo = 0;
-      if (suit === 'S') {
-        suitNo = 3;
-      }
-      if (suit === 'H') {
-        suitNo = 2;
-      }
-      if (suit === 'D') {
-        suitNo = 1;
-      }
-      if (suit === 'C') {
-        suitNo = 0;
-      }
+      const suitNo = this.determineSuit(suit);
       return (hand: DealHand) => hand.isGoodSuit(suitNo);
     }
     return undefined;
   }
 
 
+  private determineSuit(suit: string): number {
+    switch (suit) {
+      case 'S':
+        return 3;
+      case 'H':
+        return 2;
+      case 'D':
+        return 1;
+      case 'C':
+        return 0;
+      default:
+        return 3;
+    }
+  }
 }
 
 
@@ -569,3 +541,4 @@ export class DealHandCondition {
 // (A or B) and C or D
 // (A and B or C ) and D
 
+// add  ^ to beginning of some lines
