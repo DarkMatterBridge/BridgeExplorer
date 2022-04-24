@@ -59,7 +59,8 @@ export class ConditionManager {
       const suitNo = newIndex % 5;
       return level + b[suitNo];
     }
-    return bid;
+    // return bid;
+    return steps.toString();  // todo is this right?
   }
 
   addAttributes(handAttributes: HandAttributes, definitions: string): void {
@@ -79,7 +80,7 @@ export class ConditionManager {
   }
 
   parseAndAddAttribute(handAttributes: HandAttributes,  definition: string): void {
-    const regex = /(.+)(\:\=)(.+)/;
+    const regex = /(.+)(:=)(.+)/;
     const a = regex.exec(definition);
     if (a != null) {
       handAttributes.attributes.set(a[1].trim(), a[3].trim());

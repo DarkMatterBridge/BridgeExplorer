@@ -1,6 +1,7 @@
 import {BNode} from './BNode';
 import './../model/string.extension';
 import {BNodeComposite} from './BNodeComposite';
+import {ConditionManager} from '../services/ConditionManager';
 
 export class BNodeSequence {
 
@@ -107,18 +108,17 @@ export class BNodeSequence {
     return e;
   }
 
-  public generateRandomSequenceFromIndex(): void {
-    // TODO
-    //   const indexNode = this.indexNode;
-    //   if (indexNode !== undefined) {
-    //     const lll = indexNode;
-    //     const len = lll.nodes?.length;
-    //     if (len !== null && len > 0) {
-    //       const z = Math.floor(Math.random() * (lll.nodes.length));
-    //       this.addNode(indexNode.nodes[z]);
-    //       this.generateRandomSequenceFromIndex();
-    //     }
-    //     this.indexNode = indexNode;
-    //   }
+  public generateRandomSequenceFromIndex(conditionManager: ConditionManager): void {
+      const indexNode = this.indexNode;
+      if (indexNode !== undefined) {
+        const lll = indexNode;
+        const len = lll.bnode.nodes?.length;
+        if (len !== null && len > 0) {
+          const z = Math.floor(Math.random() * len);
+          this.addNode(conditionManager.buildNextBNC( indexNode, indexNode.bnode.nodes[z]));
+          this.generateRandomSequenceFromIndex(conditionManager);
+        }
+        this.indexNode = indexNode;
+      }
   }
 }

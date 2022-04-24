@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
 import {BNodeSequence} from '../model/BNodeSequence';
 import {BNodeComposite} from '../model/BNodeComposite';
+import {ConditionManager} from '../services/ConditionManager';
 
 @Component({
   selector: 'app-bnode-sequence',
@@ -13,12 +14,12 @@ export class BnodeSequenceComponent implements OnInit {
   @Input() subject!: Subject<BNodeComposite>;
   @Output() selectNode = new EventEmitter<BNodeComposite | undefined>();
 
-  @Output() conditions = new EventEmitter<string[]>();
+  // @Output() conditions = new EventEmitter<string[]>();
   @Output() bNodeSequenceEventEmitter = new EventEmitter<BNodeSequence>();
 
   bNodeSequence: BNodeSequence;
 
-  constructor() {
+  constructor(private conditionManager: ConditionManager) {
     this.bNodeSequence = new BNodeSequence();
   }
 
@@ -50,7 +51,7 @@ export class BnodeSequenceComponent implements OnInit {
   }
 
   generateRandomSequenceFromIndex(): void {
-    this.bNodeSequence.generateRandomSequenceFromIndex();
+    this.bNodeSequence.generateRandomSequenceFromIndex(this.conditionManager);
   }
 
 }

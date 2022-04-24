@@ -231,8 +231,8 @@ export class DealHandCondition {
     if (a !== null) {
       const evax = a[1];
       const evay = a[3];
-      const f1 = this.parseConditionWorker(evax);
-      const f2 = this.parseConditionWorker(evay);
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
       if (f1 !== undefined && f2 !== undefined) {
         console.log('Or successfully parsed');
         return (hand: DealHand) => f1(hand) || f2(hand);
@@ -248,8 +248,8 @@ export class DealHandCondition {
     if (a !== null) {
       const evax = a[1];
       const evay = a[3];
-      const f1 = this.parseConditionWorker(evax);
-      const f2 = this.parseConditionWorker(evay);
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
       if (f1 !== undefined && f2 !== undefined) {
         console.log('And successfully parsed');
         return (hand: DealHand) => f1(hand) && f2(hand);
@@ -265,8 +265,8 @@ export class DealHandCondition {
     if (a !== null) {
       const evax = a[1];
       const evay = a[3];
-      const f1 = this.parseConditionWorker(evax);
-      const f2 = this.parseConditionWorker(evay);
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
       if (f1 !== undefined && f2 !== undefined) {
         console.log('And successfully parsed');
         return (hand: DealHand) => f1(hand) && f2(hand);

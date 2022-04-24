@@ -18,7 +18,8 @@
 </td>
 <td *ngIf="normal  && !editable">
   <input [(ngModel)]="bnc.contextualizedCondition" size="50" (input)="checkCondition()"
-         [ngClass]="{'parsingNotOk': !okay}" [disabled]="true"/>
+         [ngClass]="{'parsingNotOk': !okay, 'noninput': true}" [disabled]="true"/>
+
 </td>
 
 <td colspan="2" *ngIf="!normal">

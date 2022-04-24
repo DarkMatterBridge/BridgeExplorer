@@ -3,16 +3,19 @@
 
   </span>
 <div class="b-bidding-sequence">
-<span>&nbsp;</span>
+  <span>&nbsp;</span>
   <span *ngFor="let bnc of bNodeSequence.compositeNodes; let i = index" (click)="selectBid(bnc)">
 
  <span class="pointer" [ngClass]="{'fett': bnc == bNodeSequence.indexNode,
                  'opp': bnc.bnode.ob}">
  <app-strain-symbol [strain]="bNodeSequence.compositeNodes[i].bid"></app-strain-symbol>
- </span>&nbsp;-
+ </span>&nbsp;
+    <span *ngIf="i<bNodeSequence.compositeNodes.length-1">-</span>
 </span>
 
-  <span style="padding-left: 2em;float: right">
+</div>
+
+<span style="padding-left: 2em;float: right">
 
   <span (click)="generateRandomSequenceFromIndex()" class="pointer">
     ↝
@@ -21,4 +24,3 @@
         class="pointer">
     <mat-icon>preview</mat-icon></span>
     </span>
-</div>

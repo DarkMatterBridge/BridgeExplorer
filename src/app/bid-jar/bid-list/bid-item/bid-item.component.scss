@@ -20,6 +20,13 @@ input {
   background: white;
 }
 
+.noninput {
+  color: black;
+  border: none;
+  outline: none;
+  background: rgb(234,238,238);
+}
+
 .parsingNotOk {
   //border-color: red;
   //border-width: 5px;
