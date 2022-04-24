@@ -17,10 +17,10 @@
 
 <span style="padding-left: 2em;float: right">
 
-  <span (click)="generateRandomSequenceFromIndex()" class="pointer">
+  <span (click)="generateRandomSequenceFromIndex()" class="pointer" matTooltip="Generate Random Sequence">
     ↝
   </span>
   <span *ngIf="bNodeSequence.isRealBiddingSequence" (click)="emitSequence()"
         class="pointer">
-    <mat-icon>preview</mat-icon></span>
-    </span>
+    <mat-icon matTooltip="Generate Hands">preview</mat-icon></span>
+ </span>

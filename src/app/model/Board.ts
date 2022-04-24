@@ -87,9 +87,10 @@ export class Board {
   }
 
   importCanonicalSequence(bns: BNode[], dealer: string): void {
-    this.biddingSequence = new BiddingSequence();
-    this.biddingSequence.importCanonicalSequence(bns);
-    this.biddingSequence.dealer = dealer;
+    const biddingSequence = new BiddingSequence();
+    biddingSequence.importCanonicalSequence(bns);
+    biddingSequence.dealer = dealer;
+    this.biddingSequence = biddingSequence;
   }
 
   resetBidding(): void {

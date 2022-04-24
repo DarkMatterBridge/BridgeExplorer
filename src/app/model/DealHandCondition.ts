@@ -342,7 +342,7 @@ export class DealHandCondition {
 
     if (a !== null) {
       const distri = a[1];
-      if (a[2] === 'c') {
+      if (a[2] === 'a') {
         return (hand: DealHand) => hand.distribution() === distri;
       } else {
         return (hand: DealHand) => hand.cardsInSuit(3) === +distri.substr(0, 1) &&

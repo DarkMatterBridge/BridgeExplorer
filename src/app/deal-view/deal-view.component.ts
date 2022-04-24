@@ -67,7 +67,7 @@ export class DealViewComponent implements OnInit, OnChanges {
       }
       this.tries = n;
 
-      this.board = new Board();
+ //     this.board = new Board();
       this.board.setHands(this.deal);
       // let newBoard = this.deal.getBoard();
       // console.log(this.board.biddingSequence.bids);
