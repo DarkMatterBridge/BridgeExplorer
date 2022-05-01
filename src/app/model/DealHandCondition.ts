@@ -9,15 +9,14 @@ export class DealHandCondition {
 
   condition = '';
 
-  public eval: Function;
+  public conditionChecker: ConditionChecker = (dh: DealHand) => true;
 
   constructor() {
-    this.eval = (x: DealHand) => true;
   }
 
-  check(hand: DealHandCondition): boolean {
-    return this.eval(hand);
-  }
+  // check(hand: DealHandCondition): boolean {
+  //   return this.conditionChecker === undefined ? true : this.conditionChecker(hand);
+  // }
 
   importAndParseCondition(cond: string): boolean {
     this.condition = cond;
@@ -29,9 +28,7 @@ export class DealHandCondition {
   }
 
   addCondition(cond: string): void {
-
-    // cond = this.handAttributes.parse(cond);  // todo  - move out of dealhandcondition; not necessary any longer; done before
-
+    // cond = this.handAttributes.parse(cond);  //  moved out of dealhandcondition; not necessary any longer; done before
     if (this.condition === '') {
       this.condition = cond;
     } else {
@@ -49,7 +46,7 @@ export class DealHandCondition {
       if (ff) {
         const fff = ff;
         console.log('Successfully parsed and added');
-        this.eval = (hand: DealHand) => this.eval(hand) && fff(hand);
+        this.conditionChecker = (hand: DealHand) => this.conditionChecker(hand) && fff(hand);
         return true;
       } else {
         return false;
@@ -65,24 +62,19 @@ export class DealHandCondition {
       return true;
     }
     try {
-      const ff = this.parseConditionWorker(this.condition);
-      if (ff) {
-        this.eval = ff;
+        this.conditionChecker = this.parseConditionWorker(this.condition);
         return true;
-      } else {
-        return false;
-      }
     } catch (e: any) {
       return false;
     }
   }
 
 
-  parseConditionWorker(cond: string): Function | undefined {
+  parseConditionWorker(cond: string): ConditionChecker {
 
     console.log('Parsing: ' + cond);
 
-    let f1: Function | undefined;
+    let f1: ConditionCheckerTemp;
 
     f1 = this.parseForPrioAnd(cond);
     if (f1 !== undefined) {
@@ -104,7 +96,87 @@ export class DealHandCondition {
       return f1;
     }
 
-    f1 = this.parseForIgnorables(cond);
+    f1 = this.parseAsAtom(cond);
+    if (f1 !== undefined) {
+      return f1;
+    }
+    console.log('Error: ' + cond + ' could not be parsed.');
+    throw new Error(cond + ' could not be parsed.');
+//    return undefined;
+
+  }
+
+  parseForNegation(cond: string): ConditionCheckerTemp {
+
+    const regex = /(\!)(.*)/;
+    const a = regex.exec(cond);
+
+    if (a !== null) {
+      const f1 = this.parseConditionWorker(a[2]);
+      if (f1 !== undefined) {
+        return (hand: DealHand) => !f1(hand);
+      }
+    }
+    return undefined;
+  }
+
+  // structural parsings
+
+  parseForOr(cond: string): ConditionCheckerTemp {
+
+    const regex = /(.+)\s(or|\|)(.*)/;
+    const a = regex.exec(cond);
+    if (a !== null) {
+      const evax = a[1];
+      const evay = a[3];
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
+      if (f1 !== undefined && f2 !== undefined) {
+        console.log('Or successfully parsed');
+        return (hand: DealHand) => f1(hand) || f2(hand);
+      }
+    }
+    return undefined;
+  }
+
+  parseForPrioAnd(cond: string): ConditionCheckerTemp {
+
+    const regex = /(.+)(\&)(.*)/;
+    const a = regex.exec(cond);
+    if (a !== null) {
+      const evax = a[1];
+      const evay = a[3];
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
+      if (f1 !== undefined && f2 !== undefined) {
+        console.log('And successfully parsed');
+        return (hand: DealHand) => f1(hand) && f2(hand);
+      }
+    }
+    return undefined;
+  }
+
+  parseForAnd(cond: string): ConditionCheckerTemp {
+
+    const regex = /(.+)(,|with)(.*)/;
+    const a = regex.exec(cond);
+    if (a !== null) {
+      const evax = a[1];
+      const evay = a[3];
+      const f1 = this.parseConditionWorker(evax.trim());
+      const f2 = this.parseConditionWorker(evay.trim());
+      if (f1 !== undefined && f2 !== undefined) {
+        console.log('And successfully parsed');
+        return (hand: DealHand) => f1(hand) && f2(hand);
+      }
+    }
+    return undefined;
+  }
+
+  /// Atoms parsing
+  parseAsAtom(cond: string): ConditionCheckerTemp {
+
+    let f1 = this.parseForIgnorables(cond);
     if (f1 !== undefined) {
       return f1;
     }
@@ -174,26 +246,9 @@ export class DealHandCondition {
       return f1;
     }
 
-    console.log('Error: ' + cond + ' could not be parsed.');
-    throw new Error(cond + ' could not be parsed.');
-//    return undefined;
-
-  }
-
-  parseForNegation(cond: string): Function | undefined {
-
-    const regex = /(\!)(.*)/;
-    const a = regex.exec(cond);
-
-    if (a !== null) {
-      const cond = a[2];
-      const f1 = this.parseConditionWorker(cond);
-      if (f1 !== undefined) {
-        return (hand: DealHand) => !f1(hand);
-      }
-    }
     return undefined;
   }
+
 
   parseForPlus(cond: string): ((hand: DealHand) => boolean) | undefined {
 
@@ -208,78 +263,23 @@ export class DealHandCondition {
     }
   }
 
-  parseForMinus(cond: string): Function | undefined { // todo check low and high point logic !
+  parseForMinus(cond: string): ConditionCheckerTemp { // todo check low and high point logic !
 
     const regex = /(\d+)\-$/;
     const a = regex.exec(cond);
-    let f1: Function;
 
     if (a !== null) {
       const hp = this.highPoints = +a[1];
-      f1 = (hand: DealHand) => hand.points() <= hp;
-      return f1;
+      return (hand: DealHand) => hand.points() <= hp;
     } else {
       return undefined;
     }
   }
 
-
-  parseForOr(cond: string): Function | undefined {
-
-    const regex = /(.+)\s(or|\|)(.*)/;
-    const a = regex.exec(cond);
-    if (a !== null) {
-      const evax = a[1];
-      const evay = a[3];
-      const f1 = this.parseConditionWorker(evax.trim());
-      const f2 = this.parseConditionWorker(evay.trim());
-      if (f1 !== undefined && f2 !== undefined) {
-        console.log('Or successfully parsed');
-        return (hand: DealHand) => f1(hand) || f2(hand);
-      }
-    }
-    return undefined;
-  }
-
-  parseForPrioAnd(cond: string): Function | undefined {
-
-    const regex = /(.+)(\&)(.*)/;
-    const a = regex.exec(cond);
-    if (a !== null) {
-      const evax = a[1];
-      const evay = a[3];
-      const f1 = this.parseConditionWorker(evax.trim());
-      const f2 = this.parseConditionWorker(evay.trim());
-      if (f1 !== undefined && f2 !== undefined) {
-        console.log('And successfully parsed');
-        return (hand: DealHand) => f1(hand) && f2(hand);
-      }
-    }
-    return undefined;
-  }
-
-  parseForAnd(cond: string): Function | undefined {
-
-    const regex = /(.+)(,|with)(.*)/;
-    const a = regex.exec(cond);
-    if (a !== null) {
-      const evax = a[1];
-      const evay = a[3];
-      const f1 = this.parseConditionWorker(evax.trim());
-      const f2 = this.parseConditionWorker(evay.trim());
-      if (f1 !== undefined && f2 !== undefined) {
-        console.log('And successfully parsed');
-        return (hand: DealHand) => f1(hand) && f2(hand);
-      }
-    }
-    return undefined;
-  }
-
-  parseForSuit(cond: string): Function | undefined {
+  parseForSuit(cond: string): ConditionCheckerTemp {
 
     const regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+)$/;
     const a = regex.exec(cond.trim());
-    let f1: Function;
 
     if (a !== null) {
       const length = +a[1];
@@ -304,37 +304,34 @@ export class DealHandCondition {
             hand.cardsInSuit(3) === length;
         }
       }
-      const suitNo  = this.determineSuit(suit);
+      const suitNo = this.determineSuit(suit);
       if (a[2] === '+') {
-        f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) >= length;
+        return (hand: DealHand) => hand.cardsInSuit(suitNo) >= length;
       } else if (a[2] === '-') {
-        f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) <= length;
+        return (hand: DealHand) => hand.cardsInSuit(suitNo) <= length;
       } else {
-        f1 = (hand: DealHand) => hand.cardsInSuit(suitNo) === length;
+        return (hand: DealHand) => hand.cardsInSuit(suitNo) === length;
       }
-      return f1;
     }
     return undefined;
   }
 
-  parseForPlusInSuit(cond: string): Function | undefined {
+  parseForPlusInSuit(cond: string): ConditionCheckerTemp {
 
     const regex = /(\d+)(\+|\-)?(S|H|D|C|\$[A-z0-9]+)points/;
     const a = regex.exec(cond.trim());
-    let f1: Function;
 
     if (a !== null) {
       const lp = +a[1];
       const suit = a[3];
       const suitNo = this.determineSuit(suit);
-      f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= lp;
-      return f1;
+      return (hand: DealHand) => hand.pointsInSuit(suitNo) >= lp;
     } else {
       return undefined;
     }
   }
 
-  parseForDistribution(cond: string): Function | undefined {
+  parseForDistribution(cond: string): ConditionCheckerTemp {
 
     const regex = /(\d\d\d\d)(.?)/;
     const a = regex.exec(cond);
@@ -354,7 +351,7 @@ export class DealHandCondition {
     return undefined;
   }
 
-  parseForMajor(cond: string): Function | undefined {
+  parseForMajor(cond: string): ConditionCheckerTemp {
     const regex = /(\d+)(\+|\-)?M/;
     const a = regex.exec(cond);
     if (a !== null) {
@@ -370,7 +367,7 @@ export class DealHandCondition {
     return undefined;
   }
 
-  parseForIgnorables(cond: string): Function | undefined {
+  parseForIgnorables(cond: string): ConditionCheckerTemp {
     const regex = /f1|F1|forced|asking|GF|gf|must|elay|Asking|inv|to play|SI/;
     const a = regex.exec(cond);
     if (a !== null) {
@@ -380,7 +377,7 @@ export class DealHandCondition {
   }
 
 
-  parseForMinor(cond: string): Function | undefined {
+  parseForMinor(cond: string): ConditionCheckerTemp {
     const regex = /(\d+)(\+|\-)?m/;
     const a = regex.exec(cond);
     if (a !== null) {
@@ -396,7 +393,7 @@ export class DealHandCondition {
     return undefined;
   }
 
-  parseForInterval(cond: string): Function | undefined {
+  parseForInterval(cond: string): ConditionCheckerTemp {
     const regex = /(\d+)\-(\d+)/;
     const a = regex.exec(cond);
     if (a !== null) {
@@ -416,33 +413,29 @@ export class DealHandCondition {
 
   }
 
-  parseForBalanced(cond: string): Function | undefined {
+  parseForBalanced(cond: string): ConditionCheckerTemp {
     const regex = /(bal)/;
     const a = regex.exec(cond);
-    let f1: Function;
 
     if (a !== null) {
-      f1 = (hand: DealHand) => hand.isBalanced();
-      return f1;
+      return  (hand: DealHand) => hand.isBalanced();
     } else {
       return undefined;
     }
   }
 
-  parseForUnbalanced(cond: string): Function | undefined {
+  parseForUnbalanced(cond: string): ConditionCheckerTemp {
     const regex = /(unbal)/;
     const a = regex.exec(cond);
-    let f1: Function;
 
     if (a !== null) {
-      f1 = (hand: DealHand) => !hand.isBalanced();
-      return f1;
+      return (hand: DealHand) => !hand.isBalanced();
     } else {
       return undefined;
     }
   }
 
-  parseForMin(cond: string): Function | undefined {
+  parseForMin(cond: string): ConditionCheckerTemp {
     const regex = /(min)/;
     const a = regex.exec(cond);
 
@@ -463,7 +456,7 @@ export class DealHandCondition {
     }
   }
 
-  parseForMax(cond: string): Function | undefined {
+  parseForMax(cond: string): ConditionCheckerTemp {
     const regex = /(max)/;
     const a = regex.exec(cond);
     if (a !== null) {
@@ -483,7 +476,7 @@ export class DealHandCondition {
     }
   }
 
-  parseForSI(cond: string): Function | undefined {
+  parseForSI(cond: string): ConditionCheckerTemp {
     const regex = /(SI)/;
     const a = regex.exec(cond.trim());
 
@@ -496,7 +489,7 @@ export class DealHandCondition {
   }
 
 
-  parseForSpecialities(cond: string): Function | undefined {
+  parseForSpecialities(cond: string): ConditionCheckerTemp {
 
     let suit;
     let regex = /(S|H|D|C|\$[A-z0-9]+)(\.8playable2void)/;
@@ -512,6 +505,49 @@ export class DealHandCondition {
       suit = a[1];
       const suitNo = this.determineSuit(suit);
       return (hand: DealHand) => hand.isGoodSuit(suitNo);
+    }
+    regex = /(S|H|D|C|\$[A-z0-9]+)(\.semisolid)/;
+    a = regex.exec(cond.trim());
+    if (a !== null) {
+      suit = a[1];
+      const suitNo = this.determineSuit(suit);
+      return (hand: DealHand) => hand.isSemiSolid(suitNo);
+    }
+    regex = /(3suiter)/;
+    a = regex.exec(cond.trim());
+    if (a !== null) {
+      return (hand: DealHand) => hand.is3suiter();
+    }
+    regex = /(S|H|D|C|\$[A-z0-9]+)(\-values)/;
+    a = regex.exec(cond.trim());
+    if (a !== null) {
+      suit = a[1];
+      const suitNo = this.determineSuit(suit);
+      return (hand: DealHand) => hand.hasValues(suitNo);
+    }
+    regex = /(S|H|D|C|\$[A-z0-9]+)(\-control)/;
+    a = regex.exec(cond.trim());
+    if (a !== null) {
+      suit = a[1];
+      const suitNo = this.determineSuit(suit);
+      return (hand: DealHand) => hand.hasControl(suitNo);
+    }
+
+    regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+).points$/;
+    a = regex.exec(cond.trim());
+    let f1: ConditionCheckerTemp;
+    if (a !== null) {
+      const length = +a[1];
+      suit = a[3];
+      const suitNo = this.determineSuit(suit);
+      if (a[2] === '+') {
+        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= length;
+      } else if (a[2] === '-') {
+        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) <= length;
+      } else {
+        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) === length;
+      }
+      return f1;
     }
     return undefined;
   }
@@ -542,3 +578,6 @@ export class DealHandCondition {
 // (A and B or C ) and D
 
 // add  ^ to beginning of some lines
+
+type ConditionCheckerTemp = ((dealHand: DealHand) => boolean) | undefined;
+type ConditionChecker = ((dealHand: DealHand) => boolean);
