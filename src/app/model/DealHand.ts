@@ -12,6 +12,10 @@ export class DealHand {
     return this.cards.reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 8, 0), 0);
   }
 
+  controls(): number {
+    return this.cards.reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 10, 0), 0);
+  }
+
   pointsInSuit(suit: number): number {
     return this.cards.filter(card => (card >= suit * 13 && card < suit * 13 + 13)).reduce((sum, b) => sum + Math.max(Math.floor(b % 13) - 8, 0), 0);
   }

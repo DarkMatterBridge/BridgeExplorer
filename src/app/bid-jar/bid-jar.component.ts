@@ -41,7 +41,7 @@ export class BidJarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subject.asObservable().subscribe(b => this.setBnode(b));
+    this.subject.asObservable().subscribe(b => this.setBnodeFromBelow(b));
     this.resetSystem();
     this.loadFromLocalStorage();
     this.uploadSubject.subscribe(bn => this.setSystem(bn));
@@ -54,11 +54,25 @@ export class BidJarComponent implements OnInit {
     // this.setToOpening();  since it does not work
   }
 
+  // 1) called from include Bnode-Sequence.component
+  // 2) called from subject event (so from bid item)
+
   setBnode(bnc: BNodeComposite | undefined): void {
     if (bnc === undefined) {
       this.bnc = new BNodeComposite(this.baseNode);
     } else {
       console.log(bnc);
+      this.bnc = bnc;
+    }
+  }
+
+  setBnodeFromBelow(bnc: BNodeComposite | undefined): void {
+    if (bnc === undefined) { // Does this ever occur?
+      this.bnc = new BNodeComposite(this.baseNode);
+      // this.reset();
+      this.bNodeSequence.reset(); // instead of this.reset() ;
+    } else {
+      this.bNodeSequence.addNode(bnc);
       this.bnc = bnc;
     }
   }
@@ -195,7 +209,6 @@ export class BidJarComponent implements OnInit {
         return;
       }
     });
-
   }
 
 

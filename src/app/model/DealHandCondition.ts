@@ -62,8 +62,8 @@ export class DealHandCondition {
       return true;
     }
     try {
-        this.conditionChecker = this.parseConditionWorker(this.condition);
-        return true;
+      this.conditionChecker = this.parseConditionWorker(this.condition);
+      return true;
     } catch (e: any) {
       return false;
     }
@@ -176,27 +176,36 @@ export class DealHandCondition {
   /// Atoms parsing
   parseAsAtom(cond: string): ConditionCheckerTemp {
 
+    const checks: ((cond: string) => ConditionCheckerTemp)[] = [this.parseForContols];
+
+    for (let i = 0; i < checks.length; i++) {
+      const f = checks[i](cond);
+      if (f !== undefined) {
+        return f;
+      }
+    }
+
     let f1 = this.parseForIgnorables(cond);
     if (f1 !== undefined) {
       return f1;
     }
 
-    f1 = this.parseForMajor(cond);
+    // f1 = this.parseForMajor(cond);
+    // if (f1 !== undefined) {
+    //   return f1;
+    // }
+
+    // f1 = this.parseForMinor(cond);
+    // if (f1 !== undefined) {
+    //   return f1;
+    // }
+
+    f1 = this.parseForNoCardsInSuit(cond);
     if (f1 !== undefined) {
       return f1;
     }
 
-    f1 = this.parseForMinor(cond);
-    if (f1 !== undefined) {
-      return f1;
-    }
-
-    f1 = this.parseForSuit(cond);
-    if (f1 !== undefined) {
-      return f1;
-    }
-
-    f1 = this.parseForPlusInSuit(cond);
+    f1 = this.parseForPointsInSuit(cond);
     if (f1 !== undefined) {
       return f1;
     }
@@ -250,6 +259,25 @@ export class DealHandCondition {
   }
 
 
+  parseForContols(cond: string): ConditionCheckerTemp {
+
+    console.log("Check for controls");
+    const regex = /(\d+)(\+|\-)?controls$/;
+    const a = regex.exec(cond);
+
+    if (a !== null) {
+      const controls = +a[1];
+      if (a[2] === '+') {
+        return (hand: DealHand) => hand.controls() >= controls;
+      } else if (a[2] === '-') {
+        return (hand: DealHand) => hand.controls() <= controls;
+      } else {
+        return (hand: DealHand) => hand.controls() === controls;
+      }
+    }
+    return undefined;
+  }
+
   parseForPlus(cond: string): ((hand: DealHand) => boolean) | undefined {
 
     const regex = /(\d+)\+$/;
@@ -276,9 +304,9 @@ export class DealHandCondition {
     }
   }
 
-  parseForSuit(cond: string): ConditionCheckerTemp {
+  parseForNoCardsInSuit(cond: string): ConditionCheckerTemp {
 
-    const regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+)$/;
+    const regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|M|m|\$[A-z0-9]+)$/;
     const a = regex.exec(cond.trim());
 
     if (a !== null) {
@@ -304,6 +332,32 @@ export class DealHandCondition {
             hand.cardsInSuit(3) === length;
         }
       }
+      if (suit === 'M') {
+        if (a[2] === '+') {
+          return (hand: DealHand) => (hand.cardsInSuit(2) >= length ||
+            hand.cardsInSuit(3) >= length);
+        } else if (a[2] === '-') {
+          return (hand: DealHand) => (hand.cardsInSuit(2) <= length ||
+            hand.cardsInSuit(3) <= length);
+        } else {
+          return (hand: DealHand) => (hand.cardsInSuit(2) === length ||
+            hand.cardsInSuit(3) === length);
+        }
+      }
+
+      if (suit === 'm') {
+        if (a[2] === '+') {
+          return (hand: DealHand) => (hand.cardsInSuit(0) >= length ||
+            hand.cardsInSuit(1) >= length);
+        }
+        if (a[2] === '-') {
+          return (hand: DealHand) => (hand.cardsInSuit(0) <= length ||
+            hand.cardsInSuit(1) <= length);
+        }
+        return (hand: DealHand) => (hand.cardsInSuit(0) === length ||
+          hand.cardsInSuit(1) === length);
+      }
+
       const suitNo = this.determineSuit(suit);
       if (a[2] === '+') {
         return (hand: DealHand) => hand.cardsInSuit(suitNo) >= length;
@@ -316,7 +370,7 @@ export class DealHandCondition {
     return undefined;
   }
 
-  parseForPlusInSuit(cond: string): ConditionCheckerTemp {
+  parseForPointsInSuit(cond: string): ConditionCheckerTemp {
 
     const regex = /(\d+)(\+|\-)?(S|H|D|C|\$[A-z0-9]+)points/;
     const a = regex.exec(cond.trim());
@@ -418,7 +472,7 @@ export class DealHandCondition {
     const a = regex.exec(cond);
 
     if (a !== null) {
-      return  (hand: DealHand) => hand.isBalanced();
+      return (hand: DealHand) => hand.isBalanced();
     } else {
       return undefined;
     }

@@ -17,17 +17,17 @@ export class BnodeSequenceComponent implements OnInit {
   // @Output() conditions = new EventEmitter<string[]>();
   @Output() bNodeSequenceEventEmitter = new EventEmitter<BNodeSequence>();
 
-  bNodeSequence: BNodeSequence;
+  @Input() bNodeSequence: BNodeSequence;
 
   constructor(private conditionManager: ConditionManager) {
     this.bNodeSequence = new BNodeSequence();
   }
 
   ngOnInit(): void {
-    this.subject.asObservable().subscribe(b => this.addBNode(b));
+    // this.subject.asObservable().subscribe(b => this.addBNode(b));
   }
 
-  addBNode(bnc: BNodeComposite): void {
+  addBNode(bnc: BNodeComposite): void {  // to removed
     if (bnc === undefined) {
       this.reset();
     } else {

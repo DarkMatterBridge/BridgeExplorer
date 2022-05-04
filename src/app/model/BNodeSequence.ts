@@ -29,7 +29,6 @@ export class BNodeSequence {
 
   cutAt(i: number): void {
     this.compositeNodes = this.compositeNodes.slice(0, i);
-    // this.bids = this.bids.slice(0, i);
   }
 
   setIndexNode(bnc: BNodeComposite): void {
@@ -38,7 +37,6 @@ export class BNodeSequence {
 
   reset(): void {
     this.compositeNodes = new Array<BNodeComposite>();
-    // this.bids = new Array<string>();
     this.indexNode = undefined;
   }
 
