@@ -11,7 +11,7 @@ import {ConditionManager} from '../services/ConditionManager';
 })
 export class BnodeSequenceComponent implements OnInit {
 
-  @Input() subject!: Subject<BNodeComposite>;
+  // @Input() subject!: Subject<BNodeComposite>;
   @Output() selectNode = new EventEmitter<BNodeComposite | undefined>();
 
   // @Output() conditions = new EventEmitter<string[]>();
@@ -27,7 +27,7 @@ export class BnodeSequenceComponent implements OnInit {
     // this.subject.asObservable().subscribe(b => this.addBNode(b));
   }
 
-  addBNode(bnc: BNodeComposite): void {  // to removed
+  addBNode(bnc: BNodeComposite): void {  // unused
     if (bnc === undefined) {
       this.reset();
     } else {
@@ -36,6 +36,8 @@ export class BnodeSequenceComponent implements OnInit {
   }
 
   selectBid(bnc: BNodeComposite): void {
+    console.log(bnc);
+    console.log(this.bNodeSequence);
     this.bNodeSequence.setIndexNode(bnc);
     this.selectNode.emit(bnc);
   }

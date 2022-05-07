@@ -29,6 +29,7 @@ export class BidJarComponent implements OnInit {
   dealViewActivated = false;
   bNodeSequence: BNodeSequence = new BNodeSequence();
 
+  bNodeSequenceForDealView: BNodeSequence = new BNodeSequence();
 
   editable = false;
   bidEditable = false;
@@ -185,7 +186,7 @@ export class BidJarComponent implements OnInit {
 
   activateDealView2(bns: BNodeSequence): void {
     this.dealViewActivated = true;
-    this.bNodeSequence = {...bns} as BNodeSequence;
+    this.bNodeSequenceForDealView = {...bns} as BNodeSequence; // Attention> this spread construct removes all functions
   }
 
   triggerFileUpload(): void {

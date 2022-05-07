@@ -1,7 +1,7 @@
 <div class="bidjar">
 
   <div class="topline">
-    <app-bnode-sequence [subject]="subject" (selectNode)="setBnode($event)" [bNodeSequence]="bNodeSequence"
+    <app-bnode-sequence (selectNode)="setBnode($event)" [bNodeSequence]="bNodeSequence"
                         (bNodeSequenceEventEmitter)="activateDealView2($event)">
     </app-bnode-sequence>
 
@@ -105,5 +105,5 @@
 </div>
 
 <div class="bidjar" *ngIf="dealViewActivated">
-  <app-deal-view [bNodeSequence]="bNodeSequence"></app-deal-view>
+  <app-deal-view [bNodeSequence]="bNodeSequenceForDealView"></app-deal-view>
 </div>
