@@ -96,6 +96,17 @@ export class BridgeSystemManager {
     }
   }
 
+  getTotalBidSequenceList(node: BNode, sequence: string = ''): string[] {
+    const nm = [sequence];
+    if (node.nodes.length > 0) {
+      return node.nodes.map(b => this.getTotalBidSequenceList(b, sequence + '-' + b.bid))
+        .reduce((accumulator, value) => [...accumulator, ...value], nm);
+    } else {
+      return nm;
+    }
+  }
+
+
   getAllLinkedNodes(map: Map<number, BNode>): Array<[number, BNode]> {
     const a = Array.from(map);
     const b = a.filter(([c, d]) => d.linkedId !== undefined);

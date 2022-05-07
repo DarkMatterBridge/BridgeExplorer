@@ -146,11 +146,15 @@ export class BidJarComponent implements OnInit {
   }
 
   showAllBids(): void {
-    const bidList = this.bsm.getTotalBidList(this.baseNode);
-    let bl = Array.from(bidList).map(([x, y]) => x + ":" + y.bid + "->" + y.con);
-    let text = bl.join('          \n');
+    const bidList = this.bsm.getTotalBidSequenceList(this.baseNode);
+    let text = bidList.join('<\p><p>');
     this.fileService.showInNewWindow(text);
-    console.log(this.bsm.getAllLinkedNodes(bidList));
+    console.log('<p>' + bidList + '<\p>');
+    // const bidList = this.bsm.getTotalBidList(this.baseNode);
+    // let bl = Array.from(bidList).map(([x, y]) => x + ":" + y.bid + "->" + y.con);
+    // let text = bl.join('          \n');
+    // this.fileService.showInNewWindow(text);
+    // console.log(this.bsm.getAllLinkedNodes(bidList));
   }
 
   processFile(input: HTMLInputElement): void {  // TODO Bug > does not triggger if file name did not change
