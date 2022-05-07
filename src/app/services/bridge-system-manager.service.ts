@@ -83,7 +83,11 @@ export class BridgeSystemManager {
 
   getTotalBidList(node: BNode): Map<number, BNode> {
     if (node.nodes.length > 0) {
-      return node.nodes.map(b => this.getTotalBidList(b)).reduce((accumulator, value) => new Map([...accumulator, ...value]), new Map()).set(node.id, node);
+      const nm = new Map();
+      nm.set(node.id, node);
+      return node.nodes.map(b => this.getTotalBidList(b))
+        .reduce((accumulator, value) => new Map([...accumulator, ...value]), nm);
+        // .set(node.id, node);
     } else {
       return new Map([[node.id, node]]);
     }

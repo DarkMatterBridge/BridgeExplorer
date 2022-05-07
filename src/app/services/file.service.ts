@@ -52,9 +52,13 @@ export class FileService {
 
   showRawSystem(name: string, bnode: BNode): void {
     const json = this.transformToJson(bnode);
+    this.showInNewWindow(json);
+  }
+
+  showInNewWindow(content: string): void {
     const wea = window.open('', 'hallo');
     if (wea) {
-      wea.document.write(json);
+      wea.document.write(content);
     }
   }
 

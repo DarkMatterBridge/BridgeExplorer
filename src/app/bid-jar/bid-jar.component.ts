@@ -145,6 +145,14 @@ export class BidJarComponent implements OnInit {
     this.fileService.showRawSystem(name, this.baseNode);
   }
 
+  showAllBids(): void {
+    const bidList = this.bsm.getTotalBidList(this.baseNode);
+    let  bl =  Array.from(bidList).map(([x,y]) => x+":"+y.bid+"->"+y.con);
+    console.log(bl);
+    let text = bl.join('          \n');
+    this.fileService.showInNewWindow(text);
+  }
+
   processFile(input: HTMLInputElement): void {  // TODO Bug > does not triggger if file name did not change
     const files = input.files;
     if (files) {
