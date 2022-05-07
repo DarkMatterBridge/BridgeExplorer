@@ -6,6 +6,8 @@ import {BNode} from '../model/BNode';
 })
 export class BridgeSystemManager {
 
+  bs: BNode | undefined; // dubious, whether this belongs to a service > TODO
+
   constructor() {
   }
 
@@ -19,7 +21,7 @@ export class BridgeSystemManager {
     return b;
   }
 
-  getNode(bidList: Map<number, BNode>, id: number): BNode |undefined{
+  getNode(bidList: Map<number, BNode>, id: number): BNode | undefined {
     return bidList.get(id);
   }
 
@@ -45,7 +47,7 @@ export class BridgeSystemManager {
     return [...bidList].filter(([_, node]) => node.linkedId !== undefined).map(([_, b]) => b);
   }
 
-  connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>): void{
+  connectLinkedNodesW(linkedNodes: BNode[], bidList: Map<number, BNode>): void {
 //    alert("linked nodes: "+ linkedNodes.length);
     for (const nwl of linkedNodes) {
       nwl.linkedNode = bidList.get(nwl.linkedId || -1);
@@ -57,6 +59,7 @@ export class BridgeSystemManager {
     const bidList = this.getTotalBidList(bn);
     this.connectLinkedNodesW(this.determineLinkedNodes(bidList), bidList);
     this.determineAndSetHighestId(bn);
+    this.bs = bn;
   }
 
   determineLinkedNodesDirect(node: BNode): BNode[] {
@@ -87,10 +90,29 @@ export class BridgeSystemManager {
       nm.set(node.id, node);
       return node.nodes.map(b => this.getTotalBidList(b))
         .reduce((accumulator, value) => new Map([...accumulator, ...value]), nm);
-        // .set(node.id, node);
+      // .set(node.id, node);
     } else {
       return new Map([[node.id, node]]);
     }
+  }
+
+  getAllLinkedNodes(map: Map<number, BNode>): Array<[number, BNode]> {
+    const a = Array.from(map);
+    const b = a.filter(([c, d]) => d.linkedId !== undefined);
+    console.log(b);
+    const linkedIds = b.map(([c, d]) => d.linkedNode);
+    console.log(linkedIds);
+    return b;
+  }
+
+  isALinkedNodeIn(bnode: BNode, baseNoade: BNode): boolean {
+    const linkedNodes = this.getAllLinkedNodes(this.getTotalBidList(baseNoade));
+    const linkedIds = linkedNodes.map(([c, d]) => d.linkedNode!!.id);
+    return linkedIds === undefined || (linkedIds.includes(bnode.id));
+  }
+
+  isALinkedNodeInSystem(bnode: BNode): boolean {
+    return this.bs !== undefined && this.isALinkedNodeIn(bnode, this.bs);
   }
 
   persistNode(bnode: BNode): void {
@@ -107,8 +129,8 @@ export class BridgeSystemManager {
     }
   }
 
-  copyBNode(bnode: BNode): BNode{
-    return  JSON.parse(this.transformToJson(bnode)) as BNode;
+  copyBNode(bnode: BNode): BNode {
+    return JSON.parse(this.transformToJson(bnode)) as BNode;
   }
 
   transformToJson(bnode: BNode): string {

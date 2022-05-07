@@ -4,6 +4,7 @@ import {Subject} from 'rxjs';
 import {BridgeSystemManager} from '../../services/bridge-system-manager.service';
 import {BNodeComposite} from '../../model/BNodeComposite';
 import {ConditionManager} from '../../services/ConditionManager';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-bid-list',
@@ -28,7 +29,9 @@ export class BidListComponent implements OnInit, OnChanges {
   bncList: BNodeComposite[] = [];
   bncLinkedList: BNodeComposite[] = [];
 
-  constructor(private bsm: BridgeSystemManager, private conditionManager: ConditionManager) {
+  constructor(private bsm: BridgeSystemManager,
+              private conditionManager: ConditionManager,
+              private matSnackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -68,10 +71,20 @@ export class BidListComponent implements OnInit, OnChanges {
   }
 
   addOrdeleteNode(bn: BNode): void {
-    if (bn.id !== -1) {
-      this.bnc.bnode.nodes = this.bnc.bnode.nodes.filter(b => b !== bn);
+    if (bn.id !== -1) {  // delete
+      const r = confirm('Really delete this bid?');
+
+      if (r) {
+        if (this.bsm.isALinkedNodeInSystem(bn)) {
+          this.matSnackBar.open(`Bid ${bn.bid} cannot be deleted since it is used as  linked node`, '', {duration: 3000});
+        } else {
+          this.matSnackBar.open(`Bid ${bn.bid} was deleted`, '', {duration: 3000});
+          this.bnc.bnode.nodes = this.bnc.bnode.nodes.filter(b => b !== bn);
+        }
+      }
+
     } else {
-      this.addNode();
+      this.addNode(); // add
     }
     this.bncList = this.getBncList();
   }
