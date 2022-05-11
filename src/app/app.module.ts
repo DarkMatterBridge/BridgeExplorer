@@ -35,6 +35,7 @@ import {BoardInputComponent} from './board-input/board-input.component';
 import {BoardEditorComponent} from './board-editor/board-editor.component';
 import {BboHandRecordsComponent} from './bbo-hand-records/bbo-hand-records.component';
 import {WebScraperComponent} from './web-scraper/web-scraper.component';
+import {BidSequencesComponent} from "./bid-sequences/bid-sequences.component";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {WebScraperComponent} from './web-scraper/web-scraper.component';
     BoardEditorComponent,
     BboHandRecordsComponent,
     WebScraperComponent,
-    BiddingSequenceComponent
+    BiddingSequenceComponent,
+    BidSequencesComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import {WebScraperComponent} from './web-scraper/web-scraper.component';
     MatIconModule,
     MatTooltipModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   exports: [
     MatDialogModule

@@ -567,6 +567,13 @@ export class DealHandCondition {
       const suitNo = this.determineSuit(suit);
       return (hand: DealHand) => hand.isSemiSolid(suitNo);
     }
+    regex = /(S|H|D|C|\$[A-z0-9]+)(\.solid)/;
+    a = regex.exec(cond.trim());
+    if (a !== null) {
+      suit = a[1];
+      const suitNo = this.determineSuit(suit);
+      return (hand: DealHand) => hand.isSolid(suitNo);
+    }
     regex = /(3suiter)/;
     a = regex.exec(cond.trim());
     if (a !== null) {

@@ -52,11 +52,11 @@ export class FileService {
 
   showRawSystem(name: string, bnode: BNode): void {
     const json = this.transformToJson(bnode);
-    this.showInNewWindow(json);
+    this.showInNewWindow('RAW', json );
   }
 
-  showInNewWindow(content: string): void {
-    const wea = window.open('', 'hallo');
+  showInNewWindow(target: string, content: string): void {
+    const wea = window.open('', target);
     if (wea) {
       wea.document.write(content);
     }

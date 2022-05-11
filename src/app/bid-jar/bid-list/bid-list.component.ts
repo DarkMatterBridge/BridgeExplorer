@@ -52,7 +52,12 @@ export class BidListComponent implements OnInit, OnChanges {
 
   addNode(): void {
     if (this.newBnc.bnode.bid.length === 0) {
-      return;
+      if (this.bncList.length > 0) {
+        const highestBid = this.bncList[this.bncList.length - 1];
+        this.newBnc.bnode.bid = this.conditionManager.addStepsToBid(highestBid.lastContractBid, 1);
+      } else {
+        return;
+      }
     }
     this.bsm.persistNode(this.newBnc.bnode);
     this.bnc.bnode.nodes.push(this.newBnc.bnode);

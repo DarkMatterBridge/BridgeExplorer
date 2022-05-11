@@ -63,7 +63,11 @@ export class DealHand {
   }
 
   isSemiSolid(suit: number): boolean {
-    return this.cardsInSuit(suit) < 6 ? false : this.honorsInSuit(suit) > 2;
+    return this.cardsInSuit(suit) < 6 ? false : this.honorsInSuit(suit) === 3;
+  }
+
+  isSolid(suit: number): boolean {
+    return this.cardsInSuit(suit) < 6 ? false : this.honorsInSuit(suit) > 3;
   }
 
   is3suiter(): boolean {

@@ -146,10 +146,15 @@ export class BidJarComponent implements OnInit {
   }
 
   showAllBids(): void {
-    const bidList = this.bsm.getTotalBidSequenceList(this.baseNode);
-    let text = bidList.join('<\p><p>');
-    this.fileService.showInNewWindow(text);
-    console.log('<p>' + bidList + '<\p>');
+    const bidList = this.bsm.getTotalBidSequenceMap(this.baseNode);
+    const bidList2 = this.bsm.getTotalBidSequenceList(this.baseNode);
+    let text = '<p>';
+    bidList.forEach((sequence, bn) => text = text + bn.id.toString() + ': ' + sequence + '<\p><p>');
+    text = text + '</p>';
+    let text2 = bidList2.join('<\p><p>');
+    this.fileService.showInNewWindow( 't1', text);
+    // this.fileService.showInNewWindow('t2', text2);
+    console.log('<p>' + text + '<\p>');
     // const bidList = this.bsm.getTotalBidList(this.baseNode);
     // let bl = Array.from(bidList).map(([x, y]) => x + ":" + y.bid + "->" + y.con);
     // let text = bl.join('          \n');

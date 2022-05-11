@@ -68,7 +68,8 @@ export class BridgeSystemManager {
       linkedNodes.push(node);
     }
     if (node.nodes.length > 0) {
-      return linkedNodes.concat(node.nodes.map(b => this.determineLinkedNodesDirect(b)).reduce((accumulator, value) => accumulator.concat(value), []));
+      return linkedNodes.concat(node.nodes.map(b => this.determineLinkedNodesDirect(b))
+        .reduce((accumulator, value) => accumulator.concat(value), []));
     } else {
       return linkedNodes;
     }
@@ -90,7 +91,6 @@ export class BridgeSystemManager {
       nm.set(node.id, node);
       return node.nodes.map(b => this.getTotalBidList(b))
         .reduce((accumulator, value) => new Map([...accumulator, ...value]), nm);
-      // .set(node.id, node);
     } else {
       return new Map([[node.id, node]]);
     }
@@ -101,6 +101,17 @@ export class BridgeSystemManager {
     if (node.nodes.length > 0) {
       return node.nodes.map(b => this.getTotalBidSequenceList(b, sequence + '-' + b.bid))
         .reduce((accumulator, value) => [...accumulator, ...value], nm);
+    } else {
+      return nm;
+    }
+  }
+
+  getTotalBidSequenceMap(node: BNode,  sequence: string= ''): Map<BNode, string> {
+    const nm = new Map();
+    nm.set(node, sequence);
+    if (node.nodes.length > 0) {
+      return node.nodes.map(b => this.getTotalBidSequenceMap(b, sequence + '-' + b.bid))
+        .reduce((accumulator, value) => new Map( [...accumulator, ...value]), nm);
     } else {
       return nm;
     }
