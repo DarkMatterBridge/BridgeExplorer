@@ -596,20 +596,35 @@ export class DealHandCondition {
 
     regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+).points$/;
     a = regex.exec(cond.trim());
-    let f1: ConditionCheckerTemp;
     if (a !== null) {
       const length = +a[1];
       suit = a[3];
       const suitNo = this.determineSuit(suit);
       if (a[2] === '+') {
-        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) >= length;
+        return (hand: DealHand) => hand.pointsInSuit(suitNo) >= length;
       } else if (a[2] === '-') {
-        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) <= length;
+        return  (hand: DealHand) => hand.pointsInSuit(suitNo) <= length;
       } else {
-        f1 = (hand: DealHand) => hand.pointsInSuit(suitNo) === length;
+        return (hand: DealHand) => hand.pointsInSuit(suitNo) === length;
       }
-      return f1;
     }
+
+    regex = /^(\d{1,2})(\+|\-)?(S|H|D|C|a|\$[A-z0-9]+).expoints$/;
+    a = regex.exec(cond.trim());
+    // let f1: ConditionCheckerTemp;
+    if (a !== null) {
+      const length = +a[1];
+      suit = a[3];
+      const suitNo = this.determineSuit(suit);
+      if (a[2] === '+') {
+        return (hand: DealHand) => hand.points() - hand.pointsInSuit(suitNo) >= length;
+      } else if (a[2] === '-') {
+        return (hand: DealHand) => hand.points() - hand.pointsInSuit(suitNo) <= length;
+      } else {
+        return (hand: DealHand) => hand.points() - hand.pointsInSuit(suitNo) === length;
+      }
+    }
+
     return undefined;
   }
 
