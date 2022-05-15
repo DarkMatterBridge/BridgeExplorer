@@ -3,7 +3,7 @@ import './../model/string.extension';
 import {BNodeComposite} from './BNodeComposite';
 import {ConditionManager} from '../services/ConditionManager';
 
-export class BNodeSequence {
+export class BNodeSequence {  // TODO better BNCSequence?
 
   index = -1;
   indexNode: BNodeComposite | undefined;
@@ -23,7 +23,6 @@ export class BNodeSequence {
       this.cutAt(this.index + 1);
     }
     this.compositeNodes.push(bnc);
-//    this.handleBidSemantics(bnode); todo  not necessary
     this.indexNode = bnc;
   }
 
@@ -47,23 +46,6 @@ export class BNodeSequence {
   positionOfBNode(bnc: BNodeComposite): number {
     return this.compositeNodes.indexOf(bnc);
   }
-
-  // handleBidSemantics(newBid: BNode): void {
-  //   let transformedBid = newBid.bid;
-  //   if (this.bids.length > 0) {
-  //     const lastBid = this.bids[this.bids.length - 1];
-  //     transformedBid = this.transformNewBid(lastBid, newBid);
-  //     this.isRealBiddingSequence = this.isRealBiddingSequence && transformedBid.isBid();
-  //   }
-  //   this.bids.push(transformedBid);
-  // }
-
-  // transformNewBid(lastBid: string, newBid: BNode): string {
-  //   if (!lastBid.isContractBid() || isNaN(+newBid.bid)) {
-  //     return newBid.bid;
-  //   }
-  //   return this.addStepsToBid(lastBid, +newBid.bid);
-  // }
 
   // TODO: this is bidding rules logic > needs to be put elsewhere later; maybe to String Class?
   // addStepsToBid(bid: string, steps: number): string {
