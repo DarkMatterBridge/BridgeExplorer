@@ -53,4 +53,8 @@ export class BoardComponent implements OnInit, OnChanges {
     this.board.importLinObject(new LinObject(linFileContent));
   }
 
+  emitBiddingSequence(): void {
+    this.fileService.emitBiddingSequence(this.board.biddingSequence);
+  }
+
 }

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BNode} from '../model/BNode';
 import {Observable, Subject} from 'rxjs';
+import {BiddingSequence} from '../model/BiddingSequence';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class FileService {
   public bnode!: BNode;
 
   private newSystem!: BNode;
+  public $subject: Subject<BiddingSequence> = new Subject<BiddingSequence>();
 
   constructor(private http: HttpClient) {
   }
@@ -109,6 +111,9 @@ export class FileService {
 
   }
 
+  public emitBiddingSequence(biddingSequence: BiddingSequence): void {
+    this.$subject.next(biddingSequence);
+  }
 
   //
   // getLinExample() {

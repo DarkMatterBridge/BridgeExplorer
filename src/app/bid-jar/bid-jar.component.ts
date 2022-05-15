@@ -7,6 +7,7 @@ import {FileService} from '../services/file.service';
 import {LegacyBiddingSystem} from '../model/LegacyBiddingSystem';
 import {BNodeSequence} from '../model/BNodeSequence';
 import {BNodeComposite} from '../model/BNodeComposite';
+import {ConditionManager} from '../services/ConditionManager';
 
 @Component({
   selector: 'app-bid-jar',
@@ -37,7 +38,8 @@ export class BidJarComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLElement>;
 
-  constructor(private  bsm: BridgeSystemManager, private fileService: FileService) {
+  constructor(private  bsm: BridgeSystemManager, private fileService: FileService,
+              private conditionManager: ConditionManager) {
     this.bridgeSystem = new BiddingSystem(bsm);
   }
 
@@ -46,6 +48,8 @@ export class BidJarComponent implements OnInit {
     this.resetSystem();
     this.loadFromLocalStorage();
     this.uploadSubject.subscribe(bn => this.setSystem(bn));
+    this.fileService.$subject
+      .subscribe((bs) =>  this.bnc = this.bNodeSequence.importBiddingSequence(this.bsm, bs, this.conditionManager));
   }
 
   setSystem(bn: BNode): void {
@@ -62,7 +66,6 @@ export class BidJarComponent implements OnInit {
     if (bnc === undefined) {
       this.bnc = new BNodeComposite(this.baseNode);
     } else {
-      console.log(bnc);
       this.bnc = bnc;
     }
   }
@@ -70,7 +73,6 @@ export class BidJarComponent implements OnInit {
   setBnodeFromBelow(bnc: BNodeComposite | undefined): void {
     if (bnc === undefined) { // Does this ever occur?
       this.bnc = new BNodeComposite(this.baseNode);
-      // this.reset();
       this.bNodeSequence.reset(); // instead of this.reset() ;
     } else {
       this.bNodeSequence.addNode(bnc);
@@ -151,8 +153,8 @@ export class BidJarComponent implements OnInit {
     let text = '<p>';
     bidList.forEach((sequence, bn) => text = text + bn.id.toString() + ': ' + sequence + '<\p><p>');
     text = text + '</p>';
-    let text2 = bidList2.join('<\p><p>');
-    this.fileService.showInNewWindow( 't1', text);
+    const text2 = bidList2.join('<\p><p>');
+    this.fileService.showInNewWindow('t1', text);
     // this.fileService.showInNewWindow('t2', text2);
     console.log('<p>' + text + '<\p>');
     // const bidList = this.bsm.getTotalBidList(this.baseNode);

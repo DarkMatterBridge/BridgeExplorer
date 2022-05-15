@@ -2,6 +2,9 @@ import {BNode} from './BNode';
 import './../model/string.extension';
 import {BNodeComposite} from './BNodeComposite';
 import {ConditionManager} from '../services/ConditionManager';
+import {BiddingSequence} from './BiddingSequence';
+import {BridgeSystemManager} from '../services/bridge-system-manager.service';
+import {HandAttributes} from './HandAttributes';
 
 export class BNodeSequence {  // TODO better BNCSequence?
 
@@ -106,4 +109,57 @@ export class BNodeSequence {  // TODO better BNCSequence?
       this.compositeNodes[i] = conditionManager.buildNextBNC(this.compositeNodes[i - 1], this.compositeNodes[i].bnode);
     }
   }
+
+  public importBiddingSequence(bsm: BridgeSystemManager,
+                               biddingSequence: BiddingSequence,
+                               conditionManager: ConditionManager): BNodeComposite {
+
+    console.log(biddingSequence.bids);
+    const bids = biddingSequence.bids;
+    const rootNode = bsm.bs;
+    if (rootNode === undefined) {
+      throw new Error('Bridgesystem not set');
+    }
+    this.compositeNodes = new Array<BNodeComposite>();
+    const rootBNC = (new BNodeComposite(rootNode));
+    // this.addNode(rootBNC);
+
+    const opening = rootNode?.nodes.find(node => node.bid === 'opening');
+    console.log(rootNode?.nodes);
+    if (opening === undefined) {
+      throw new Error('opening not set');
+    }
+    let bnc = conditionManager.buildNextBNC(rootBNC, opening);
+    this.addNode(bnc);
+
+    let bidNode: BNode | undefined;
+    for (let i = 0; i < bids.length; i++) {
+      if (i % 2 === 0) {
+        bidNode = bnc.bnode?.nodes.find(node => node.bid === bids[i]);
+        if (bidNode === undefined) {
+          const r = confirm('Bid ' + bids[i] + ' does not exist. Add it to system?');
+          if (r) {
+            bidNode = new BNode(bids[i], new Array<BNode>(), '');
+            bnc.bnode.nodes.push(bidNode);
+          } else {
+            break;
+          }
+        }
+        bnc = conditionManager.buildNextBNC(bnc, bidNode);
+        this.addNode(bnc);
+      } else {
+        // todo handle opps bid
+      }
+    }
+
+    // const firstBid = opening?.nodes.find(node => node.bid === bids[0]);
+    // if (firstBid === undefined) {
+    //   throw new Error('First Bid not found');
+    // }
+    // const firstBidBNC = conditionManager.buildNextBNC(bnc, firstBid);
+    // this.addNode(firstBidBNC);
+    //
+    return bnc;
+  }
+
 }
