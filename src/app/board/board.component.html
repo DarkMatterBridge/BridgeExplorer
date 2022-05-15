@@ -5,7 +5,14 @@
         <table>
           <tr>
             <td>
-<!--              <span (click)="save()"> Save</span><span (click)="load()"> Load</span>-->
+
+              <input  class="file-input" #fileInput type="file" accept=".lin" (change)="loadFile(fileInput)">
+
+              <button (click)="fileInput.click()">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">upload</mat-icon>
+              </button>
+
+              <!--              <span (click)="save()"> Save</span><span (click)="load()"> Load</span>-->
             </td>
             <td>{{board.players[2]}}
               <app-hand [hand]="board.northHand"></app-hand>
@@ -35,15 +42,16 @@
     </td>
   <tr>
     <td>
-<!--      Dealer: {{board.biddingSequence.dealer}}-->
+      <!--      Dealer: {{board.biddingSequence.dealer}}-->
       <div class="bidding">
         <div>
-        <app-bidding-sequence [biddingSequence]="board.biddingSequence"
-                              [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
+          <app-bidding-sequence [biddingSequence]="board.biddingSequence"
+                                [count]="board.biddingSequence.bids.length+1"></app-bidding-sequence>
         </div>
         <div class="pointer" (click)="biddingBoxVisible = !biddingBoxVisible">B</div>
         <div>
-        <app-biddingbox *ngIf="biddingBoxVisible" [biddingSequence]="board.biddingSequence" ($addBid)="addBid($event)"></app-biddingbox>
+          <app-biddingbox *ngIf="biddingBoxVisible" [biddingSequence]="board.biddingSequence"
+                          ($addBid)="addBid($event)"></app-biddingbox>
         </div>
       </div>
 

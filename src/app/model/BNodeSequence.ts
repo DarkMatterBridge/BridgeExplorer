@@ -107,16 +107,21 @@ export class BNodeSequence {
   }
 
   public generateRandomSequenceFromIndex(conditionManager: ConditionManager): void {
-      const indexNode = this.indexNode;
-      if (indexNode !== undefined) {
-        const lll = indexNode;
-        const len = lll.bnode.nodes?.length;
-        if (len !== null && len > 0) {
-          const z = Math.floor(Math.random() * len);
-          this.addNode(conditionManager.buildNextBNC( indexNode, indexNode.bnode.nodes[z]));
-          this.generateRandomSequenceFromIndex(conditionManager);
-        }
-        this.indexNode = indexNode;
+    const indexNode = this.indexNode;
+    if (indexNode !== undefined) {
+      const len = indexNode.bnode.nodes?.length;
+      if (len !== null && len > 0) {
+        const z = Math.floor(Math.random() * len);
+        this.addNode(conditionManager.buildNextBNC(indexNode, indexNode.bnode.nodes[z]));
+        this.generateRandomSequenceFromIndex(conditionManager);
       }
+      this.indexNode = indexNode;
+    }
+  }
+
+  public rebuild(conditionManager: ConditionManager): void {
+    for (let i = 1; i < this.compositeNodes.length; i++) {
+      this.compositeNodes[i] = conditionManager.buildNextBNC(this.compositeNodes[i - 1], this.compositeNodes[i].bnode);
+    }
   }
 }

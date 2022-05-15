@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs';
 import {BNodeSequence} from '../model/BNodeSequence';
 import {BNodeComposite} from '../model/BNodeComposite';
 import {ConditionManager} from '../services/ConditionManager';
@@ -48,12 +47,18 @@ export class BnodeSequenceComponent implements OnInit {
   }
 
   emitSequence(): void {
+    this.rebuildBncSequence();  // needed in case of changes in e.g. conditions
     this.bNodeSequence.buildCanonicalSequence();
     this.bNodeSequenceEventEmitter.emit(this.bNodeSequence);
   }
 
   generateRandomSequenceFromIndex(): void {
     this.bNodeSequence.generateRandomSequenceFromIndex(this.conditionManager);
+  }
+
+  rebuildBncSequence(): void {
+    this.bNodeSequence.rebuild(this.conditionManager);
+
   }
 
 }

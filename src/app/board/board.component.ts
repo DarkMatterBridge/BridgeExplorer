@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {Board} from "../model/Board";
-import {CrossOriginService} from "../cross-origin.service";
-import {strict} from "assert";
-import {stringify} from "querystring";
-import {BridgeRespsonse} from "../model/BridgeRespsonse";
+import {Board} from '../model/Board';
+import {CrossOriginService} from '../cross-origin.service';
+import {FileService} from '../services/file.service';
+import {Subject} from 'rxjs';
+import {LinObject} from '../model/LinObject';
 
 @Component({
   selector: 'app-board',
@@ -16,27 +16,41 @@ export class BoardComponent implements OnInit, OnChanges {
   board!: Board;
   biddingBoxVisible = false;
 
-  constructor(private crossOriginService: CrossOriginService) {
+  uploadSubject: Subject<string> = new Subject<string>();
+
+  constructor(private crossOriginService: CrossOriginService,
+              private fileService: FileService) {
   }
 
   ngOnInit(): void {
-    console.log("in bord -comp");
-    // console.log(this.board.biddingSequence.bids);
+    this.uploadSubject.subscribe(ln => this.parseLinFile(ln));
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
   }
 
-  addBid(bid: string) {
+  addBid(bid: string): void {
     this.board.biddingSequence.addBid(bid);
   }
 
-  save() {
-    this.board.export("board");
+  save(): void {
+    this.board.export('board');
   }
 
-  load() {
-    this.board.importFromLocalStorage("board");
+  load(): void {
+    this.board.importFromLocalStorage('board');
+  }
+
+  loadFile(input: HTMLInputElement): void {
+    const files = input.files;
+    if (files) {
+      this.fileService.uploadLinFile(files[0], this.uploadSubject);
+    }
+  }
+
+  parseLinFile(linFileContent: string): void {
+    this.board = new Board(); // import > to trigger changedetection in child components > todo check here
+    this.board.importLinObject(new LinObject(linFileContent));
   }
 
 }
