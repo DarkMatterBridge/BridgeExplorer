@@ -7,7 +7,7 @@
   <span *ngFor="let bnc of bNodeSequence.compositeNodes; let i = index" (click)="selectBid(bnc)">
 
  <span class="pointer" [ngClass]="{'fett': bnc == bNodeSequence.indexNode,
-                 'opp': bnc.bnode.ob}">
+                 'opp': bnc.bnode.ob}"   matTooltip="{{bnc.contextualizedCondition}}">
  <app-strain-symbol [strain]="bNodeSequence.compositeNodes[i].bid"></app-strain-symbol>
  </span>&nbsp;
     <span *ngIf="i<bNodeSequence.compositeNodes.length-1">-</span>

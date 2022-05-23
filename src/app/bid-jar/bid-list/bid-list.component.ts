@@ -5,6 +5,7 @@ import {BridgeSystemManager} from '../../services/bridge-system-manager.service'
 import {BNodeComposite} from '../../model/BNodeComposite';
 import {ConditionManager} from '../../services/ConditionManager';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {FileService} from '../../services/file.service';
 
 @Component({
   selector: 'app-bid-list',
@@ -31,6 +32,7 @@ export class BidListComponent implements OnInit, OnChanges {
 
   constructor(private bsm: BridgeSystemManager,
               private conditionManager: ConditionManager,
+              private fileService: FileService,
               private matSnackBar: MatSnackBar) {
   }
 
@@ -106,10 +108,34 @@ export class BidListComponent implements OnInit, OnChanges {
   }
 
   getBncList(): BNodeComposite[] {
-    return this.bnc.bnode.nodes.map(
-      // node => this.bnc.buildNextBNC(node)
-      node => this.conditionManager.buildNextBNC(this.bnc, node)
+    return this.getBncListX(this.bnc);
+  }
+
+  getBncListX(bnc: BNodeComposite): BNodeComposite[] {
+    return bnc.bnode.nodes.map(
+      node => this.conditionManager.buildNextBNC(bnc, node)
     );
+  }
+
+  getBncList2Levels(): BNodeComposite[][] {
+    const bncList1Level = this.getBncList();
+    const d2 = bncList1Level.map(bnc => [bnc].concat(this.getBncListX(bnc)));
+    console.log(d2);
+
+    let text = '<html><body> <table>';
+    text = text + d2.map(bid => this.addLine(bid)).join('');
+    text = text + '</table></body></html>';
+    console.log(text);
+    this.fileService.showInNewWindow('TABLE', text);
+
+    return d2;
+  }
+
+  addLine(bncList: BNodeComposite[]): string {
+    let text = '<tr>';
+    bncList.forEach(bid => text = text + '<td>' + bid.contextualizedCondition + '</td>');
+    text = text + '</tr>';
+    return text;
   }
 
   getLinkedBncList(): BNodeComposite[] {

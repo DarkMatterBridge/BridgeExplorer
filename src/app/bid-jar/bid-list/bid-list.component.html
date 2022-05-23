@@ -12,6 +12,9 @@
     <tr *ngIf="editable" app-bid-item [bnc]="newBnc" [subject]="subject" [editable]="editable"
         ($addOrDeleteNode)="addOrdeleteNode($event)" [newNode]="true">
     </tr>
+    <a [routerLink]=""  (click)="getBncList2Levels()" matTooltip="show Bid Table">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">table_chart</mat-icon>
+    </a>
 
     <tr *ngIf="linkedNodes.length >0" class="linkeNodes">
       <td> Linked</td>
