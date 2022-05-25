@@ -61,6 +61,7 @@ export class BidListComponent implements OnInit, OnChanges {
         return;
       }
     }
+    this.checkIfOppBid(this.newBnc.bnode);
     this.bsm.persistNode(this.newBnc.bnode);
     this.bnc.bnode.nodes.push(this.newBnc.bnode);
     this.sortNodes();
@@ -146,6 +147,13 @@ export class BidListComponent implements OnInit, OnChanges {
       );
     } else {
       return [];
+    }
+  }
+
+  checkIfOppBid(node: BNode): void {
+    if (node.con?.startsWith('.')) {
+      node.con = node.con?.substr(0, node.con?.length - 1);
+      node.ob = true;
     }
   }
 

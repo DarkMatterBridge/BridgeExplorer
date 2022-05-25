@@ -86,7 +86,7 @@ export class DealViewComponent implements OnInit, OnChanges {
     this.parsingOK[direction] = this.dealCondition.directionConditions[direction].parseCondition();
   }
 
-  getTricks(): void {
+  getTricks(): void { // Unsinn
     const x = this.board.constructBcaclString();
     alert(x);
     navigator.clipboard.writeText(x);
